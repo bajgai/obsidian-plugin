@@ -4,8 +4,8 @@
     {
       "mode": "0644",
       "path": ".claude-plugin/marketplace.json",
-      "sha256": "744c3a9cfd21da5a97142a933d7f66c51cc745c355b3ed6ee27f07c868d2e739",
-      "size": 890
+      "sha256": "877a006149596fa0caa3b691afba0e20696617a9a341fcc21f592b5c05c6799d",
+      "size": 823
     },
     {
       "mode": "0644",
@@ -100,8 +100,8 @@
     {
       "mode": "0644",
       "path": "CHANGELOG.md",
-      "sha256": "e116219376dbf7857d256572452b7bb67b7c61602a37eb08d3d800c9ff3872fc",
-      "size": 36483
+      "sha256": "fe46f68974b8a02e8fe2f84626b5ed55c8b8d9e9b7570c56f41b93dbe1c9c91e",
+      "size": 35725
     },
     {
       "mode": "0644",
@@ -298,8 +298,8 @@
     {
       "mode": "0644",
       "path": "config/public-marketplace.json",
-      "sha256": "744c3a9cfd21da5a97142a933d7f66c51cc745c355b3ed6ee27f07c868d2e739",
-      "size": 890
+      "sha256": "877a006149596fa0caa3b691afba0e20696617a9a341fcc21f592b5c05c6799d",
+      "size": 823
     },
     {
       "mode": "0644",
@@ -346,8 +346,8 @@
     {
       "mode": "0644",
       "path": "docs/namespace-migration.md",
-      "sha256": "58178c9b5846fc0e768f83d0828eb4f16a2eb88cf14a4d4b4756a57243c3b764",
-      "size": 1902
+      "sha256": "39cd006111e5d4c50492008e904ec4678385ef5b20243804933c045f4f75efef",
+      "size": 1797
     },
     {
       "mode": "0644",
@@ -1462,8 +1462,8 @@
     {
       "mode": "0644",
       "path": "tests/test_package_validation.py",
-      "sha256": "9793eab60ccfa1720c73da25f697364b978eea7c4c2d0c0d9fa99c2d82a0f368",
-      "size": 21208
+      "sha256": "2312c618e261e73ef20bd0b64653ebe1be124d0cafe2ccaae973d6909e1440b9",
+      "size": 21262
     },
     {
       "mode": "0644",
@@ -1595,6 +1595,6 @@
     }
   },
   "schema_version": 1,
-  "source_commit": "1086a3415c553bce2d80a1be3bf28a6c98e71c04",
-  "source_date_epoch": 1793222568
+  "source_commit": "e906da947f669116a09d8d7c3c97a27348d988a7",
+  "source_date_epoch": 1793222733
 }

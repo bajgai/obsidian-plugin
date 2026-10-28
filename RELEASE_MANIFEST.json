@@ -4,14 +4,14 @@
     {
       "mode": "0644",
       "path": ".claude-plugin/marketplace.json",
-      "sha256": "48c3c5a61e700a282c9a73b984fa6f7f05e335aa9663ba31af6251ab2667dd18",
+      "sha256": "744c3a9cfd21da5a97142a933d7f66c51cc745c355b3ed6ee27f07c868d2e739",
       "size": 890
     },
     {
       "mode": "0644",
       "path": ".claude-plugin/plugin.json",
-      "sha256": "83de9a65c537ffda3d55a429db4bb37d756a760d9a397070dc5358fa07909ab3",
-      "size": 958
+      "sha256": "9faa1f376dbbd6c5f483bcc823f835c8b8556fd1ab2e63929741221b89cc2a9d",
+      "size": 955
     },
     {
       "mode": "0644",
@@ -94,8 +94,8 @@
     {
       "mode": "0644",
       "path": "ATTRIBUTION.md",
-      "sha256": "d9cd1cd697abe789794f632edf904f3eab7082173bb16034ce6a826f3881fe3b",
-      "size": 5905
+      "sha256": "e025d890b189bd9789769fadd4af9e4129f310ca9957b23c35646a4a6844899d",
+      "size": 5589
     },
     {
       "mode": "0644",
@@ -106,14 +106,14 @@
     {
       "mode": "0644",
       "path": "CITATION.cff",
-      "sha256": "f5c3ba606e6ae638c8788dbf720ef92d8eedfcc7c0a7e2f4a3b87ab1de741961",
-      "size": 456
+      "sha256": "ca7ed8641519a85399c584466ca4bd0111f0d412da594b214e8ce5e1421c4ef9",
+      "size": 501
     },
     {
       "mode": "0644",
       "path": "CODEOWNERS",
-      "sha256": "b47b715103bc8cefe7badafb5622793ac912480a3515ac5491fa99e87dea73dc",
-      "size": 47
+      "sha256": "64e7e8a40fabbc4be704fbe07df69dc30fba35d310511a32a118c7bc2089a7e1",
+      "size": 41
     },
     {
       "mode": "0644",
@@ -231,12 +231,6 @@
     },
     {
       "mode": "0644",
-      "path": "assets/readme/credits.svg",
-      "sha256": "60326e5df27d564e29417fa6e11976468ad6bf5a5daddb0aa2f7118ce9df55a1",
-      "size": 313766
-    },
-    {
-      "mode": "0644",
       "path": "assets/readme/crew.svg",
       "sha256": "e6887011d904bc0fb66af4078b5faa6f0db79f83fe3be040b11ca9ea41f4262b",
       "size": 350371
@@ -304,7 +298,7 @@
     {
       "mode": "0644",
       "path": "config/public-marketplace.json",
-      "sha256": "48c3c5a61e700a282c9a73b984fa6f7f05e335aa9663ba31af6251ab2667dd18",
+      "sha256": "744c3a9cfd21da5a97142a933d7f66c51cc745c355b3ed6ee27f07c868d2e739",
       "size": 890
     },
     {
@@ -1601,6 +1595,6 @@
     }
   },
   "schema_version": 1,
-  "source_commit": "6d65cafac2ea910b04022392bacae28c08914262",
-  "source_date_epoch": 1793221936
+  "source_commit": "1086a3415c553bce2d80a1be3bf28a6c98e71c04",
+  "source_date_epoch": 1793222568
 }

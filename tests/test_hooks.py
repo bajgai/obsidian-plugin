@@ -35,7 +35,7 @@ def make_vault(root: Path, hot: str) -> Path:
 
 
 def opted_in() -> dict[str, str]:
-    return {"CLAUDE_OBSIDIAN_SESSION_CONTEXT": "1"}
+    return {"OBSIDIAN_WIKI_SESSION_CONTEXT": "1"}
 
 
 def test_hook_schema_uses_supported_session_start_shape() -> None:
@@ -64,11 +64,11 @@ def test_fork_dispatch_keeps_session_context_explicit_and_read_only() -> None:
         vault = make_vault(Path(directory) / "vault", "FORK_CONTEXT_SENTINEL\n")
         before = {p.relative_to(vault).as_posix(): p.read_bytes() for p in vault.rglob("*") if p.is_file()}
         for enabled in (False, True):
-            env = {key: value for key, value in os.environ.items() if not key.startswith("CLAUDE_OBSIDIAN_")}
+            env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "CLAUDE_OBSIDIAN_"))}
             env["PYTHONDONTWRITEBYTECODE"] = "1"
-            env["CLAUDE_OBSIDIAN_VAULT"] = str(vault)
+            env["OBSIDIAN_WIKI_VAULT"] = str(vault)
             if enabled:
-                env["CLAUDE_OBSIDIAN_SESSION_CONTEXT"] = "1"
+                env["OBSIDIAN_WIKI_SESSION_CONTEXT"] = "1"
             result = subprocess.run(command, cwd=vault, env=env, input=json.dumps({"hook_event_name": "SessionStart", "source": "fork", "cwd": str(vault)}), capture_output=True, text=True, timeout=10)
             assert result.returncode == 0, result.stderr
             if enabled:
@@ -118,8 +118,9 @@ def test_context_is_silent_without_explicit_environment_opt_in() -> None:
         vault = make_vault(Path(td) / "vault", "PRIVATE_HOT_CONTEXT\n")
         for environment in (
             {},
-            {"CLAUDE_OBSIDIAN_SESSION_CONTEXT": "true"},
-            {"CLAUDE_OBSIDIAN_SESSION_CONTEXT": "0"},
+            {"OBSIDIAN_WIKI_SESSION_CONTEXT": "true"},
+            {"OBSIDIAN_WIKI_SESSION_CONTEXT": "0"},
+            {"OBSIDIAN_WIKI_SESSION_CONTEXT": "0", "CLAUDE_OBSIDIAN_SESSION_CONTEXT": "1"},
         ):
             output = session_start_context(
                 start=vault,
@@ -130,13 +131,24 @@ def test_context_is_silent_without_explicit_environment_opt_in() -> None:
             assert "PRIVATE_HOT_CONTEXT" not in output
 
 
+def test_legacy_session_context_opt_in_still_counts() -> None:
+    with tempfile.TemporaryDirectory() as td:
+        vault = make_vault(Path(td) / "vault", "LEGACY_OPT_IN_CONTEXT\n")
+        output = session_start_context(
+            start=vault,
+            environ={"CLAUDE_OBSIDIAN_SESSION_CONTEXT": "1"},
+            plugin_root=Path(td) / "plugin",
+        )
+        assert "LEGACY_OPT_IN_CONTEXT" in output
+
+
 def test_project_config_cannot_redirect_global_context_consent() -> None:
     with tempfile.TemporaryDirectory() as td:
         base = Path(td)
         project = base / "untrusted-project"
         project.mkdir()
         external = make_vault(base / "private-vault", "EXTERNAL_PRIVATE_CONTEXT\n")
-        (project / ".claude-obsidian.json").write_text(
+        (project / ".obsidian-wiki.json").write_text(
             json.dumps(
                 {
                     "schema": "claude-obsidian.workspace.v1",
@@ -156,7 +168,7 @@ def test_project_config_cannot_redirect_global_context_consent() -> None:
 
         exact_consent = {
             **opted_in(),
-            "CLAUDE_OBSIDIAN_SESSION_CONTEXT_VAULT": str(external.resolve()),
+            "OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT": str(external.resolve()),
         }
         allowed = session_start_context(
             start=project,
@@ -166,7 +178,7 @@ def test_project_config_cannot_redirect_global_context_consent() -> None:
         assert "EXTERNAL_PRIVATE_CONTEXT" in allowed
 
         local = make_vault(project / "local-vault", "LOCAL_PROJECT_CONTEXT\n")
-        (project / ".claude-obsidian.json").write_text(
+        (project / ".obsidian-wiki.json").write_text(
             json.dumps(
                 {
                     "schema": "claude-obsidian.workspace.v1",
@@ -465,6 +477,7 @@ def main() -> None:
     test_fork_dispatch_keeps_session_context_explicit_and_read_only()
     test_context_is_bounded_and_delimiter_safe()
     test_context_is_silent_without_explicit_environment_opt_in()
+    test_legacy_session_context_opt_in_still_counts()
     test_project_config_cannot_redirect_global_context_consent()
     test_non_vault_and_plugin_root_are_silent()
     test_context_rejects_symlinked_hot_cache_and_parent()
@@ -482,10 +495,10 @@ def main() -> None:
 
 
 def _hook_env(vault: Path) -> dict[str, str]:
-    env = {key: value for key, value in os.environ.items() if not key.startswith("CLAUDE_OBSIDIAN_")}
+    env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "CLAUDE_OBSIDIAN_"))}
     env["PYTHONDONTWRITEBYTECODE"] = "1"
-    env["CLAUDE_OBSIDIAN_VAULT"] = str(vault)
-    env["CLAUDE_OBSIDIAN_SESSION_CONTEXT"] = "1"
+    env["OBSIDIAN_WIKI_VAULT"] = str(vault)
+    env["OBSIDIAN_WIKI_SESSION_CONTEXT"] = "1"
     return env
 
 
@@ -532,7 +545,7 @@ def test_hook_dispatch_avoids_full_cli_imports() -> None:
         "\nexcept SystemExit as exc: assert exc.code == 0"
         "\nprint(json.dumps(sorted(name for name in sys.modules if name.startswith('claude_obsidian'))))"
     )
-    env = {key: value for key, value in os.environ.items() if not key.startswith("CLAUDE_OBSIDIAN_")}
+    env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "CLAUDE_OBSIDIAN_"))}
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     with tempfile.TemporaryDirectory() as td:
         for event in ("session-start", "stop"):

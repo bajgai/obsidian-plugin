@@ -7,6 +7,20 @@ implementation record for older releases.
 
 ## [Unreleased]
 
+### Changed
+
+- The workspace config is now `.obsidian-wiki.json` and the environment
+  variables are `OBSIDIAN_WIKI_VAULT`, `OBSIDIAN_WIKI_SESSION_CONTEXT` and
+  `OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT`, so nothing in a user vault names a
+  particular agent host. The Stop hook status prefix is `OBSIDIAN_WIKI_STATUS`.
+- README, install guide and skill references treat every Agent Skills host
+  equally; Claude Code is documented as the one shipped plugin adapter.
+
+### Deprecated
+
+- `.claude-obsidian.json` and the `CLAUDE_OBSIDIAN_*` variables are still read
+  when the new name is absent, but `init` and `adopt` write only the new file.
+
 ## [3.0.1] - 2026-10-21
 
 Restores the Claude plugin name `claude-obsidian`, so commands are

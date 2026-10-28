@@ -46,7 +46,7 @@ invoke a network client, or substitute another source.
 3. Read the source completely. Never alter `.raw/` or `inbox/`. Recommend no
    canonical page when the captured source adds no durable synthesis,
    navigation, decision, or reusable connection.
-4. Read `.claude-obsidian.json`, the active methodology-mode configuration,
+4. Read `.obsidian-wiki.json`, the active methodology-mode configuration,
    `wiki/index.md`, `wiki/hot.md`, and only the pages needed to detect existing
    entities, concepts, claims, and contradictions.
 5. Preserve evidence fidelity. Record exact source-relative locators (page,

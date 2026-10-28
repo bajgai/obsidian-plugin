@@ -18,7 +18,7 @@ python3 "$CORE" --help
 ```
 
 Resolve a vault in this order: explicit `--vault`,
-`CLAUDE_OBSIDIAN_VAULT`, the nearest `.claude-obsidian.json`, then an
+`OBSIDIAN_WIKI_VAULT`, the nearest `.obsidian-wiki.json`, then an
 unambiguous initialized vault at or above the current directory. Fail closed when
 selection is missing or ambiguous.
 

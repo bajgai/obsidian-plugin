@@ -258,7 +258,7 @@
       ],
       "read_scope": [
         "plugin:skills/**",
-        "vault:.claude-obsidian.json",
+        "vault:.obsidian-wiki.json",
         "vault:.gitignore",
         "vault:.obsidian/**",
         "vault:.raw/**",
@@ -268,7 +268,7 @@
       ],
       "write_scope": [
         {
-          "pattern": "vault:.claude-obsidian.json",
+          "pattern": "vault:.obsidian-wiki.json",
           "access": "transactional"
         },
         {

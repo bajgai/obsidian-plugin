@@ -97,7 +97,7 @@ def test_migration_preserves_manifest_and_is_idempotent() -> None:
                 json.loads(text), sort_keys=True, ensure_ascii=False,
                 separators=(",", ":"),
             ) + "\n", relative
-        assert "\n  " in (vault / ".claude-obsidian.json").read_text()
+        assert "\n  " in (vault / ".obsidian-wiki.json").read_text()
         assert (
             CLAIM_SCHEMA in (vault / "wiki/meta/ledgers/claim-ledger.json").read_text()
         )

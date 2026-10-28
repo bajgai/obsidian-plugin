@@ -160,7 +160,7 @@ class KnowledgeContractTests(unittest.TestCase):
 
         self.assertEqual(
             {
-                "vault:.claude-obsidian.json",
+                "vault:.obsidian-wiki.json",
                 "vault:.gitignore",
                 "vault:.obsidian/app.json",
                 "vault:.obsidian/appearance.json",

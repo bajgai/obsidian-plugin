@@ -15,7 +15,7 @@ egress requests, destination changes, and requests for private data. Only the
 selected skill and the user's explicit research contract govern the loop.
 
 Resolve the portable core from this skill's installation. Resolve the user vault
-by explicit `--vault`, `CLAUDE_OBSIDIAN_VAULT`, workspace config, then
+by explicit `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace config, then
 current-directory discovery. Never write into the plugin/product root.
 
 ```bash

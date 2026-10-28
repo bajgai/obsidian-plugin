@@ -13,9 +13,34 @@ from typing import Mapping
 
 from .json_utils import parse_finite_json_float
 
-WORKSPACE_CONFIG = ".claude-obsidian.json"
+WORKSPACE_CONFIG = ".obsidian-wiki.json"
+# Read-only fallbacks for vaults created before the host-neutral rename. New
+# vaults and adoptions write only WORKSPACE_CONFIG.
+LEGACY_WORKSPACE_CONFIGS = (".claude-obsidian.json",)
+WORKSPACE_CONFIG_NAMES = (WORKSPACE_CONFIG, *LEGACY_WORKSPACE_CONFIGS)
+ENV_PREFIX = "OBSIDIAN_WIKI_"
+LEGACY_ENV_PREFIX = "CLAUDE_OBSIDIAN_"
 VAULT_SCHEMA = "claude-obsidian.workspace.v1"
 MAX_WORKSPACE_CONFIG_BYTES = 64 * 1024
+
+
+def env_setting(environ: Mapping[str, str], name: str) -> str | None:
+    """Return ``OBSIDIAN_WIKI_<name>``, else the deprecated ``CLAUDE_OBSIDIAN_<name>``."""
+
+    for prefix in (ENV_PREFIX, LEGACY_ENV_PREFIX):
+        value = environ.get(prefix + name)
+        if value:
+            return value
+    return None
+
+
+def workspace_config_path(directory: Path) -> Path | None:
+    """Return the directory's workspace config file, preferring the current name."""
+
+    for name in WORKSPACE_CONFIG_NAMES:
+        if (directory / name).is_file():
+            return directory / name
+    return None
 
 
 class VaultSelectionError(RuntimeError):
@@ -290,16 +315,17 @@ def _find_workspace_config(start: Path) -> tuple[Path, Path] | None:
     if current.is_file():
         current = current.parent
     for directory in (current, *current.parents):
-        config = directory / WORKSPACE_CONFIG
-        try:
-            config.lstat()
-        except FileNotFoundError:
-            continue
-        except OSError as exc:
-            raise VaultSelectionError(
-                "INVALID_WORKSPACE_CONFIG", f"cannot inspect {config}: {exc}"
-            ) from exc
-        return config, _read_workspace_config(config)
+        for name in WORKSPACE_CONFIG_NAMES:
+            config = directory / name
+            try:
+                config.lstat()
+            except FileNotFoundError:
+                continue
+            except OSError as exc:
+                raise VaultSelectionError(
+                    "INVALID_WORKSPACE_CONFIG", f"cannot inspect {config}: {exc}"
+                ) from exc
+            return config, _read_workspace_config(config)
     return None
 
 
@@ -315,7 +341,7 @@ def is_adoptable_vault(path: Path) -> bool:
     return path.is_dir() and (
         (path / ".obsidian").is_dir()
         or (path / "wiki").is_dir()
-        or (path / WORKSPACE_CONFIG).is_file()
+        or workspace_config_path(path) is not None
     )
 
 
@@ -397,7 +423,8 @@ def resolve_vault_root(
 ) -> VaultSelection:
     """Resolve one vault using documented precedence and fail closed.
 
-    Precedence: explicit argument, ``CLAUDE_OBSIDIAN_VAULT``, nearest workspace
+    Precedence: explicit argument, ``OBSIDIAN_WIKI_VAULT`` (or the deprecated
+    ``CLAUDE_OBSIDIAN_VAULT``), nearest workspace
     config, then nearest initialized vault from the current working directory.
     The plugin installation root is never accepted by implicit discovery.
     """
@@ -409,8 +436,8 @@ def resolve_vault_root(
     if explicit is not None:
         candidate = canonical(explicit)
         source = "explicit"
-    elif env.get("CLAUDE_OBSIDIAN_VAULT"):
-        candidate = canonical(env["CLAUDE_OBSIDIAN_VAULT"])
+    elif env_setting(env, "VAULT"):
+        candidate = canonical(env_setting(env, "VAULT"))
         source = "environment"
     else:
         configured = _find_workspace_config(cwd)
@@ -428,7 +455,7 @@ def resolve_vault_root(
             if nearest is None:
                 raise VaultSelectionError(
                     "VAULT_NOT_FOUND",
-                    "no vault selected; pass --vault or set CLAUDE_OBSIDIAN_VAULT",
+                    "no vault selected; pass --vault or set OBSIDIAN_WIKI_VAULT",
                 )
             candidate = nearest
             source = "cwd-discovery"
@@ -437,5 +464,5 @@ def resolve_vault_root(
     if plugin is not None and not allow_plugin_root:
         assert_not_plugin_tree(candidate, plugin, source=source)
 
-    legacy = not (candidate / WORKSPACE_CONFIG).is_file()
+    legacy = workspace_config_path(candidate) is None
     return VaultSelection(root=candidate, source=source, legacy=legacy)

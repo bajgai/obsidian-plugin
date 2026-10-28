@@ -10,7 +10,7 @@ delete child entries or their pages. Do not perform fold-of-folds or trigger a
 fold automatically.
 
 Resolve the portable core from this skill's installation. Resolve the user vault
-by explicit `--vault`, `CLAUDE_OBSIDIAN_VAULT`, workspace config, then
+by explicit `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace config, then
 current-directory discovery. Never treat the plugin/product root as a vault.
 
 ```bash

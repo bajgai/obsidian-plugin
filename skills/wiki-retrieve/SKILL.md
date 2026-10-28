@@ -54,7 +54,7 @@ other writer; a busy vault fails closed instead of publishing a partial index.
 
 Synthetic prefixes use only local frontmatter and page text. The explicit
 Anthropic API profile can send page bodies off-machine and requires the user's
-consent plus `--allow-egress` and a configured API key. There is no Claude CLI
+consent plus `--allow-egress` and a configured API key. There is no host-CLI
 generation tier or ambient subprocess fallback. Never infer consent from an
 API key or installed binary. Preview the scope first and state which provider
 will receive what data.

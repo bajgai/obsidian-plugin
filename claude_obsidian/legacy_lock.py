@@ -23,7 +23,7 @@ from dataclasses import dataclass
 from pathlib import Path, PurePosixPath
 from typing import Iterator, Sequence
 
-from .paths import VaultSelectionError, assert_not_plugin_tree, canonical
+from .paths import VaultSelectionError, assert_not_plugin_tree, canonical, env_setting
 from .transaction import (
     MutationLock,
     TransactionConflict,
@@ -631,7 +631,7 @@ def _peek(vault_root: Path, path: str) -> int:
 
 
 def _select_vault(plugin_root: Path) -> Path:
-    raw = os.environ.get("WIKI_LOCK_VAULT") or os.environ.get("CLAUDE_OBSIDIAN_VAULT")
+    raw = os.environ.get("WIKI_LOCK_VAULT") or env_setting(os.environ, "VAULT")
     try:
         vault_root = canonical(raw if raw else Path.cwd())
     except OSError as exc:

@@ -16,7 +16,7 @@ from .ledgers import (
     migrate_legacy_manifest,
     validate_existing_canonical_state,
 )
-from .paths import canonical
+from .paths import WORKSPACE_CONFIG, canonical, workspace_config_path
 from .transaction import BUNDLE_SCHEMA, _safe_hash
 
 
@@ -45,7 +45,7 @@ def scan_vault(root: Path | str) -> dict[str, Any]:
         "obsidian_config": (path / ".obsidian").is_dir(),
         "wiki_present": (path / "wiki").is_dir(),
         "legacy_raw_present": (path / ".raw").is_dir(),
-        "workspace_config": (path / ".claude-obsidian.json").is_file(),
+        "workspace_config": workspace_config_path(path) is not None,
         "markdown_notes": len(notes),
         "sample_notes": notes[:20],
     }
@@ -98,7 +98,7 @@ def build_vault_bundle(
         )
         for file in _template_files(template)
     }
-    planned[".claude-obsidian.json"] = (
+    planned[WORKSPACE_CONFIG] = (
         json.dumps(_workspace_config(), indent=2, sort_keys=True) + "\n"
     ).encode("utf-8")
     if adopt:

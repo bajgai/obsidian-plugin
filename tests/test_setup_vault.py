@@ -356,7 +356,7 @@ class SetupVaultTests(unittest.TestCase):
             self.assertEqual(2, applied.returncode)
             self.assertIn("PLAN_CHANGED", applied.stderr)
             self.assertEqual("user-created\n", marker_file.read_text(encoding="utf-8"))
-            self.assertFalse((vault / ".claude-obsidian.json").exists())
+            self.assertFalse((vault / ".obsidian-wiki.json").exists())
 
 
 if __name__ == "__main__":

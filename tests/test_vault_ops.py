@@ -33,7 +33,7 @@ def test_init_and_adopt_are_non_destructive() -> None:
             adopt=False,
         )
         result = apply_bundle(vault, operation)
-        assert ".claude-obsidian.json" in result["changed_paths"]
+        assert ".obsidian-wiki.json" in result["changed_paths"]
         assert (vault / "inbox/.gitkeep").is_file()
         assert ".vault-meta/" in (vault / ".gitignore").read_text(encoding="utf-8")
         assert scan_vault(vault)["workspace_config"]
@@ -74,7 +74,7 @@ def test_init_refuses_existing_content_without_force() -> None:
 
 def test_adopt_rejects_invalid_canonical_state_without_replacing_it() -> None:
     cases = (
-        (".claude-obsidian.json", {"schema": "wrong", "vault": "."}),
+        (".obsidian-wiki.json", {"schema": "wrong", "vault": "."}),
         (
             "wiki/meta/ledgers/source-ledger.json",
             {"schema": "wrong", "sources": {}},

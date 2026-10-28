@@ -8,7 +8,7 @@ The portable workflow is implemented in `skills/` and the standard-library
 ## Product and vault boundaries
 
 - This repository is the product source. It is not the default user vault.
-- A user vault is the directory containing `.claude-obsidian.json`, `wiki/`,
+- A user vault is the directory containing `.obsidian-wiki.json`, `wiki/`,
   and `.raw/`. Mutable state always belongs there.
 - `templates/vault/` is the distributable seed. Root `wiki/`, `.raw/`, and
   `.vault-meta/` are contributor state and are excluded from public artifacts.
@@ -21,8 +21,10 @@ The portable workflow is implemented in `skills/` and the standard-library
   artifact, never by pushing contributor-vault state.
 
 Resolve a vault in this order: explicit `--vault`,
-`CLAUDE_OBSIDIAN_VAULT`, nearest `.claude-obsidian.json`, then an unambiguous
+`OBSIDIAN_WIKI_VAULT`, nearest `.obsidian-wiki.json`, then an unambiguous
 vault at or above the current directory. Fail closed when no vault is selected.
+`.claude-obsidian.json` and `CLAUDE_OBSIDIAN_*` remain read-only legacy
+fallbacks; never write them.
 
 ## Bootstrap
 
@@ -85,10 +87,10 @@ publishing. No agent may push, tag, open or mutate issues, or publish a release
 without explicit owner approval.
 
 Claude SessionStart context injection is disabled by default. Treat
-`CLAUDE_OBSIDIAN_SESSION_CONTEXT=1` as explicit user consent to place bounded
+`OBSIDIAN_WIKI_SESSION_CONTEXT=1` as explicit user consent to place bounded
 `wiki/hot.md` data in the model context; never set it automatically. A
 workspace-configured vault outside the project also requires an exact
-`CLAUDE_OBSIDIAN_SESSION_CONTEXT_VAULT` path.
+`OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT` path.
 
 ## Reference
 

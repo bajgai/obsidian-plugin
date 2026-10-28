@@ -22,8 +22,8 @@ commit from a generic lifecycle hook.
 
 ## Workflow
 
-1. Resolve a user vault. Prefer `--vault`, then `CLAUDE_OBSIDIAN_VAULT`, then
-   `.claude-obsidian.json`, then unambiguous current-directory discovery.
+1. Resolve a user vault. Prefer `--vault`, then `OBSIDIAN_WIKI_VAULT`, then
+   `.obsidian-wiki.json`, then unambiguous current-directory discovery.
 2. Read every expected target and record its SHA-256, or `null` when it must be
    absent.
 3. Have workers return drafts and evidence. Workers do not edit shared vault

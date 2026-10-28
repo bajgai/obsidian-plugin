@@ -4,7 +4,9 @@ message: >-
   If you use this software, please cite it using the metadata from this file.
 type: software
 authors:
-  - alias: AgriciDaniel
+  - given-names: Niranjan
+    family-names: Bajgai
+    alias: bajgai
 repository-code: 'https://github.com/bajgai/obsidian-plugin'
 url: 'https://github.com/bajgai/obsidian-plugin'
 license: MIT

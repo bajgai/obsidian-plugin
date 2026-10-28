@@ -1,6 +1,6 @@
 # Attributions
 
-obsidian-plugin is a fork of work by Agrici Daniel and its contributors. The following third-party patterns, tools, and creators informed its design.
+The following third-party patterns, tools, and creators informed its design.
 
 ---
 
@@ -107,12 +107,3 @@ Pinned ecosystem references, licenses and intentional differences are recorded
 in [config/upstream-references.json](config/upstream-references.json). The
 3.0.0 original examples do not incorporate restricted third-party plugin
 implementations or personal contributor vaults.
-
----
-
-## Original project
-
-**Author:** AgriciDaniel / AI Marketing Hub
-**License:** MIT (see [LICENSE](LICENSE))
-**Original author:** https://github.com/AgriciDaniel
-**Community early-access mirror (Pro):** https://github.com/AI-Marketing-Hub

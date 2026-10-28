@@ -2,13 +2,13 @@
   "description": "Audited public distribution channel for obsidian-plugin",
   "name": "bajgai-obsidian-plugin",
   "owner": {
-    "name": "AgriciDaniel"
+    "name": "Niranjan Bajgai"
   },
   "plugins": [
     {
       "author": {
-        "name": "AgriciDaniel",
-        "url": "https://github.com/AgriciDaniel"
+        "name": "Niranjan Bajgai",
+        "url": "https://github.com/bajgai"
       },
       "description": "Local-first Agent Skills package and Claude Code plugin for source-cited Obsidian knowledge bases. Includes recoverable transactions, deterministic lint and retrieval, provenance ledgers, explicit vault adoption, offline-first capture foundations, and methodology modes.",
       "homepage": "https://github.com/bajgai/obsidian-plugin",

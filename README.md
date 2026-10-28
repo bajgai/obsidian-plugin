@@ -1,7 +1,7 @@
 <!--
   obsidian-plugin: a free, open-source AI second brain for Obsidian that works with any Agent Skills host.
   Drop in sources and your AI agent reads, links and files them into a connected knowledge graph of plain Markdown you own.
-  Host-neutral fork of work by Agrici Daniel, based on Andrej Karpathy's LLM Wiki pattern.
+  Based on Andrej Karpathy's LLM Wiki pattern.
   15 skills and 3 agents. Works in Codex, OpenCode, Gemini, ZCode, Cursor, Windsurf, Claude Code and other Agent Skills hosts. MIT licensed.
 -->
 
@@ -26,7 +26,6 @@
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-any%20host-2563eb" alt="Agent Skills: any host" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/release-v3.0.1-d97745" alt="Release v3.0.1" /></a>
-  <a href="https://github.com/AgriciDaniel"><img src="https://img.shields.io/badge/original%20author-Agrici%20Daniel-6b7280" alt="Original author: Agrici Daniel" /></a>
 </p>
 
 **obsidian-plugin turns the things you read into a knowledge base that keeps getting more useful.** Drop a paper, an article, a transcript or your own notes into the vault, and your AI agent reads them, writes linked notes with sources, and files everything into one connected knowledge graph you can explore in Obsidian.
@@ -39,7 +38,7 @@
 
 Everything stays as plain Markdown files on your computer. No cloud database, no lock-in, no telemetry. Apart from the AI tool you chat with, nothing leaves your machine unless you say so.
 
-This host-neutral fork builds on work by [Agrici Daniel](https://github.com/AgriciDaniel). Its skills, transaction core, and vault configuration work across Agent Skills hosts.
+Its skills, transaction core, and vault configuration work the same in every Agent Skills host.
 
 ## See the vault
 
@@ -341,8 +340,8 @@ It is built not to. Adopting a vault does not move your notes, every change is s
 
 </details>
 
-## License, credits and contributing
+## License and contributing
 
-MIT License, see [LICENSE](LICENSE). This fork builds on work by **[Agrici Daniel](https://agricidaniel.com/about)** and its contributors; all credit for the original design and implementation goes to them. The design follows [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and uses [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) as the reference for Obsidian Markdown, Bases and Canvas syntax. See [ATTRIBUTION.md](ATTRIBUTION.md) and [CITATION.cff](CITATION.cff).
+MIT License, see [LICENSE](LICENSE). The design follows [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and uses [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) as the reference for Obsidian Markdown, Bases and Canvas syntax. See [ATTRIBUTION.md](ATTRIBUTION.md) and [CITATION.cff](CITATION.cff).
 
 Contributions are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) first and run `make test` before you open a pull request. Report security problems as described in [SECURITY.md](SECURITY.md). Release notes live in the [changelog](CHANGELOG.md), and the [code of conduct](CODE_OF_CONDUCT.md) applies everywhere. AI coding agents working on this repo start at [AGENTS.md](AGENTS.md), whichever host they run in.

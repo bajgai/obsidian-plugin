@@ -154,8 +154,8 @@
     {
       "mode": "0644",
       "path": "README.md",
-      "sha256": "296102baa10c0c3829f214c957c8f5f5c1277ed780979cacad097589171657ba",
-      "size": 23127
+      "sha256": "beed7295060115f5982824852a6ca025f22ec98495d13d8c97717cdf2c344efc",
+      "size": 19332
     },
     {
       "mode": "0644",
@@ -256,14 +256,14 @@
     {
       "mode": "0644",
       "path": "assets/readme/modes.svg",
-      "sha256": "728d0e16d5f3e965a73a1895f00823e4a264391fb52ef629b5fee6d0f0646e40",
-      "size": 209720
+      "sha256": "298943e2af24519c95d350fa6c88759d8675b93b3bc750232b7d9b5ed1539ff8",
+      "size": 209726
     },
     {
       "mode": "0644",
       "path": "assets/readme/safety.svg",
-      "sha256": "c0d604edc248641f0030982dc99864a17e70bd4a7c7a4bbfbd9632622691ff4b",
-      "size": 222479
+      "sha256": "34c44ed0b0ecb60a36057a543ea5f78aeba4fb977f0121c4ee24ca33daa77ca4",
+      "size": 222447
     },
     {
       "mode": "0644",
@@ -1601,6 +1601,6 @@
     }
   },
   "schema_version": 1,
-  "source_commit": "f6de8f42c39dc82dc5a4b5698f941c1fe1c1e54a",
-  "source_date_epoch": 1793220052
+  "source_commit": "a602c121cd6b70ae42f54a2ed5d4c9b60b8752a0",
+  "source_date_epoch": 1793221395
 }

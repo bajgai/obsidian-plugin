@@ -18,8 +18,7 @@ python3 scripts/obsidian-plugin.py --help
 ## Marketplace configuration
 
 The configured marketplace is `bajgai-obsidian-plugin`, backed by
-`bajgai/obsidian-plugin`. Its published manifest maps the historical
-`agricidaniel-obsidian` plugin identity to `obsidian-plugin`.
+`bajgai/obsidian-plugin`.
 
 After the renamed package is published, install it with:
 

@@ -384,7 +384,7 @@ class PackageValidationTests(unittest.TestCase):
                 codes = {item["code"] for item in validate_package(root)["findings"]}
                 self.assertEqual(reserved, "reserved_plugin_name" in codes)
 
-    def test_published_marketplace_migrates_the_former_plugin_identity(self) -> None:
+    def test_published_marketplace_lists_the_plugin_without_renames(self) -> None:
         # The fork publishes the same host-neutral identity on both surfaces.
         plugin = json.loads(
             (ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
@@ -394,8 +394,9 @@ class PackageValidationTests(unittest.TestCase):
             with self.subTest(relative):
                 marketplace = json.loads((ROOT / relative).read_text(encoding="utf-8"))
                 self.assertEqual(
-                    {"agricidaniel-obsidian": plugin["name"]}, marketplace.get("renames")
+                    [plugin["name"]], [entry["name"] for entry in marketplace["plugins"]]
                 )
+                self.assertNotIn("renames", marketplace)
 
     def test_skills_cannot_invoke_product_helpers_relative_to_the_vault_cwd(
         self,

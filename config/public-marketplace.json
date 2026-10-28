@@ -18,8 +18,5 @@
       "source": "./"
     }
   ],
-  "renames": {
-    "agricidaniel-obsidian": "obsidian-plugin"
-  },
   "version": "3.0.1"
 }

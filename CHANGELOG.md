@@ -45,22 +45,20 @@ claude plugin marketplace update bajgai-obsidian-plugin
 claude plugin update obsidian-plugin@bajgai-obsidian-plugin
 ```
 
-If you installed 3.0.0 (`agricidaniel-obsidian`), the marketplace update moves
-your settings back, then install once:
+If you installed 3.0.0 under its temporary plugin name, install once:
 
 ```bash
 claude plugin marketplace update bajgai-obsidian-plugin
 claude plugin install obsidian-plugin@bajgai-obsidian-plugin
 ```
 
-Restart Claude Code after either path. Managed settings that name
-`agricidaniel-obsidian` must change the key by hand.
+Restart Claude Code after either path. Managed settings that name the 3.0.0
+plugin must change the key by hand.
 
 ### Changed
 
-- The Claude plugin is `obsidian-plugin` again. The marketplace `renames` map
-  now migrates `agricidaniel-obsidian` back to it; the 3.0.0 map in the other
-  direction is removed, since a name cannot be both current and former.
+- The Claude plugin is `obsidian-plugin` again, replacing the temporary 3.0.0
+  plugin name.
 - The original release identity was reported as reserved by
   `claude plugin validate`, and
   `claude plugin tag` refuses it, though Claude Code installs and loads it.
@@ -78,25 +76,13 @@ The rename is the breaking change; vaults need no migration.
 
 ### Upgrading from 2.x
 
-The Claude plugin is now `agricidaniel-obsidian`, so `/obsidian-plugin:*`
-commands become `/agricidaniel-obsidian:*`. No alias is provided. Run:
-
-```bash
-claude plugin marketplace update bajgai-obsidian-plugin
-claude plugin install agricidaniel-obsidian@bajgai-obsidian-plugin
-```
-
-Then restart Claude Code. Until the install runs, the plugin is not installed.
-Managed settings must change the key by hand. Contextual prefixes no longer
-fall back to `claude -p` (see Removed). See the
-[namespace migration](docs/namespace-migration.md) for verification and rollback.
+Superseded by 3.0.1, which restores the `obsidian-plugin` name. Contextual
+prefixes no longer fall back to `claude -p` (see Removed).
 
 ### Changed
 
-- The Claude plugin is renamed from `obsidian-plugin` to
-  `agricidaniel-obsidian`, because Claude Code reserves plugin names starting
-  with `claude-`. The marketplace `renames` map migrates existing installations
-  instead of reporting the plugin as missing; package validation rejects
+- The Claude plugin was temporarily renamed, because Claude Code reserves
+  plugin names starting with `claude-`; package validation rejects marketplace
   renames chains that do not resolve. The repository, Python package and vault
   formats keep the obsidian-plugin name.
 - Cached contextual prefixes are reused only when they match the current

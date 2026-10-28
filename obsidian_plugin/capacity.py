@@ -43,7 +43,7 @@ def inspect_capacity(vault: Path | str) -> dict[str, Any]:
         ledgers.append({'path': relative, 'size_bytes': size if raw is not None else None,
                         'limit_bytes': MAX_CANONICAL_LEDGER_BYTES, 'status': status,
                         'sha256': hashlib.sha256(raw).hexdigest() if raw is not None else None})
-    return {'schema': 'claude-obsidian.capacity.v1', 'ledgers': ledgers,
+    return {'schema': 'obsidian-plugin.capacity.v1', 'ledgers': ledgers,
             'ok': all(x['status'] not in {'over_capacity', 'unreadable'} for x in ledgers),
             'recovery': 'Preview capacity compact; it only removes JSON formatting from near- or over-capacity ledgers. If records still exceed the limit, preserve the source and request an explicitly designed migration. Never truncate ledger records or raw sources.'}
 

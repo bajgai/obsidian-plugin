@@ -16,7 +16,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.prompt_eval import (
+from obsidian_plugin.prompt_eval import (
     PACKET_SCHEMA,
     REPORT_SCHEMA,
     RESPONSE_SCHEMA,
@@ -87,7 +87,7 @@ class PromptEvaluationTests(unittest.TestCase):
             "offline response-contract validation", report["evidence_class"]
         )
         self.assertEqual(
-            hashlib.sha256((ROOT / "claude_obsidian/prompt_eval.py").read_bytes()).hexdigest(),
+            hashlib.sha256((ROOT / "obsidian_plugin/prompt_eval.py").read_bytes()).hexdigest(),
             report["provenance"]["evaluator_sha256"],
         )
         self.assertEqual(
@@ -361,8 +361,8 @@ class PromptEvaluationTests(unittest.TestCase):
     def test_duplicate_json_keys_are_rejected(self) -> None:
         raw = json.dumps(self.response)
         raw = raw.replace(
-            '"schema": "claude-obsidian.prompt-response.v1"',
-            '"schema": "claude-obsidian.prompt-response.v1", "schema": "claude-obsidian.prompt-response.v1"',
+            '"schema": "obsidian-plugin.prompt-response.v1"',
+            '"schema": "obsidian-plugin.prompt-response.v1", "schema": "obsidian-plugin.prompt-response.v1"',
             1,
         )
         with tempfile.TemporaryDirectory() as directory:

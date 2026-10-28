@@ -1,5 +1,5 @@
 {
-  "schema": "claude-obsidian.retrieval-queries.v1",
+  "schema": "obsidian-plugin.retrieval-queries.v1",
   "title": "Original offline retrieval regression fixture, version 1",
   "queries": [
     {"id": "exact-address", "query": "c-100001", "expected_pages": ["wiki/concepts/Vault backup.md"], "category": "exact-id"},

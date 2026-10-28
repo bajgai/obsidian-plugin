@@ -48,7 +48,7 @@ whitespace), with the expected hash of the current ledger and an approved plan.
 
 Writers determine how long the savings last. `migration_bundle` (`migrate`)
 now writes canonical ledgers in that compact form. The `init`/`adopt` planner
-in `claude_obsidian/vault_ops.py` and hand-written bundles may still write
+in `obsidian_plugin/vault_ops.py` and hand-written bundles may still write
 indented JSON; that is valid, and compaction becomes relevant only once such a
 ledger approaches the limit.
 

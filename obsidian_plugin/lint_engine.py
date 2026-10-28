@@ -56,11 +56,11 @@ from typing import Any, Iterable, Mapping, Sequence, cast
 if __package__ in {None, ""}:
     sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
-from claude_obsidian.gitignore import GitignoreMatcher
-from claude_obsidian.json_utils import strict_json_loads
-from claude_obsidian.visible_paths import is_visible_path
-from claude_obsidian.limits import MAX_CANONICAL_LEDGER_BYTES
-from claude_obsidian.markdown_links import (
+from obsidian_plugin.gitignore import GitignoreMatcher
+from obsidian_plugin.json_utils import strict_json_loads
+from obsidian_plugin.visible_paths import is_visible_path
+from obsidian_plugin.limits import MAX_CANONICAL_LEDGER_BYTES
+from obsidian_plugin.markdown_links import (
     HTML_COMPLETE_TAG_RE as _HTML_COMPLETE_TAG_RE, html_block_start as _html_block_start,
     iter_markdown_links, iter_wikilinks,
     markdown_destination as _markdown_destination,
@@ -68,7 +68,7 @@ from claude_obsidian.markdown_links import (
     mask_comments as _mask_comments,
     mask_protected_regions as _mask_markdown_code,
 )
-from claude_obsidian.paths import WORKSPACE_CONFIG_NAMES, is_name_surrogate
+from obsidian_plugin.paths import WORKSPACE_CONFIG_NAMES, is_name_surrogate
 
 REPORT_VERSION = 1
 ENGINE_VERSION = "1.2.0"
@@ -1124,7 +1124,7 @@ def _frontmatter_policy(
 
 def _generated_frontmatter_errors(page: _Page) -> list[dict[str, Any]]:
     """Validate only the explicit generated-page profile, never adopted schemas."""
-    from claude_obsidian.page_schema import PAGE_TYPES
+    from obsidian_plugin.page_schema import PAGE_TYPES
 
     findings: list[dict[str, Any]] = []
     values = page.frontmatter.values
@@ -1397,7 +1397,7 @@ def _ledger_contracts() -> tuple[str, str, Any, Any]:
         package_root = str(Path(__file__).resolve().parents[1])
         if package_root not in sys.path:
             sys.path.insert(0, package_root)
-        from claude_obsidian.ledgers import (
+        from obsidian_plugin.ledgers import (
             CLAIM_PATH,
             SOURCE_PATH,
             validate_claim_ledger,
@@ -1413,7 +1413,7 @@ def _transaction_reader() -> Any:
         package_root = str(Path(__file__).resolve().parents[1])
         if package_root not in sys.path:
             sys.path.insert(0, package_root)
-        from claude_obsidian.transaction import read_vault_regular
+        from obsidian_plugin.transaction import read_vault_regular
     return read_vault_regular
 
 
@@ -1424,7 +1424,7 @@ def _transaction_error_type() -> type[Exception]:
         package_root = str(Path(__file__).resolve().parents[1])
         if package_root not in sys.path:
             sys.path.insert(0, package_root)
-        from claude_obsidian.transaction import TransactionError
+        from obsidian_plugin.transaction import TransactionError
     return TransactionError
 
 
@@ -1435,7 +1435,7 @@ def _transaction_file_limit() -> int:
         package_root = str(Path(__file__).resolve().parents[1])
         if package_root not in sys.path:
             sys.path.insert(0, package_root)
-        from claude_obsidian.transaction import MAX_TRANSACTION_FILE_BYTES
+        from obsidian_plugin.transaction import MAX_TRANSACTION_FILE_BYTES
     return MAX_TRANSACTION_FILE_BYTES
 
 
@@ -1451,7 +1451,7 @@ def _read_ledger(
         try:
             from .ledgers import strict_json_loads
         except ImportError:  # pragma: no cover - direct script compatibility
-            from claude_obsidian.ledgers import strict_json_loads
+            from obsidian_plugin.ledgers import strict_json_loads
         payload = strict_json_loads(raw.decode("utf-8"))
     except Exception as exc:
         code = getattr(exc, "code", None)
@@ -1461,7 +1461,7 @@ def _read_ledger(
         if code == "VAULT_FILE_TOO_LARGE":
             message += (
                 f"; the ledger exceeds {MAX_CANONICAL_LEDGER_BYTES} bytes. Run "
-                "`claude-obsidian.py capacity` and preview `capacity compact`; "
+                "`obsidian-plugin.py capacity` and preview `capacity compact`; "
                 "never truncate ledger records"
             )
         return None, [{"path": relative, "message": message}]

@@ -11,10 +11,10 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.transaction import apply_bundle, inspect_bundle
-import claude_obsidian.transaction as transaction_module
-from claude_obsidian.ledgers import LedgerValidationError, stable_source_id
-from claude_obsidian.vault_ops import (
+from obsidian_plugin.transaction import apply_bundle, inspect_bundle
+import obsidian_plugin.transaction as transaction_module
+from obsidian_plugin.ledgers import LedgerValidationError, stable_source_id
+from obsidian_plugin.vault_ops import (
     VaultOperationError,
     build_vault_bundle,
     scan_vault,

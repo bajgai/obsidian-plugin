@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from claude_obsidian.transaction import BUNDLE_SCHEMA, apply_bundle, inspect_bundle
+from obsidian_plugin.transaction import BUNDLE_SCHEMA, apply_bundle, inspect_bundle
 
 
 class ProspectiveCanvasTests(unittest.TestCase):

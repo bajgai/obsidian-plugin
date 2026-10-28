@@ -4,8 +4,8 @@ Resolve the installed product root from the invoking skill's own location, not
 from the user-vault working directory:
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 test -f "$CORE"
 ```
 
@@ -28,8 +28,8 @@ still resolve from `--vault`, the workspace configuration or the project, never
 from the plugin cache or a host plugin-root variable.
 
 Claude Code is the one shipped plugin adapter. Install it through its
-marketplace, or load a checkout with `claude --plugin-dir /path/to/claude-obsidian`,
-and invoke skills as `/claude-obsidian:<name>`.
+marketplace, or load a checkout with `claude --plugin-dir /path/to/obsidian-plugin`,
+and invoke skills as `/obsidian-plugin:<name>`.
 
 ## Product clone
 

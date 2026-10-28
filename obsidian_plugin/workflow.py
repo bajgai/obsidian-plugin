@@ -356,7 +356,7 @@ def inspect_workflow(vault: Path | str, bundle_or_path: Mapping[str, Any] | Path
             has_raw = any(p.startswith('.raw/') and p != '.raw/.manifest.json' for p in writes)
             if not has_raw and not _ledger_has_sources(writes.get(_LEDGERS[0], {}).get('content', '')):
                 fail('MISSING_INGEST_SOURCE', '', 'ingest needs a create-only .raw/ source or a recorded source in the source ledger')
-    return {'schema': 'claude-obsidian.workflow-plan.v1', 'storage_valid': True,
+    return {'schema': 'obsidian-plugin.workflow-plan.v1', 'storage_valid': True,
             'workflow_complete': not findings, 'workflow_findings': findings,
             'semantic_review': 'required', 'plan': storage,
             'approval_sha256': storage['approval_sha256'], 'changed_paths': storage['changed_paths'],

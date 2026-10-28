@@ -1,4 +1,4 @@
-# claude-obsidian Copilot instructions
+# obsidian-plugin Copilot instructions
 
 Read `AGENTS.md` before proposing changes. The repository is an Agent Skills
 package, Claude Code adapter, standard-library Python core, and deterministic
@@ -16,4 +16,4 @@ When editing:
 - Do not add secrets, private paths, unsupported capability claims, or duplicate
   command wrappers.
 
-Public canonical: https://github.com/AgriciDaniel/claude-obsidian
+Public canonical: https://github.com/bajgai/obsidian-plugin

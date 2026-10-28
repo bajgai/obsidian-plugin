@@ -12,7 +12,7 @@ sys.dont_write_bytecode = True
 PRODUCT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PRODUCT_ROOT))
 
-from claude_obsidian.prompt_eval import (
+from obsidian_plugin.prompt_eval import (
     PromptEvaluationError,
     evaluate_response,
     generate_packet,

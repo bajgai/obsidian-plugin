@@ -12,7 +12,7 @@ sys.dont_write_bytecode = True
 PRODUCT_ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(PRODUCT_ROOT))
 
-from claude_obsidian.retrieval_eval import EvaluationError, IndexNotReadyError, run_fixture, run_quality
+from obsidian_plugin.retrieval_eval import EvaluationError, IndexNotReadyError, run_fixture, run_quality
 
 
 def main(argv=None) -> int:

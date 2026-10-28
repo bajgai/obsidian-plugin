@@ -18,7 +18,7 @@ What you expected to happen instead.
 3. ...
 
 ## Environment
-- Product version: (run `python3 scripts/claude-obsidian.py --version`)
+- Product version: (run `python3 scripts/obsidian-plugin.py --version`)
 - Claude Code version: (run `claude --version`)
 - OS: (e.g. macOS 14.5, Pop!_OS 24.04, Windows 11)
 - Obsidian version: (if relevant)
@@ -26,7 +26,7 @@ What you expected to happen instead.
 - Transport state: (`bash scripts/detect-transport.sh --peek --vault <vault>` output)
 
 ## Skill / agent / script involved
-Which surface is affected? (e.g. `/claude-obsidian:wiki-ingest`, `scripts/wiki-mode.py`, `agents/verifier.md`)
+Which surface is affected? (e.g. `/obsidian-plugin:wiki-ingest`, `scripts/wiki-mode.py`, `agents/verifier.md`)
 
 ## Logs / output
 ```

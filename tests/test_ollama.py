@@ -22,7 +22,7 @@ ROOT = Path(__file__).resolve().parent.parent
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.ollama import (
+from obsidian_plugin.ollama import (
     OllamaLocalProofError,
     OllamaModelUnavailable,
     model_is_available,
@@ -382,7 +382,7 @@ class DirectTransportTests(unittest.TestCase):
     """The shared no-proxy, no-redirect JSON transport is bounded per request."""
 
     def _get(self, url, timeout, *, limit=1024 * 1024):
-        from claude_obsidian import ollama as shared
+        from obsidian_plugin import ollama as shared
 
         request = urllib.request.Request(url + "/api/status", method="GET")
         deadline = time.monotonic() + timeout
@@ -408,7 +408,7 @@ class DirectTransportTests(unittest.TestCase):
         self.assertLess(elapsed, 3.0)
 
     def test_tls_handshake_gets_only_the_time_left_after_a_slow_connect(self):
-        from claude_obsidian import ollama as shared
+        from obsidian_plugin import ollama as shared
 
         listener = socket.socket()
         listener.bind(("127.0.0.1", 0))
@@ -447,7 +447,7 @@ class DirectTransportTests(unittest.TestCase):
         self.assertEqual({"disabled": True}, document["cloud"])
 
     def test_duplicate_keys_nesting_and_size_are_rejected(self):
-        from claude_obsidian import ollama as shared
+        from obsidian_plugin import ollama as shared
 
         for raw in (
             b'{"remote_host":"https://ollama.com","remote_host":null}',
@@ -465,7 +465,7 @@ class DirectTransportTests(unittest.TestCase):
             self.assertEqual({"cloud": {"disabled": True}}, self._get(server.url, 3.0))
 
     def test_redirects_are_refused_and_proxies_are_bypassed(self):
-        from claude_obsidian import ollama as shared
+        from obsidian_plugin import ollama as shared
 
         class Redirect(http.server.BaseHTTPRequestHandler):
             def log_message(self, *_args):

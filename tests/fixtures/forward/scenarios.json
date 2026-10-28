@@ -1,5 +1,5 @@
 {
-  "schema": "claude-obsidian.forward-evaluations.v1",
+  "schema": "obsidian-plugin.forward-evaluations.v1",
   "scenarios": [
     {
       "id": "save-selected-decision-with-hostile-quote",

@@ -10,9 +10,9 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from claude_obsidian.capacity import compaction_bundle, inspect_capacity
-from claude_obsidian.ledgers import SOURCE_SCHEMA, CLAIM_SCHEMA
-from claude_obsidian.transaction import apply_bundle, inspect_bundle, TransactionError
+from obsidian_plugin.capacity import compaction_bundle, inspect_capacity
+from obsidian_plugin.ledgers import SOURCE_SCHEMA, CLAIM_SCHEMA
+from obsidian_plugin.transaction import apply_bundle, inspect_bundle, TransactionError
 
 
 class CapacityTests(unittest.TestCase):
@@ -55,7 +55,7 @@ class CapacityTests(unittest.TestCase):
         source = self.vault / 'wiki/meta/ledgers/source-ledger.json'
         original = json.dumps({'schema': SOURCE_SCHEMA, 'sources': {}, 'data': 'x' * 200})
         source.write_text(original)
-        with mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', 100):
+        with mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', 100):
             with self.assertRaises(TransactionError) as caught:
                 compaction_bundle(self.vault, operation_id='too-large')
         self.assertEqual('LEDGER_MIGRATION_REQUIRED', caught.exception.code)
@@ -65,7 +65,7 @@ class CapacityTests(unittest.TestCase):
     def test_duplicate_json_keys_and_symlink_are_refused(self):
         source = self.vault / 'wiki/meta/ledgers/source-ledger.json'
         source.write_text('{"sources":{},"sources":{}}')
-        with mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', 30), \
+        with mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', 30), \
                 self.assertRaises(TransactionError) as caught:
             compaction_bundle(self.vault, operation_id='duplicate')
         self.assertEqual('INVALID_PROVENANCE_LEDGER', caught.exception.code)
@@ -80,7 +80,7 @@ class CapacityTests(unittest.TestCase):
         source = self.vault / 'wiki/meta/ledgers/source-ledger.json'
         original = '{ "schema": "' + SOURCE_SCHEMA + '", "sources": {}, "custom_measurement": 1.0000000000000001, "custom_string": "a \\"quote\\" \\t text" }'
         source.write_text(original)
-        with mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', len(original)):
+        with mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', len(original)):
             plan = compaction_bundle(self.vault, operation_id='precise')
         text = plan['writes'][0]['content']
         self.assertIn('1.0000000000000001', text)
@@ -95,7 +95,7 @@ class CapacityTests(unittest.TestCase):
         record = json.dumps({'schema': SOURCE_SCHEMA, 'sources': {}}, indent=2)
         limit = 1000
         threshold = 850  # the inspect_capacity near_capacity boundary at this limit
-        with mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', limit):
+        with mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', limit):
             source.write_text(record + ' ' * (threshold - 1 - len(record)))
             self.assertEqual('within_capacity', inspect_capacity(self.vault)['ledgers'][0]['status'])
             empty = compaction_bundle(self.vault, operation_id='nothing-near')
@@ -114,9 +114,9 @@ class CapacityTests(unittest.TestCase):
         # No JSON whitespace at all: compaction cannot shrink it below the limit.
         original = json.dumps({'schema': SOURCE_SCHEMA, 'sources': {}, 'data': 'x' * 2000}, separators=(',', ':'))
         source.write_text(original)
-        with mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', 1000), \
-                mock.patch('claude_obsidian.capacity.strict_json_loads', side_effect=AssertionError('parsed')), \
-                mock.patch('claude_obsidian.capacity._compact_json_bytes', side_effect=AssertionError('scanned')):
+        with mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', 1000), \
+                mock.patch('obsidian_plugin.capacity.strict_json_loads', side_effect=AssertionError('parsed')), \
+                mock.patch('obsidian_plugin.capacity._compact_json_bytes', side_effect=AssertionError('scanned')):
             with self.assertRaises(TransactionError) as caught:
                 compaction_bundle(self.vault, operation_id='bounded-refusal')
         self.assertEqual('LEDGER_MIGRATION_REQUIRED', caught.exception.code)
@@ -125,7 +125,7 @@ class CapacityTests(unittest.TestCase):
         # fits is still refused by the exact compacted size.
         padded = '{"schema":"' + SOURCE_SCHEMA + '","sources":{},"data":"' + ' ' * 2000 + '"}'
         source.write_text(padded)
-        with mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', 1000):
+        with mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', 1000):
             with self.assertRaises(TransactionError) as caught:
                 compaction_bundle(self.vault, operation_id='string-whitespace')
         self.assertEqual('LEDGER_MIGRATION_REQUIRED', caught.exception.code)
@@ -165,7 +165,7 @@ class CapacityTests(unittest.TestCase):
                 text = text.replace('\n', '\r\n')
             source.write_text(text, encoding='utf-8', newline='')
             with self.subTest(index=index), \
-                    mock.patch('claude_obsidian.capacity.MAX_CANONICAL_LEDGER_BYTES', len(text.encode('utf-8'))):
+                    mock.patch('obsidian_plugin.capacity.MAX_CANONICAL_LEDGER_BYTES', len(text.encode('utf-8'))):
                 plan = compaction_bundle(self.vault, operation_id=f'oracle-{index}')
                 expected = reference(text)
                 if expected == text:

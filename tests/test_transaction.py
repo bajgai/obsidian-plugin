@@ -17,8 +17,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-import claude_obsidian.transaction as transaction_module
-from claude_obsidian.transaction import (
+import obsidian_plugin.transaction as transaction_module
+from obsidian_plugin.transaction import (
     BUNDLE_SCHEMA,
     MutationLock,
     TransactionConflict,
@@ -309,7 +309,7 @@ def test_paths_require_nfc_and_file_bundles_reject_duplicate_json_keys() -> None
         bundle_path = base / "ambiguous.json"
         bundle_path.write_text(
             "{"
-            '"schema":"claude-obsidian.transaction.v1",'
+            '"schema":"obsidian-plugin.transaction.v1",'
             '"operation_id":"duplicate-json",'
             '"operation_type":"generic",'
             '"expected_hashes":{"wiki/A.md":null},'
@@ -1023,7 +1023,7 @@ def test_legacy_canvas_catalog_journals_stay_recoverable() -> None:
         (backups / "0000.original").write_text("old\n")
         catalog.write_text("new\n")
         journal = {
-            "schema": "claude-obsidian.transaction-journal.v1",
+            "schema": "obsidian-plugin.transaction-journal.v1",
             "operation_id": "canvas-legacy-crashed",
             "operation_type": "canvas",
             "state": "applying",
@@ -2049,7 +2049,7 @@ def test_explicit_recovery_can_reap_stale_pid_reuse_lock() -> None:
         (lock / "owner.json").write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": os.getpid(),
                     "token": "stale-owner",
                     "host": socket.gethostname(),
@@ -2086,7 +2086,7 @@ def test_force_stale_lock_reaps_dead_same_host_owner_before_stale_after() -> Non
         (lock / "owner.json").write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": 999999,
                     "token": "dead-owner",
                     "host": socket.gethostname(),
@@ -2126,7 +2126,7 @@ def test_force_stale_lock_does_not_reap_a_live_same_host_owner() -> None:
         (lock / "owner.json").write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": os.getpid(),
                     "token": "live-owner",
                     "host": socket.gethostname(),
@@ -2158,7 +2158,7 @@ def test_force_stale_lock_keeps_the_age_gate_for_a_foreign_host_owner() -> None:
         (lock / "owner.json").write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": 999999,
                     "token": "foreign-owner",
                     "host": f"not-{socket.gethostname()}",
@@ -2221,7 +2221,7 @@ def test_mutation_lock_release_and_reaping_ignore_replaced_external_alias() -> N
         outside_owner.write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": os.getpid(),
                     "token": lock.token,
                     "host": socket.gethostname(),
@@ -2277,7 +2277,7 @@ def test_mutation_lock_serializes_across_meta_directory_replacement() -> None:
         replacement_owner.write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": 999999,
                     "token": first.token,
                     "host": socket.gethostname(),
@@ -2371,8 +2371,8 @@ def test_meta_managed_targets_rollback_inside_pinned_namespace() -> None:
         (
             "configuration",
             ".vault-meta/mode.json",
-            '{"schema":"claude-obsidian.vault-mode.v1","mode":"generic"}\n',
-            '{"schema":"claude-obsidian.vault-mode.v1","mode":"para"}\n',
+            '{"schema":"obsidian-plugin.vault-mode.v1","mode":"generic"}\n',
+            '{"schema":"obsidian-plugin.vault-mode.v1","mode":"para"}\n',
         ),
         ("setup", ".vault-meta/address-counter.txt", "1\n", "2\n"),
     )
@@ -2429,7 +2429,7 @@ def test_recovery_never_reads_a_replaced_external_operation() -> None:
         transaction = vault / f".vault-meta/transactions/{operation_id}"
         (transaction / "backups").mkdir(parents=True)
         benign = {
-            "schema": "claude-obsidian.transaction-journal.v1",
+            "schema": "obsidian-plugin.transaction-journal.v1",
             "operation_id": operation_id,
             "operation_type": "generic",
             "state": "applying",
@@ -2492,7 +2492,7 @@ def _seed_runtime_read_probe(base: Path) -> tuple[Path, bytes]:
     """Write one bounded runtime file used by the stability read probes."""
 
     target = base / "runtime-file.json"
-    payload = b'{"schema": "claude-obsidian.runtime-read-probe.v1"}\n'
+    payload = b'{"schema": "obsidian-plugin.runtime-read-probe.v1"}\n'
     target.write_bytes(payload)
     return target, payload
 
@@ -2732,7 +2732,7 @@ def test_recover_interrupted_journal() -> None:
         (backups / "0000.original").write_text("old\n")
         original.write_text("new\n")
         journal = {
-            "schema": "claude-obsidian.transaction-journal.v1",
+            "schema": "obsidian-plugin.transaction-journal.v1",
             "operation_id": "crashed",
             "operation_type": "generic",
             "state": "applying",
@@ -2827,7 +2827,7 @@ def test_recovery_conflicts_when_a_replace_target_was_deleted_externally() -> No
             },
         ]
         journal = {
-            "schema": "claude-obsidian.transaction-journal.v1",
+            "schema": "obsidian-plugin.transaction-journal.v1",
             "operation_id": "missing-replace",
             "operation_type": "generic",
             "state": "applying",
@@ -2886,7 +2886,7 @@ def test_recovery_rejects_unbound_or_indirect_backups_before_any_write() -> None
                 backup_value = "0001.original"
 
             journal = {
-                "schema": "claude-obsidian.transaction-journal.v1",
+                "schema": "obsidian-plugin.transaction-journal.v1",
                 "operation_id": f"recovery-{attack}",
                 "operation_type": "generic",
                 "state": "applying",
@@ -3257,7 +3257,7 @@ def test_never_started_write_stays_out_of_failed_or_interrupted_rollback() -> No
                     "import json, os, sys\n"
                     "from pathlib import Path\n"
                     "sys.path.insert(0, sys.argv[1])\n"
-                    "import claude_obsidian.transaction as t\n"
+                    "import obsidian_plugin.transaction as t\n"
                     "vault = Path(sys.argv[2])\n"
                     "t._restore_journal = lambda *a, **k: os._exit(9)\n"
                     "def edit(path, index):\n"
@@ -3323,7 +3323,7 @@ def test_recovery_skips_journal_writes_that_never_started() -> None:
             (vault / "wiki/A.md").write_text("new A\n" if state == "applying" else "old A\n")
             (vault / "wiki/B.md").write_text("new B\n" if state == "applying" else "user B\n")
             journal = {
-                "schema": "claude-obsidian.transaction-journal.v1",
+                "schema": "obsidian-plugin.transaction-journal.v1",
                 "operation_id": "never-started",
                 "operation_type": "generic",
                 "state": state,
@@ -3449,7 +3449,7 @@ def test_fifo_targets_and_retained_paths_fail_without_blocking() -> None:
         os.mkfifo(vault / "wiki/Pipe.md")
         program = """import sys
 from pathlib import Path
-from claude_obsidian.transaction import TransactionError, _safe_file_state, read_vault_regular, inspect_bundle, BUNDLE_SCHEMA
+from obsidian_plugin.transaction import TransactionError, _safe_file_state, read_vault_regular, inspect_bundle, BUNDLE_SCHEMA
 vault = Path(sys.argv[1])
 for probe in (lambda: read_vault_regular(vault, 'wiki/Pipe.md'), lambda: _safe_file_state(vault, 'wiki/Pipe.md'),
               lambda: inspect_bundle(vault, {'schema': BUNDLE_SCHEMA, 'operation_id': 'fifo-target', 'operation_type': 'generic',
@@ -3475,7 +3475,7 @@ for probe in (lambda: read_vault_regular(vault, 'wiki/Pipe.md'), lambda: _safe_f
         source.write_text(json.dumps(operation))
         run = _run_bounded(
             "import runpy, sys; sys.argv = sys.argv[1:]; runpy.run_path(sys.argv[0], run_name='__main__')",
-            str(ROOT / "scripts/claude-obsidian.py"), "transaction", "apply", str(source),
+            str(ROOT / "scripts/obsidian-plugin.py"), "transaction", "apply", str(source),
             "--vault", str(vault), "--approved-plan-sha256", approval,
         )
         assert run.returncode == 75, (run.returncode, run.stderr)

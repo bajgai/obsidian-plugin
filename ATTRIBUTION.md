@@ -1,6 +1,6 @@
 # Attributions
 
-claude-obsidian is an original work. The following third-party patterns, tools, and creators informed its design.
+obsidian-plugin is a fork of work by Agrici Daniel and its contributors. The following third-party patterns, tools, and creators informed its design.
 
 ---
 
@@ -8,7 +8,7 @@ claude-obsidian is an original work. The following third-party patterns, tools, 
 
 **Author:** Andrej Karpathy
 **Source:** https://github.com/karpathy
-**Use:** The core architecture of claude-obsidian (using an LLM to build and maintain a structured wiki from raw sources) is based on the LLM Wiki pattern Karpathy described publicly. claude-obsidian is an independent implementation; no code or content from Karpathy's repositories was copied.
+**Use:** The core architecture of obsidian-plugin (using an LLM to build and maintain a structured wiki from raw sources) is based on the LLM Wiki pattern Karpathy described publicly. obsidian-plugin is an independent implementation; no code or content from Karpathy's repositories was copied.
 
 ---
 
@@ -24,7 +24,7 @@ claude-obsidian is an original work. The following third-party patterns, tools, 
 These snippets exist only in the private contributor-vault state. They are not
 selected into the deterministic public product artifact and are not installed
 by the vault template. The project-owned `templates/vault/.obsidian/snippets/vault-colors.css`
-is the only snippet distributed by claude-obsidian.
+is the only snippet distributed by obsidian-plugin.
 
 ---
 
@@ -56,8 +56,8 @@ the designs are theirs.
 
 | Change | Contributor | Pull request |
 |--------|-------------|--------------|
-| Nomic `search_query` and `search_document` task prefixes in the reranker, including the `with_task_prefix` helper and cache-scheme invalidation | maartengoet | https://github.com/AgriciDaniel/claude-obsidian/pull/77 |
-| BM25 fallback order preserved in reranker no-op paths (`bm25_score` before `score`) | vinsocci | https://github.com/AgriciDaniel/claude-obsidian/pull/62 |
+| Nomic `search_query` and `search_document` task prefixes in the reranker, including the `with_task_prefix` helper and cache-scheme invalidation | maartengoet | Upstream PR #77 |
+| BM25 fallback order preserved in reranker no-op paths (`bm25_score` before `score`) | vinsocci | Upstream PR #62 |
 
 Version 3.0.0 also draws on the following diagnosed fixes and proposals. These
 credits do not imply that a pull request was merged or accepted without
@@ -65,43 +65,43 @@ revision.
 
 | Change or design input | Contributor | Pull request |
 |--------|-------------|--------------|
-| Split encoded Markdown destinations before decoding their path | Ychris12138 | https://github.com/AgriciDaniel/claude-obsidian/pull/194 |
-| Canvas `_index.md`, title-preserving routes and legacy journal compatibility | Marcos64s | https://github.com/AgriciDaniel/claude-obsidian/pull/199 |
-| Haiku 5.5 model and cache-floor migration, revised here with explicit thinking and output limits | hphsu | https://github.com/AgriciDaniel/claude-obsidian/pull/195 |
-| Optional local Ollama prefix tier, independently reimplemented here with bounded transport and local-model preflight | vinsocci | https://github.com/AgriciDaniel/claude-obsidian/pull/63 |
-| Dataview queries use vault-relative content paths | miraclemanza | https://github.com/AgriciDaniel/claude-obsidian/pull/46 |
+| Split encoded Markdown destinations before decoding their path | Ychris12138 | Upstream PR #194 |
+| Canvas `_index.md`, title-preserving routes and legacy journal compatibility | Marcos64s | Upstream PR #199 |
+| Haiku 5.5 model and cache-floor migration, revised here with explicit thinking and output limits | hphsu | Upstream PR #195 |
+| Optional local Ollama prefix tier, independently reimplemented here with bounded transport and local-model preflight | vinsocci | Upstream PR #63 |
+| Dataview queries use vault-relative content paths | miraclemanza | Upstream PR #46 |
 
 These community pull requests were merged as submitted.
 
 | Change | Contributor | Pull request |
 |--------|-------------|--------------|
-| ZCode host adapter for portable skill discovery | Lion-1209 | https://github.com/AgriciDaniel/claude-obsidian/pull/146 |
-| One page-type vocabulary, so the router files every documented type | HectorBernstorff | https://github.com/AgriciDaniel/claude-obsidian/pull/149 |
-| Lint ignores gitignored candidates when resolving ambiguous wikilinks | Packetslave | https://github.com/AgriciDaniel/claude-obsidian/pull/159 |
-| Ingest prefers Markdown links for citable URLs | CooperSheroy | https://github.com/AgriciDaniel/claude-obsidian/pull/176 |
-| UTF-8 test output so Windows test runs do not crash | yotamleo | https://github.com/AgriciDaniel/claude-obsidian/pull/178 |
-| Contextual prefixes parse CRLF frontmatter | ketpatil77 | https://github.com/AgriciDaniel/claude-obsidian/pull/180 |
-| Scaffolded vaults pinned to the absolute wikilink format | tilusnet | https://github.com/AgriciDaniel/claude-obsidian/pull/182 |
+| ZCode host adapter for portable skill discovery | Lion-1209 | Upstream PR #146 |
+| One page-type vocabulary, so the router files every documented type | HectorBernstorff | Upstream PR #149 |
+| Lint ignores gitignored candidates when resolving ambiguous wikilinks | Packetslave | Upstream PR #159 |
+| Ingest prefers Markdown links for citable URLs | CooperSheroy | Upstream PR #176 |
+| UTF-8 test output so Windows test runs do not crash | yotamleo | Upstream PR #178 |
+| Contextual prefixes parse CRLF frontmatter | ketpatil77 | Upstream PR #180 |
+| Scaffolded vaults pinned to the absolute wikilink format | tilusnet | Upstream PR #182 |
 
 Version 2.2.0 also draws on these pull requests, implemented here independently.
 
 | Change | Contributor | Pull request |
 |--------|-------------|--------------|
-| The repository root ignores `.mcp.json`, a possible credential carrier | GPezzuti | https://github.com/AgriciDaniel/claude-obsidian/pull/44 |
-| `stop_status` reads large valid journals instead of reporting them unreadable | STiFLeR7 | https://github.com/AgriciDaniel/claude-obsidian/pull/172 |
-| `checkpoint` honors Git's false values for `core.filemode` | STiFLeR7 | https://github.com/AgriciDaniel/claude-obsidian/pull/173 |
+| The repository root ignores `.mcp.json`, a possible credential carrier | GPezzuti | Upstream PR #44 |
+| `stop_status` reads large valid journals instead of reporting them unreadable | STiFLeR7 | Upstream PR #172 |
+| `checkpoint` honors Git's false values for `core.filemode` | STiFLeR7 | Upstream PR #173 |
 
 These issue reports, several with a diagnosis or a tested patch, led to fixes
 in 3.0.0.
 
 | Report | Reporter | Issue |
 |--------|----------|-------|
-| Lint passed a flat vault clean with 0 pages scanned | RoelKluin | https://github.com/AgriciDaniel/claude-obsidian/issues/200 |
-| Decoding before the fragment split broke `%23`-encoded links | threnard | https://github.com/AgriciDaniel/claude-obsidian/issues/193 |
-| Lint reported existing hidden `.raw` targets as missing files | szrenwei | https://github.com/AgriciDaniel/claude-obsidian/issues/191 |
-| SessionStart and Stop hooks timed out on Windows | ppuri2 | https://github.com/AgriciDaniel/claude-obsidian/issues/168 |
-| CLI transport detection ignored whether this vault was reachable | cosmos75 | https://github.com/AgriciDaniel/claude-obsidian/issues/141 |
-| Glossary proposal | simonc | https://github.com/AgriciDaniel/claude-obsidian/issues/25 |
+| Lint passed a flat vault clean with 0 pages scanned | RoelKluin | Upstream issue #200 |
+| Decoding before the fragment split broke `%23`-encoded links | threnard | Upstream issue #193 |
+| Lint reported existing hidden `.raw` targets as missing files | szrenwei | Upstream issue #191 |
+| SessionStart and Stop hooks timed out on Windows | ppuri2 | Upstream issue #168 |
+| CLI transport detection ignored whether this vault was reachable | cosmos75 | Upstream issue #141 |
+| Glossary proposal | simonc | Upstream issue #25 |
 
 Pinned ecosystem references, licenses and intentional differences are recorded
 in [config/upstream-references.json](config/upstream-references.json). The
@@ -110,9 +110,9 @@ implementations or personal contributor vaults.
 
 ---
 
-## claude-obsidian
+## Original project
 
 **Author:** AgriciDaniel / AI Marketing Hub
 **License:** MIT (see [LICENSE](LICENSE))
-**Repository (public canonical):** https://github.com/AgriciDaniel/claude-obsidian
+**Original author:** https://github.com/AgriciDaniel
 **Community early-access mirror (Pro):** https://github.com/AI-Marketing-Hub

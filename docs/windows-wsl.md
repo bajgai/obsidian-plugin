@@ -1,6 +1,6 @@
 # Windows and WSL guide
 
-claude-obsidian supports native Windows as a read-only platform and WSL as the
+obsidian-plugin supports native Windows as a read-only platform and WSL as the
 full-capability platform. This guide covers what works where, why the boundary
 exists, and how to unstick WSL when it misbehaves.
 
@@ -10,7 +10,7 @@ exists, and how to unstick WSL when it misbehaves.
 |---|---|---|
 | Inspection, dry-run previews, retrieval | Yes | Yes |
 | Vault writes (`transaction apply`, `init`, `adopt`, `migrate`, `capture apply`, `mode set`) | Yes | No: refused with `UNSUPPORTED_PLATFORM` |
-| Capture queue commands (including read-only `capture queue list`) | Yes | No: currently refused; tracked in [#151](https://github.com/AgriciDaniel/claude-obsidian/issues/151) |
+| Capture queue commands (including read-only `capture queue list`) | Yes | No: currently refused; tracked in [#151](https://github.com/bajgai/obsidian-plugin/issues/151) |
 | Git checkpoints (`checkpoint`) | Linux and macOS only | No |
 | Bash setup scripts and shell test suites | Yes | No (POSIX-only) |
 | Claude Code hooks (`SessionStart`, `Stop`) | Yes (works out of the box) | Partial: requires `python3` on `PATH`; see [below](#claude-code-hooks-and-python3-on-windows) |
@@ -41,9 +41,9 @@ not:
   or WSL and confirm the real interpreter is on `PATH`.
 
 When `python3` cannot be resolved, Claude Code fails to spawn the hook
-process, so claude-obsidian's own code never runs and cannot emit a
+process, so obsidian-plugin's own code never runs and cannot emit a
 diagnostic. SessionStart context and Stop recovery warnings are both silently
-absent in that case; the rest of claude-obsidian (skills and the CLI) is
+absent in that case; the rest of obsidian-plugin (skills and the CLI) is
 unaffected, since only the optional hook path depends on `python3`.
 
 ## Why writes require WSL
@@ -57,7 +57,7 @@ silently running with weaker guarantees.
 
 A degraded native-Windows write mode (default-off, behind an explicit
 reduced-guarantees flag) is under consideration in
-[#151](https://github.com/AgriciDaniel/claude-obsidian/issues/151). If WSL is a
+[#151](https://github.com/bajgai/obsidian-plugin/issues/151). If WSL is a
 blocker for you, that issue is the place to weigh in.
 
 ## WSL troubleshooting

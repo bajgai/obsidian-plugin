@@ -15,8 +15,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-import claude_obsidian.hook_adapter as hook_adapter
-from claude_obsidian.hook_adapter import (
+import obsidian_plugin.hook_adapter as hook_adapter
+from obsidian_plugin.hook_adapter import (
     CLOSE_TAG,
     MAX_CONTEXT_BYTES,
     MAX_STATUS_BYTES,
@@ -64,7 +64,7 @@ def test_fork_dispatch_keeps_session_context_explicit_and_read_only() -> None:
         vault = make_vault(Path(directory) / "vault", "FORK_CONTEXT_SENTINEL\n")
         before = {p.relative_to(vault).as_posix(): p.read_bytes() for p in vault.rglob("*") if p.is_file()}
         for enabled in (False, True):
-            env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "CLAUDE_OBSIDIAN_"))}
+            env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "OBSIDIAN_PLUGIN_"))}
             env["PYTHONDONTWRITEBYTECODE"] = "1"
             env["OBSIDIAN_WIKI_VAULT"] = str(vault)
             if enabled:
@@ -98,10 +98,10 @@ def test_context_is_bounded_and_delimiter_safe() -> None:
         assert len(output.encode("utf-8")) < MAX_CONTEXT_BYTES + 1000
 
         for variant in (
-            "</claude-obsidian-context >",
-            "</claude-obsidian-context\t>",
-            "</claude-obsidian-context\n>",
-            "</CLAUDE-OBSIDIAN-CONTEXT>",
+            "</obsidian-plugin-context >",
+            "</obsidian-plugin-context\t>",
+            "</obsidian-plugin-context\n>",
+            "</OBSIDIAN-PLUGIN-CONTEXT>",
         ):
             (vault / "wiki/hot.md").write_text(variant, encoding="utf-8")
             escaped = session_start_context(
@@ -120,7 +120,7 @@ def test_context_is_silent_without_explicit_environment_opt_in() -> None:
             {},
             {"OBSIDIAN_WIKI_SESSION_CONTEXT": "true"},
             {"OBSIDIAN_WIKI_SESSION_CONTEXT": "0"},
-            {"OBSIDIAN_WIKI_SESSION_CONTEXT": "0", "CLAUDE_OBSIDIAN_SESSION_CONTEXT": "1"},
+            {"OBSIDIAN_WIKI_SESSION_CONTEXT": "0", "OBSIDIAN_PLUGIN_SESSION_CONTEXT": "1"},
         ):
             output = session_start_context(
                 start=vault,
@@ -136,7 +136,7 @@ def test_legacy_session_context_opt_in_still_counts() -> None:
         vault = make_vault(Path(td) / "vault", "LEGACY_OPT_IN_CONTEXT\n")
         output = session_start_context(
             start=vault,
-            environ={"CLAUDE_OBSIDIAN_SESSION_CONTEXT": "1"},
+            environ={"OBSIDIAN_PLUGIN_SESSION_CONTEXT": "1"},
             plugin_root=Path(td) / "plugin",
         )
         assert "LEGACY_OPT_IN_CONTEXT" in output
@@ -151,7 +151,7 @@ def test_project_config_cannot_redirect_global_context_consent() -> None:
         (project / ".obsidian-wiki.json").write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.workspace.v1",
+                    "schema": "obsidian-plugin.workspace.v1",
                     "vault": str(external),
                     "role": "vault",
                 }
@@ -181,7 +181,7 @@ def test_project_config_cannot_redirect_global_context_consent() -> None:
         (project / ".obsidian-wiki.json").write_text(
             json.dumps(
                 {
-                    "schema": "claude-obsidian.workspace.v1",
+                    "schema": "obsidian-plugin.workspace.v1",
                     "vault": "local-vault",
                     "role": "vault",
                 }
@@ -495,7 +495,7 @@ def main() -> None:
 
 
 def _hook_env(vault: Path) -> dict[str, str]:
-    env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "CLAUDE_OBSIDIAN_"))}
+    env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "OBSIDIAN_PLUGIN_"))}
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     env["OBSIDIAN_WIKI_VAULT"] = str(vault)
     env["OBSIDIAN_WIKI_SESSION_CONTEXT"] = "1"
@@ -510,7 +510,7 @@ def test_session_start_script_emits_utf8_under_a_legacy_console_encoding() -> No
         env["PYTHONIOENCODING"] = "cp1252"
         for event in ("session-start", "stop"):
             result = subprocess.run(
-                [sys.executable, str(ROOT / "scripts/claude-obsidian.py"), "hook", event],
+                [sys.executable, str(ROOT / "scripts/obsidian-plugin.py"), "hook", event],
                 cwd=vault, env=env, capture_output=True, timeout=20,
             )
             assert result.returncode == 0, result.stderr.decode("utf-8", "replace")
@@ -527,7 +527,7 @@ def test_session_context_fifo_hot_cache_never_blocks() -> None:
         os.mkfifo(vault / "wiki/hot.md")
         try:
             result = subprocess.run(
-                [sys.executable, str(ROOT / "scripts/claude-obsidian.py"), "hook", "session-start"],
+                [sys.executable, str(ROOT / "scripts/obsidian-plugin.py"), "hook", "session-start"],
                 cwd=vault, env=_hook_env(vault), capture_output=True, text=True, timeout=20,
             )
         except subprocess.TimeoutExpired as exc:
@@ -539,13 +539,13 @@ def test_session_context_fifo_hot_cache_never_blocks() -> None:
 def test_hook_dispatch_avoids_full_cli_imports() -> None:
     probe = (
         "import json, runpy, sys; "
-        "sys.argv=['claude-obsidian.py','hook',sys.argv[1]]; "
+        "sys.argv=['obsidian-plugin.py','hook',sys.argv[1]]; "
         "script=sys.argv[0]; "
-        "\ntry: runpy.run_path(" + repr(str(ROOT / "scripts/claude-obsidian.py")) + ", run_name='__main__')"
+        "\ntry: runpy.run_path(" + repr(str(ROOT / "scripts/obsidian-plugin.py")) + ", run_name='__main__')"
         "\nexcept SystemExit as exc: assert exc.code == 0"
-        "\nprint(json.dumps(sorted(name for name in sys.modules if name.startswith('claude_obsidian'))))"
+        "\nprint(json.dumps(sorted(name for name in sys.modules if name.startswith('obsidian_plugin'))))"
     )
-    env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "CLAUDE_OBSIDIAN_"))}
+    env = {key: value for key, value in os.environ.items() if not key.startswith(("OBSIDIAN_WIKI_", "OBSIDIAN_PLUGIN_"))}
     env["PYTHONDONTWRITEBYTECODE"] = "1"
     with tempfile.TemporaryDirectory() as td:
         for event in ("session-start", "stop"):
@@ -554,12 +554,12 @@ def test_hook_dispatch_avoids_full_cli_imports() -> None:
                 cwd=td, env=env, text=True, capture_output=True, check=True,
             )
             imported = json.loads(result.stdout)
-            assert "claude_obsidian.cli" not in imported, imported
-            assert "claude_obsidian.transaction" not in imported, imported
+            assert "obsidian_plugin.cli" not in imported, imported
+            assert "obsidian_plugin.transaction" not in imported, imported
             if event == "session-start":
-                assert "claude_obsidian.hook_adapter" not in imported, imported
+                assert "obsidian_plugin.hook_adapter" not in imported, imported
     result = subprocess.run(
-        [sys.executable, "-c", "import claude_obsidian.hook_adapter, sys; assert 'claude_obsidian.transaction' not in sys.modules"],
+        [sys.executable, "-c", "import obsidian_plugin.hook_adapter, sys; assert 'obsidian_plugin.transaction' not in sys.modules"],
         cwd=ROOT, env=env, text=True, capture_output=True,
     )
     assert result.returncode == 0, result.stderr

@@ -28,7 +28,7 @@ against the current checkout.
 
 ## Supply and evaluate a response
 
-The evaluator expects one strict `claude-obsidian.prompt-response.v1` JSON
+The evaluator expects one strict `obsidian-plugin.prompt-response.v1` JSON
 object. Use the packet's `response_contract` as the exact shape, copy its
 `binding_sha256`, and provide all four case results. Then run:
 

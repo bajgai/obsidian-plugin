@@ -39,7 +39,7 @@ def scan_vault(root: Path | str) -> dict[str, Any]:
         else []
     )
     return {
-        "schema": "claude-obsidian.adoption-scan.v1",
+        "schema": "obsidian-plugin.adoption-scan.v1",
         "exists": path.exists(),
         "is_directory": path.is_dir(),
         "obsidian_config": (path / ".obsidian").is_dir(),
@@ -59,7 +59,7 @@ def _template_files(template_root: Path) -> list[Path]:
 
 def _workspace_config() -> dict[str, Any]:
     return {
-        "schema": "claude-obsidian.workspace.v1",
+        "schema": "obsidian-plugin.workspace.v1",
         "vault": ".",
         "role": "vault",
         "source_inbox": "inbox",

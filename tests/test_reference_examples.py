@@ -16,8 +16,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.lint_engine import _parse_frontmatter, lint_vault
-from claude_obsidian.page_schema import PAGE_TYPES, route_rejection
+from obsidian_plugin.lint_engine import _parse_frontmatter, lint_vault
+from obsidian_plugin.page_schema import PAGE_TYPES, route_rejection
 
 
 def blocks(path: str, language: str) -> list[str]:
@@ -150,7 +150,7 @@ class ReferenceExampleTests(unittest.TestCase):
                     commands.append(shlex.split(line))
         plans = [argv for argv in commands if argv[2:5] == ["capture", "external-plan", "url"]]
         self.assertEqual(1, len(plans))
-        argv = [str(ROOT / "scripts/claude-obsidian.py") if token == "$CORE"
+        argv = [str(ROOT / "scripts/obsidian-plugin.py") if token == "$CORE"
                 else "https://example.com/reference" if token == "HTTPS_URL" else token
                 for token in plans[0][1:]]
         result = subprocess.run([sys.executable, *argv], cwd=ROOT, check=True,
@@ -162,7 +162,7 @@ class ReferenceExampleTests(unittest.TestCase):
 
     def test_manifest_pins_reviewed_sources_and_matches_actual_fallback_bytes(self) -> None:
         document = json.loads((ROOT / "config/upstream-references.json").read_text(encoding="utf-8"))
-        self.assertEqual("claude-obsidian.upstream-references.v1", document["schema"])
+        self.assertEqual("obsidian-plugin.upstream-references.v1", document["schema"])
         self.assertEqual(10, len(document["references"]))
         for reference in document["references"]:
             self.assertRegex(reference["revision"], r"^[0-9a-f]{40}$")

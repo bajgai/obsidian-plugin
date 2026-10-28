@@ -1,6 +1,6 @@
 # External editors and multiple machines
 
-The local mutation lock serializes cooperating claude-obsidian writers on the
+The local mutation lock serializes cooperating obsidian-plugin writers on the
 selected local vault. Expected SHA-256 preconditions detect changed targets at
 inspection/apply time. Obsidian, other editors, sync clients, and other machines
 do not acquire that lock. A file can still change after a check. This is not a

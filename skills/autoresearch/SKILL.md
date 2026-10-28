@@ -19,8 +19,8 @@ by explicit `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace config, then
 current-directory discovery. Never write into the plugin/product root.
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 test -f "$CORE"
 ```
 
@@ -83,7 +83,7 @@ give a grounded refusal and identify the missing evidence.
 ## File the research dossier
 
 Research remains draft-only until the user reviews the proposal. Then build one
-`claude-obsidian.transaction.v1` bundle with `operation_type: autoresearch`.
+`obsidian-plugin.transaction.v1` bundle with `operation_type: autoresearch`.
 Read [the transaction contract](../wiki/references/operation-transactions.md).
 The dossier operation may couple:
 

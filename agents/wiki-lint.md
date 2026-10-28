@@ -20,8 +20,8 @@ and optional scope. Resolve the helper from that product root, never from the
 current working directory or vault:
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 test -f "$CORE"
 ```
 

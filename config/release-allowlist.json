@@ -60,11 +60,11 @@
     ".windsurf",
     "agents",
     "assets",
-    "claude_obsidian",
     "config",
     "docs",
     "examples",
     "hooks",
+    "obsidian_plugin",
     "scripts",
     "skills",
     "templates",
@@ -78,7 +78,7 @@
     "max_total_bytes": 52428800
   },
   "reviewed_binaries": {
-    "assets/cover.png": "7921a6494df958c9bf236cbaa141fc23641efc2ca16f2775be9913ce91724197",
+    "assets/cover.png": "6d6e2de03bb19a2a2280cc2199128eb72dbbba04820fdda04766a35bdec64ae5",
     "assets/screenshots/graph-view.png": "9faa4a414ccfa2618ab849519ca81a66fe5eb096c90491fc9fe650099f3002cc",
     "assets/screenshots/wiki-map-view.png": "76d5e1ce23d4a76bca4c09e737fb3ac494e787556fcb385d6acc2af66235be89",
     "tests/fixtures/capture/sample.pdf": "b6a48cb88c70887bd99c9120292e72764d368433655388783b7fc77578b23a35"

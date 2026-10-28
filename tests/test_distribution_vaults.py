@@ -14,9 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.lint_engine import lint_vault
-from claude_obsidian.transaction import apply_bundle
-from claude_obsidian.vault_ops import build_vault_bundle
+from obsidian_plugin.lint_engine import lint_vault
+from obsidian_plugin.transaction import apply_bundle
+from obsidian_plugin.vault_ops import build_vault_bundle
 
 
 def fingerprint(root: Path) -> dict[str, str]:

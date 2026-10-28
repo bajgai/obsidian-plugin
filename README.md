@@ -1,7 +1,7 @@
 <!--
   obsidian-plugin: a free, open-source AI second brain for Obsidian that works with any Agent Skills host.
   Drop in sources and your AI agent reads, links and files them into a connected knowledge graph of plain Markdown you own.
-  Host-neutral fork of claude-obsidian by Agrici Daniel, based on Andrej Karpathy's LLM Wiki pattern.
+  Host-neutral fork of work by Agrici Daniel, based on Andrej Karpathy's LLM Wiki pattern.
   15 skills and 3 agents. Works in Codex, OpenCode, Gemini, ZCode, Cursor, Windsurf, Claude Code and other Agent Skills hosts. MIT licensed.
 -->
 
@@ -26,7 +26,7 @@
   <a href="https://agentskills.io"><img src="https://img.shields.io/badge/Agent%20Skills-any%20host-2563eb" alt="Agent Skills: any host" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="License: MIT" /></a>
   <a href="CHANGELOG.md"><img src="https://img.shields.io/badge/release-v3.0.1-d97745" alt="Release v3.0.1" /></a>
-  <a href="https://github.com/AgriciDaniel/claude-obsidian"><img src="https://img.shields.io/badge/fork%20of-claude--obsidian-6b7280" alt="Fork of claude-obsidian" /></a>
+  <a href="https://github.com/AgriciDaniel"><img src="https://img.shields.io/badge/original%20author-Agrici%20Daniel-6b7280" alt="Original author: Agrici Daniel" /></a>
 </p>
 
 **obsidian-plugin turns the things you read into a knowledge base that keeps getting more useful.** Drop a paper, an article, a transcript or your own notes into the vault, and your AI agent reads them, writes linked notes with sources, and files everything into one connected knowledge graph you can explore in Obsidian.
@@ -39,7 +39,7 @@
 
 Everything stays as plain Markdown files on your computer. No cloud database, no lock-in, no telemetry. Apart from the AI tool you chat with, nothing leaves your machine unless you say so.
 
-This is a host-neutral fork of [claude-obsidian](https://github.com/AgriciDaniel/claude-obsidian) by Agrici Daniel. The skills, the transaction core and the vault format are the same; nothing in your vault or its configuration names a particular AI host.
+This host-neutral fork builds on work by [Agrici Daniel](https://github.com/AgriciDaniel). Its skills, transaction core, and vault configuration work across Agent Skills hosts.
 
 ## See the vault
 
@@ -81,7 +81,7 @@ Open the folder you want as your vault in your AI tool and ask in plain words, o
 | `save` | keep a good answer as a note |
 | `wiki-lint` | run a health check: dead links, orphans, gaps |
 
-How you call a skill depends on the host: plain names in most tools, `/claude-obsidian:<skill>` in the Claude Code plugin. Open the same folder in Obsidian with **Open folder as vault** to browse your notes as they grow. Every host is covered in the [installation guide](docs/install-guide.md).
+How you call a skill depends on the host: plain names in most tools, `/obsidian-plugin:<skill>` in the Claude Code plugin. Open the same folder in Obsidian with **Open folder as vault** to browse your notes as they grow. Every host is covered in the [installation guide](docs/install-guide.md).
 
 <details>
 <summary><b>Set up a vault without an AI host</b></summary>
@@ -90,9 +90,9 @@ How you call a skill depends on the host: plain names in most tools, `/claude-ob
 The portable core is plain Python. Both commands print a plan first; apply it only with the plan's hash:
 
 ```bash
-python3 scripts/claude-obsidian.py init /path/to/vault \
+python3 scripts/obsidian-plugin.py init /path/to/vault \
   --generated-at <ISO-UTC> --operation-id init-reviewed
-python3 scripts/claude-obsidian.py init /path/to/vault \
+python3 scripts/obsidian-plugin.py init /path/to/vault \
   --generated-at <ISO-UTC> --operation-id init-reviewed \
   --approved-plan-sha256 <reviewed-sha256> --apply
 ```
@@ -116,7 +116,7 @@ The workflow lives in the skills and the standard-library Python core. Host inte
 | Layer | Host-neutral | Host-specific (optional) |
 |---|---|---|
 | Skills | `skills/<name>/SKILL.md`, portable `name` and `description` frontmatter only | none |
-| Core | `claude_obsidian/` and `scripts/claude-obsidian.py`, Python standard library | none |
+| Core | `obsidian_plugin/` and `scripts/obsidian-plugin.py`, Python standard library | none |
 | Vault config | `.obsidian-wiki.json` | none |
 | Environment | `OBSIDIAN_WIKI_VAULT`, `OBSIDIAN_WIKI_SESSION_CONTEXT`, `OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT` | none |
 | Adapters | `scripts/setup-multi-agent.sh` for skill linking | Claude Code plugin manifest (`.claude-plugin/`), session hooks (`hooks/`), Cursor and Windsurf rules |
@@ -124,19 +124,19 @@ The workflow lives in the skills and the standard-library Python core. Host inte
 A vault is selected the same way in every host: `--vault`, then `OBSIDIAN_WIKI_VAULT`, then the nearest `.obsidian-wiki.json`, then one unambiguous initialized vault above the current folder. If it is not sure, it exits without writing.
 
 <details>
-<summary><b>Coming from claude-obsidian?</b></summary>
+<summary><b>Workspace configuration</b></summary>
 <br />
 
-Existing vaults keep working with no migration. `.claude-obsidian.json` and the `CLAUDE_OBSIDIAN_*` variables are still read as deprecated fallbacks when the new name is absent; new vaults and adoptions write only `.obsidian-wiki.json`. Rename the old file and variables when convenient:
+.obsidian-wiki.json is the canonical workspace configuration. `.obsidian-plugin.json` and the `OBSIDIAN_PLUGIN_*` variables are still read as deprecated fallbacks when the new name is absent; new vaults and adoptions write only `.obsidian-wiki.json`. Rename the old file and variables when convenient:
 
 | Before | Now |
 |---|---|
-| `.claude-obsidian.json` | `.obsidian-wiki.json` |
-| `CLAUDE_OBSIDIAN_VAULT` | `OBSIDIAN_WIKI_VAULT` |
-| `CLAUDE_OBSIDIAN_SESSION_CONTEXT` | `OBSIDIAN_WIKI_SESSION_CONTEXT` |
-| `CLAUDE_OBSIDIAN_SESSION_CONTEXT_VAULT` | `OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT` |
+| `.obsidian-plugin.json` | `.obsidian-wiki.json` |
+| `OBSIDIAN_PLUGIN_VAULT` | `OBSIDIAN_WIKI_VAULT` |
+| `OBSIDIAN_PLUGIN_SESSION_CONTEXT` | `OBSIDIAN_WIKI_SESSION_CONTEXT` |
+| `OBSIDIAN_PLUGIN_SESSION_CONTEXT_VAULT` | `OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT` |
 
-Some internal identifiers keep their original names for compatibility: the `claude_obsidian` Python package, the `scripts/claude-obsidian.py` entry point, the `claude-obsidian.*.v1` schema IDs and the Claude Code plugin name.
+Product identifiers use the project name: the `obsidian_plugin` Python package, the `scripts/obsidian-plugin.py` entry point, the `obsidian-plugin.*.v1` schema IDs and the Claude Code plugin name. Update callers and review persisted schema IDs when upgrading from a differently named package; see [namespace migration](docs/namespace-migration.md).
 
 </details>
 
@@ -255,7 +255,7 @@ The idea follows [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/ka
 <summary><b>Command line reference</b></summary>
 <br />
 
-The same core is available without any AI host: `python3 scripts/claude-obsidian.py`. Commands that change files show a plan first and only apply with the plan's hash.
+The same core is available without any AI host: `python3 scripts/obsidian-plugin.py`. Commands that change files show a plan first and only apply with the plan's hash.
 
 | Command | What it does |
 |---|---|
@@ -267,7 +267,7 @@ The same core is available without any AI host: `python3 scripts/claude-obsidian
 | `transaction recover --vault PATH` | Restores the vault after an interrupted write |
 | `bench --queries FILE --vault PATH` | Measures search quality on your own questions |
 
-Run `python3 scripts/claude-obsidian.py --help`, or add `--help` to any command, to see every option.
+Run `python3 scripts/obsidian-plugin.py --help`, or add `--help` to any command, to see every option.
 
 </details>
 
@@ -343,6 +343,6 @@ It is built not to. Adopting a vault does not move your notes, every change is s
 
 ## License, credits and contributing
 
-MIT License, see [LICENSE](LICENSE). This fork is based on [claude-obsidian](https://github.com/AgriciDaniel/claude-obsidian), built by **[Agrici Daniel](https://agricidaniel.com/about)** and its contributors; all credit for the original design and implementation goes to them. The design follows [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and uses [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) as the reference for Obsidian Markdown, Bases and Canvas syntax. See [ATTRIBUTION.md](ATTRIBUTION.md) and [CITATION.cff](CITATION.cff).
+MIT License, see [LICENSE](LICENSE). This fork builds on work by **[Agrici Daniel](https://agricidaniel.com/about)** and its contributors; all credit for the original design and implementation goes to them. The design follows [Andrej Karpathy's LLM Wiki pattern](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) and uses [kepano/obsidian-skills](https://github.com/kepano/obsidian-skills) as the reference for Obsidian Markdown, Bases and Canvas syntax. See [ATTRIBUTION.md](ATTRIBUTION.md) and [CITATION.cff](CITATION.cff).
 
 Contributions are welcome: read [CONTRIBUTING.md](CONTRIBUTING.md) first and run `make test` before you open a pull request. Report security problems as described in [SECURITY.md](SECURITY.md). Release notes live in the [changelog](CHANGELOG.md), and the [code of conduct](CODE_OF_CONDUCT.md) applies everywhere. AI coding agents working on this repo start at [AGENTS.md](AGENTS.md), whichever host they run in.

@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "product": {
-    "id": "claude-obsidian",
-    "name": "claude-obsidian",
+    "id": "obsidian-plugin",
+    "name": "obsidian-plugin",
     "promise": "Build and maintain a local-first, source-cited, compounding Obsidian knowledge base through portable Agent Skills.",
     "non_promises": [
       "Automatic transcript capture",
@@ -94,7 +94,7 @@
       "host": "claude-code",
       "implementation_paths": [
         ".claude-plugin/plugin.json",
-        "claude_obsidian/release.py",
+        "obsidian_plugin/release.py",
         "config/public-marketplace.json",
         "config/release-allowlist.json"
       ]
@@ -185,7 +185,7 @@
         "type": "command",
         "command": [
           "{python}",
-          "claude_obsidian/contracts.py",
+          "obsidian_plugin/contracts.py",
           "--repo-root",
           ".",
           "--verify"

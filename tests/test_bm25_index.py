@@ -24,7 +24,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.transaction import MutationLock
+from obsidian_plugin.transaction import MutationLock
 
 HELPER = ROOT / "scripts" / "bm25-index.py"
 

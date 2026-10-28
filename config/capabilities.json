@@ -494,7 +494,7 @@
       "id": "wiki-lint",
       "tier": "core",
       "implementation_paths": [
-        "claude_obsidian/lint_engine.py",
+        "obsidian_plugin/lint_engine.py",
         "skills/wiki-lint/SKILL.md"
       ],
       "read_scope": [
@@ -603,7 +603,7 @@
         "scripts/setup-retrieve.sh",
         "scripts/bm25-index.py",
         "scripts/contextual-prefix.py",
-        "claude_obsidian/ollama.py",
+        "obsidian_plugin/ollama.py",
         "scripts/rerank.py",
         "scripts/retrieve.py"
       ],

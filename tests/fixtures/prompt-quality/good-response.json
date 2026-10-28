@@ -1,5 +1,5 @@
 {
-  "schema": "claude-obsidian.prompt-response.v1",
+  "schema": "obsidian-plugin.prompt-response.v1",
   "binding_sha256": "<packet-binding-sha256>",
   "cases": {
     "known": {

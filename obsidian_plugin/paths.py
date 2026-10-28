@@ -16,16 +16,16 @@ from .json_utils import parse_finite_json_float
 WORKSPACE_CONFIG = ".obsidian-wiki.json"
 # Read-only fallbacks for vaults created before the host-neutral rename. New
 # vaults and adoptions write only WORKSPACE_CONFIG.
-LEGACY_WORKSPACE_CONFIGS = (".claude-obsidian.json",)
+LEGACY_WORKSPACE_CONFIGS = (".obsidian-plugin.json",)
 WORKSPACE_CONFIG_NAMES = (WORKSPACE_CONFIG, *LEGACY_WORKSPACE_CONFIGS)
 ENV_PREFIX = "OBSIDIAN_WIKI_"
-LEGACY_ENV_PREFIX = "CLAUDE_OBSIDIAN_"
-VAULT_SCHEMA = "claude-obsidian.workspace.v1"
+LEGACY_ENV_PREFIX = "OBSIDIAN_PLUGIN_"
+VAULT_SCHEMA = "obsidian-plugin.workspace.v1"
 MAX_WORKSPACE_CONFIG_BYTES = 64 * 1024
 
 
 def env_setting(environ: Mapping[str, str], name: str) -> str | None:
-    """Return ``OBSIDIAN_WIKI_<name>``, else the deprecated ``CLAUDE_OBSIDIAN_<name>``."""
+    """Return ``OBSIDIAN_WIKI_<name>``, else the deprecated ``OBSIDIAN_PLUGIN_<name>``."""
 
     for prefix in (ENV_PREFIX, LEGACY_ENV_PREFIX):
         value = environ.get(prefix + name)
@@ -375,7 +375,7 @@ def validate_vault_root(
     if not allow_uninitialized and not is_adoptable_vault(resolved):
         raise VaultSelectionError(
             "VAULT_SENTINEL_MISSING",
-            f"{resolved} is not a claude-obsidian or Obsidian vault",
+            f"{resolved} is not a obsidian-plugin or Obsidian vault",
         )
     return resolved
 
@@ -424,7 +424,7 @@ def resolve_vault_root(
     """Resolve one vault using documented precedence and fail closed.
 
     Precedence: explicit argument, ``OBSIDIAN_WIKI_VAULT`` (or the deprecated
-    ``CLAUDE_OBSIDIAN_VAULT``), nearest workspace
+    ``OBSIDIAN_PLUGIN_VAULT``), nearest workspace
     config, then nearest initialized vault from the current working directory.
     The plugin installation root is never accepted by implicit discovery.
     """

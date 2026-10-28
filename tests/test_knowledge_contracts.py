@@ -16,9 +16,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.lint_engine import lint_vault
-from claude_obsidian.page_schema import PAGE_TYPES
-from claude_obsidian.transaction import BUNDLE_SCHEMA, inspect_bundle
+from obsidian_plugin.lint_engine import lint_vault
+from obsidian_plugin.page_schema import PAGE_TYPES
+from obsidian_plugin.transaction import BUNDLE_SCHEMA, inspect_bundle
 
 
 def _frontmatter(path: Path) -> str:
@@ -190,7 +190,7 @@ class KnowledgeContractTests(unittest.TestCase):
             f"claude plugin marketplace remove {marketplace['name']}",
             guide,
         )
-        self.assertNotIn("marketplace remove AgriciDaniel/claude-obsidian", guide)
+        self.assertNotIn("marketplace remove bajgai/obsidian-plugin", guide)
 
     def test_release_excludes_host_only_root_claude_context(self) -> None:
         allowlist = json.loads(
@@ -202,8 +202,8 @@ class KnowledgeContractTests(unittest.TestCase):
 
     def test_agents_resolve_helpers_and_return_bounded_packets(self) -> None:
         lint_agent = (ROOT / "agents/wiki-lint.md").read_text(encoding="utf-8")
-        self.assertIn('CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"', lint_agent)
-        self.assertNotIn("python3 scripts/claude-obsidian.py", lint_agent)
+        self.assertIn('CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"', lint_agent)
+        self.assertNotIn("python3 scripts/obsidian-plugin.py", lint_agent)
 
         ingest_agent = (ROOT / "agents/wiki-ingest.md").read_text(encoding="utf-8")
         self.assertRegex(ingest_agent, r"(?m)^maxTurns:\s*60$")
@@ -249,7 +249,7 @@ class KnowledgeContractTests(unittest.TestCase):
         corpus = json.loads(
             (ROOT / "tests/fixtures/forward/scenarios.json").read_text(encoding="utf-8")
         )
-        self.assertEqual("claude-obsidian.forward-evaluations.v1", corpus["schema"])
+        self.assertEqual("obsidian-plugin.forward-evaluations.v1", corpus["schema"])
         scenarios = {item["skill"]: item for item in corpus["scenarios"]}
         self.assertEqual({"save", "wiki-ingest", "wiki-query"}, set(scenarios))
         for scenario in scenarios.values():

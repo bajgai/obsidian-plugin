@@ -36,11 +36,6 @@ NAME_RE = re.compile(r"^[a-z0-9]+(?:-[a-z0-9]+)*$")
 RESERVED_PLUGIN_PREFIX_RE = re.compile(r"^(?:claude|anthropics?|cc-*plugin)-")
 RESERVED_PLUGIN_NAMES = frozenset({"claude", "anthropic", "anthropics", "claudecode", "claudemods"})
 RESERVED_OFFICIAL_WORDS = ("claude", "anthropic")
-# The published identity since v1. The host still installs and loads it, but
-# `claude plugin validate` reports it as reserved and `claude plugin tag`
-# refuses it. The owner chose to keep the name users know; any other reserved
-# name is still rejected.
-OWNER_APPROVED_PLUGIN_NAMES = frozenset({"claude-obsidian"})
 MARKETPLACE_TEMPLATE = "config/public-marketplace.json"
 MARKETPLACE_PATH = ".claude-plugin/marketplace.json"
 YAML_PLAIN_FORBIDDEN_START = frozenset("-?:,[]{}#&*!|>'\"%@`")
@@ -268,7 +263,7 @@ def _validate_documented_apply_examples(root: Path) -> list[dict[str, str]]:
     paths.extend(sorted((root / "skills").glob("**/*.md")))
     findings: list[dict[str, str]] = []
     mutation = re.compile(
-        r"claude-obsidian\.py\s+(?:init|adopt|migrate|mode\s+set|extension\s+dragonscale|capture\s+apply|capacity\s+compact)\b"
+        r"obsidian-plugin\.py\s+(?:init|adopt|migrate|mode\s+set|extension\s+dragonscale|capture\s+apply|capacity\s+compact)\b"
     )
     for path in paths:
         if not path.is_file():
@@ -463,8 +458,6 @@ def _validate_hooks(root: Path) -> list[dict[str, str]]:
 
 
 def _is_reserved_plugin_name(name: str) -> bool:
-    if name in OWNER_APPROVED_PLUGIN_NAMES:
-        return False
     compact = name.replace("-", "")
     return (
         compact in RESERVED_PLUGIN_NAMES
@@ -665,7 +658,7 @@ def validate_package(root: Path) -> dict[str, Any]:
         key=lambda finding: (finding["path"], finding["code"], finding["message"]),
     )
     return {
-        "schema": "claude-obsidian.package-validation.v1",
+        "schema": "obsidian-plugin.package-validation.v1",
         "ok": not findings,
         "skills": len(list((root / "skills").glob("*/SKILL.md"))),
         "findings": findings,

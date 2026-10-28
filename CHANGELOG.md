@@ -1,6 +1,6 @@
 # Changelog
 
-Notable changes to claude-obsidian are recorded here using
+Notable changes to obsidian-plugin are recorded here using
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) categories and
 [Semantic Versioning](https://semver.org/). Git history retains the detailed
 implementation record for older releases.
@@ -9,6 +9,13 @@ implementation record for older releases.
 
 ### Changed
 
+- Renamed the project and plugin to `obsidian-plugin`, the Python package to
+  `obsidian_plugin`, and the CLI to `scripts/obsidian-plugin.py`. Updated
+  schema prefixes, host rules, documentation, and cover artwork. Callers and
+  previously persisted schema IDs must use the renamed identifiers; see
+  [namespace migration](docs/namespace-migration.md).
+- The plugin uses a host-neutral name, so the reserved-name validation
+  exception is removed.
 - The workspace config is now `.obsidian-wiki.json` and the environment
   variables are `OBSIDIAN_WIKI_VAULT`, `OBSIDIAN_WIKI_SESSION_CONTEXT` and
   `OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT`, so nothing in a user vault names a
@@ -18,29 +25,32 @@ implementation record for older releases.
 
 ### Deprecated
 
-- `.claude-obsidian.json` and the `CLAUDE_OBSIDIAN_*` variables are still read
+- `.obsidian-plugin.json` and the `OBSIDIAN_PLUGIN_*` variables are still read
   when the new name is absent, but `init` and `adopt` write only the new file.
+
+Historical entries below use the current project name for readability.
+Descriptions of host behavior refer to the original releases.
 
 ## [3.0.1] - 2026-10-21
 
-Restores the Claude plugin name `claude-obsidian`, so commands are
-`/claude-obsidian:*` again. Nothing else changes.
+Restores the Claude plugin name `obsidian-plugin`, so commands are
+`/obsidian-plugin:*` again. Nothing else changes.
 
 ### Upgrading
 
 From 2.x, this is an ordinary update and your commands never change:
 
 ```bash
-claude plugin marketplace update agricidaniel-claude-obsidian
-claude plugin update claude-obsidian@agricidaniel-claude-obsidian
+claude plugin marketplace update bajgai-obsidian-plugin
+claude plugin update obsidian-plugin@bajgai-obsidian-plugin
 ```
 
 If you installed 3.0.0 (`agricidaniel-obsidian`), the marketplace update moves
 your settings back, then install once:
 
 ```bash
-claude plugin marketplace update agricidaniel-claude-obsidian
-claude plugin install claude-obsidian@agricidaniel-claude-obsidian
+claude plugin marketplace update bajgai-obsidian-plugin
+claude plugin install obsidian-plugin@bajgai-obsidian-plugin
 ```
 
 Restart Claude Code after either path. Managed settings that name
@@ -48,17 +58,18 @@ Restart Claude Code after either path. Managed settings that name
 
 ### Changed
 
-- The Claude plugin is `claude-obsidian` again. The marketplace `renames` map
+- The Claude plugin is `obsidian-plugin` again. The marketplace `renames` map
   now migrates `agricidaniel-obsidian` back to it; the 3.0.0 map in the other
   direction is removed, since a name cannot be both current and former.
-- `claude plugin validate` reports the name as reserved, and
+- The original release identity was reported as reserved by
+  `claude plugin validate`, and
   `claude plugin tag` refuses it, though Claude Code installs and loads it.
   Keeping the published name is an owner-approved exception: `package validate`
-  accepts `claude-obsidian` and still rejects every other reserved name.
+  accepts `obsidian-plugin` and still rejects every other reserved name.
 
 ## [3.0.0] - 2026-10-21
 
-To upgrade, follow 3.0.1 instead: it restores the `claude-obsidian` name that
+To upgrade, follow 3.0.1 instead: it restores the `obsidian-plugin` name that
 this release changed.
 
 Hardening release: recoverable transactions, deterministic lint and retrieval,
@@ -67,12 +78,12 @@ The rename is the breaking change; vaults need no migration.
 
 ### Upgrading from 2.x
 
-The Claude plugin is now `agricidaniel-obsidian`, so `/claude-obsidian:*`
+The Claude plugin is now `agricidaniel-obsidian`, so `/obsidian-plugin:*`
 commands become `/agricidaniel-obsidian:*`. No alias is provided. Run:
 
 ```bash
-claude plugin marketplace update agricidaniel-claude-obsidian
-claude plugin install agricidaniel-obsidian@agricidaniel-claude-obsidian
+claude plugin marketplace update bajgai-obsidian-plugin
+claude plugin install agricidaniel-obsidian@bajgai-obsidian-plugin
 ```
 
 Then restart Claude Code. Until the install runs, the plugin is not installed.
@@ -82,12 +93,12 @@ fall back to `claude -p` (see Removed). See the
 
 ### Changed
 
-- The Claude plugin is renamed from `claude-obsidian` to
+- The Claude plugin is renamed from `obsidian-plugin` to
   `agricidaniel-obsidian`, because Claude Code reserves plugin names starting
   with `claude-`. The marketplace `renames` map migrates existing installations
   instead of reporting the plugin as missing; package validation rejects
   renames chains that do not resolve. The repository, Python package and vault
-  formats keep the claude-obsidian name.
+  formats keep the obsidian-plugin name.
 - Cached contextual prefixes are reused only when they match the current
   provider settings. Prefixes cached by earlier versions record no settings,
   so the first run after upgrading regenerates them all; with `--allow-egress`
@@ -281,7 +292,7 @@ vocabulary, gitignore-aware link resolution, and a ZCode host adapter.
   or `wiki-lint.json`; CLI and vault-config patterns are combined. The
   report's new `summary.excluded_paths` count reports how many walked files
   were dropped.
-- `claude_obsidian/page_schema.py` declares the page-type vocabulary once,
+- `obsidian_plugin/page_schema.py` declares the page-type vocabulary once,
   separating every valid `type` value from the subset the methodology router can
   file. `wiki-mode.py` derives its accepted types from it instead of
   keeping a fifth hand-maintained copy.
@@ -377,7 +388,7 @@ vocabulary, gitignore-aware link resolution, and a ZCode host adapter.
 - Lint link resolution no longer reports a wikilink as ambiguous when the
   extra candidates are gitignored files (for example a compiled binary whose
   name shadows a page, such as `bin/env8oy` next to `wiki/projects/env8oy.md`).
-  A new pure-Python `.gitignore` evaluator (`claude_obsidian/gitignore.py`)
+  A new pure-Python `.gitignore` evaluator (`obsidian_plugin/gitignore.py`)
   reads only `.gitignore` files inside the vault root — never
   `.git/info/exclude`, global excludes, or a `git` subprocess — keeping
   reports deterministic and process-free. Gitignored files remain valid link
@@ -475,7 +486,7 @@ Reliability and evidence refoundation.
 
 ### Added
 
-- Standard-library `claude_obsidian` core with fail-closed vault selection,
+- Standard-library `obsidian_plugin` core with fail-closed vault selection,
   recoverable operation transactions, crash recovery, exact changed-path
   manifests, and explicit Git checkpoints.
 - Deterministic Obsidian linting, product and capability contracts, portable
@@ -514,7 +525,7 @@ Reliability and evidence refoundation.
   operations.
 - Claude hooks are bounded SessionStart and Stop adapters. Stop reports recovery
   state; SessionStart context injection requires the explicit
-  `CLAUDE_OBSIDIAN_SESSION_CONTEXT=1` opt-in. Neither mutates knowledge or Git.
+  `OBSIDIAN_PLUGIN_SESSION_CONTEXT=1` opt-in. Neither mutates knowledge or Git.
 - Setup and installation helpers default to previews, use selected user vaults,
   avoid plugin-cache state, and preserve existing configuration.
 - Portable installation creates directly discoverable per-skill links at each

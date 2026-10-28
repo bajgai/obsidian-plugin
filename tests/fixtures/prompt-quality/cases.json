@@ -1,5 +1,5 @@
 {
-  "schema": "claude-obsidian.prompt-cases.v1",
+  "schema": "obsidian-plugin.prompt-cases.v1",
   "title": "Frozen synthetic Query and Save acceptance cases, version 1",
   "cases": {
     "known": {

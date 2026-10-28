@@ -14,8 +14,8 @@ by explicit `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace config, then
 current-directory discovery. Never treat the plugin/product root as a vault.
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 test -f "$CORE"
 ```
 
@@ -77,7 +77,7 @@ return extracts, but only the orchestrator assembles the fold; workers never
 write.
 
 When the user explicitly says to apply or commit the fold, build one
-`claude-obsidian.transaction.v1` bundle with `operation_type: fold`. Read
+`obsidian-plugin.transaction.v1` bundle with `operation_type: fold`. Read
 [the transaction contract](../wiki/references/operation-transactions.md). Couple:
 
 - `wiki/folds/{FOLD_ID}.md` in `create` mode by default;

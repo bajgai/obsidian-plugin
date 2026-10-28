@@ -1,6 +1,6 @@
-# Install claude-obsidian
+# Install obsidian-plugin
 
-claude-obsidian has two independent parts:
+obsidian-plugin has two independent parts:
 
 1. the product package (host-neutral skills, portable core, templates, and an
    optional Claude Code plugin adapter);
@@ -69,8 +69,8 @@ Windsurf:  <workspace>/.windsurf/skills/<name> -> <product-repository>/skills/<n
 Add the public catalog and install the namespaced plugin:
 
 ```bash
-claude plugin marketplace add AgriciDaniel/claude-obsidian
-claude plugin install claude-obsidian@agricidaniel-claude-obsidian
+claude plugin marketplace add bajgai/obsidian-plugin
+claude plugin install obsidian-plugin@bajgai-obsidian-plugin
 claude plugin list
 ```
 
@@ -83,8 +83,8 @@ that manifest only into its audited output. The public default branch must be
 promoted from the extracted audited artifact before these marketplace commands
 are advertised for a new version.
 
-Invoke skills as `/claude-obsidian:wiki`,
-`/claude-obsidian:wiki-ingest`, and `/claude-obsidian:save`.
+Invoke skills as `/obsidian-plugin:wiki`,
+`/obsidian-plugin:wiki-ingest`, and `/obsidian-plugin:save`.
 
 The plugin cache contains read-only product assets. Run Claude from the user
 vault, set `OBSIDIAN_WIKI_VAULT`, or pass `--vault` to portable commands.
@@ -105,7 +105,7 @@ not convert the product repository into a user vault.
 Review the initialization plan first:
 
 ```bash
-python3 scripts/claude-obsidian.py init <new-vault> \
+python3 scripts/obsidian-plugin.py init <new-vault> \
   --generated-at <ISO-UTC> --operation-id init-reviewed
 ```
 
@@ -113,7 +113,7 @@ Apply the same operation only after the destination and changed paths look
 correct:
 
 ```bash
-python3 scripts/claude-obsidian.py init <new-vault> \
+python3 scripts/obsidian-plugin.py init <new-vault> \
   --generated-at <ISO-UTC> --operation-id init-reviewed \
   --approved-plan-sha256 <reviewed-sha256> --apply
 ```
@@ -138,9 +138,9 @@ Adoption scans an existing Obsidian directory and proposes only missing product
 metadata and foundation files:
 
 ```bash
-python3 scripts/claude-obsidian.py adopt <existing-vault> \
+python3 scripts/obsidian-plugin.py adopt <existing-vault> \
   --generated-at <ISO-UTC> --operation-id adopt-reviewed
-python3 scripts/claude-obsidian.py adopt <existing-vault> \
+python3 scripts/obsidian-plugin.py adopt <existing-vault> \
   --generated-at <ISO-UTC> --operation-id adopt-reviewed \
   --approved-plan-sha256 <reviewed-sha256> --apply
 ```
@@ -148,13 +148,13 @@ python3 scripts/claude-obsidian.py adopt <existing-vault> \
 It preserves existing notes and Obsidian JSON. `--force` is intentionally
 separate and should be used only after inspecting replacement targets.
 
-For older claude-obsidian layouts, add provenance ledgers and workspace config
+For older obsidian-plugin layouts, add provenance ledgers and workspace config
 with an additive migration:
 
 ```bash
-python3 scripts/claude-obsidian.py migrate --vault <existing-vault> \
+python3 scripts/obsidian-plugin.py migrate --vault <existing-vault> \
   --generated-at <ISO-UTC> --operation-id migrate-reviewed
-python3 scripts/claude-obsidian.py migrate --vault <existing-vault> \
+python3 scripts/obsidian-plugin.py migrate --vault <existing-vault> \
   --generated-at <ISO-UTC> --operation-id migrate-reviewed \
   --approved-plan-sha256 <reviewed-sha256> --apply
 ```
@@ -174,8 +174,8 @@ Mutable commands use this precedence:
 If selection fails, the command exits without mutation. The product/plugin root
 is rejected as an implicit vault.
 
-Older vaults keep working: `.claude-obsidian.json` and the
-`CLAUDE_OBSIDIAN_*` variables are read as deprecated fallbacks when the
+Older vaults keep working: `.obsidian-plugin.json` and the
+`OBSIDIAN_PLUGIN_*` variables are read as deprecated fallbacks when the
 `.obsidian-wiki.json` file or the matching `OBSIDIAN_WIKI_*` variable is absent.
 `init` and `adopt` write only `.obsidian-wiki.json`; rename the old file at
 your convenience.
@@ -183,8 +183,8 @@ your convenience.
 Verify a selected vault:
 
 ```bash
-python3 scripts/claude-obsidian.py doctor --vault <vault>
-python3 scripts/claude-obsidian.py contracts --verify --vault <vault>
+python3 scripts/obsidian-plugin.py doctor --vault <vault>
+python3 scripts/obsidian-plugin.py contracts --verify --vault <vault>
 ```
 
 Doctor checks metadata directory safety and write/search permissions without
@@ -218,15 +218,15 @@ consent. Optional tools such as Ollama and defuddle are capability-detected.
 Place a source in `inbox/`. Inspect the byte-capture plan:
 
 ```bash
-python3 scripts/claude-obsidian.py capture plan --vault <vault>
+python3 scripts/obsidian-plugin.py capture plan --vault <vault>
 ```
 
 Create immutable content-addressed copies only when the plan is correct:
 
 ```bash
-python3 scripts/claude-obsidian.py capture apply --vault <vault> \
+python3 scripts/obsidian-plugin.py capture apply --vault <vault> \
   --generated-at <ISO-UTC> --operation-id capture-reviewed
-python3 scripts/claude-obsidian.py capture apply --vault <vault> \
+python3 scripts/obsidian-plugin.py capture apply --vault <vault> \
   --generated-at <ISO-UTC> --operation-id capture-reviewed \
   --approved-plan-sha256 <reviewed-sha256> --apply
 ```
@@ -237,32 +237,18 @@ metadata unless a separately configured adapter is explicitly approved.
 
 ## Upgrade and rollback
 
-The Claude plugin is `claude-obsidian`, and its commands are
-`/claude-obsidian:*`. From 2.x, update it as usual:
-
-```bash
-claude plugin marketplace update agricidaniel-claude-obsidian
-claude plugin update claude-obsidian@agricidaniel-claude-obsidian
-```
-
-Version 3.0.0 alone was named `agricidaniel-obsidian`. If you installed it,
-the marketplace `renames` map moves you back, then you install once:
-
-```bash
-claude plugin marketplace update agricidaniel-claude-obsidian
-claude plugin install claude-obsidian@agricidaniel-claude-obsidian
-```
-
-Restart Claude Code after either path. Managed settings that name
-`agricidaniel-obsidian` need an administrator change. See the
-[namespace migration](namespace-migration.md) for verification and rollback.
+The optional Claude Code plugin is `obsidian-plugin`, with commands under
+`/obsidian-plugin:*`. After the renamed package is published, install it from
+`bajgai/obsidian-plugin` and restart the host. See the
+[namespace migration](namespace-migration.md) for configuration, schema
+compatibility, and verification.
 
 Upgrade product code independently from the user vault. Before a migration or
 large ingest, make a normal backup or snapshot. Knowledge writes are journaled;
 run recovery after an interrupted operation:
 
 ```bash
-python3 scripts/claude-obsidian.py transaction recover --vault <vault>
+python3 scripts/obsidian-plugin.py transaction recover --vault <vault>
 ```
 
 Recovery conservatively preserves stale or foreign lock identities. Only after
@@ -272,7 +258,7 @@ Git history is optional and never automatic. To checkpoint exactly one
 completed transaction:
 
 ```bash
-python3 scripts/claude-obsidian.py checkpoint <operation-id> --vault <vault> \
+python3 scripts/obsidian-plugin.py checkpoint <operation-id> --vault <vault> \
   --as-of YYYY-MM-DD
 ```
 
@@ -285,8 +271,8 @@ from its vault-local pending record.
 Remove the host integration, not the vault:
 
 ```bash
-claude plugin uninstall claude-obsidian@agricidaniel-claude-obsidian
-claude plugin marketplace remove agricidaniel-claude-obsidian
+claude plugin uninstall obsidian-plugin@bajgai-obsidian-plugin
+claude plugin marketplace remove bajgai-obsidian-plugin
 ```
 
 For portable hosts, remove only the per-skill links that the installer reported.

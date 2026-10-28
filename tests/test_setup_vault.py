@@ -90,7 +90,7 @@ class SetupVaultTests(unittest.TestCase):
             self.assertEqual(0, result.returncode, result.stderr)
             payload = json.loads(result.stdout)
             self.assertEqual(
-                "claude-obsidian.initialization-plan.v1", payload["schema"]
+                "obsidian-plugin.initialization-plan.v1", payload["schema"]
             )
             self.assertEqual("dry-run", payload["status"])
             self.assertFalse(vault.exists())
@@ -103,7 +103,7 @@ class SetupVaultTests(unittest.TestCase):
             result = _run("--dry-run", cwd=parent, env={"PWD": str(parent)})
             self.assertEqual(0, result.returncode, result.stderr)
             self.assertEqual(
-                "claude-obsidian.adoption-plan.v1", json.loads(result.stdout)["schema"]
+                "obsidian-plugin.adoption-plan.v1", json.loads(result.stdout)["schema"]
             )
             self.assertEqual(before, _snapshot(parent))
 
@@ -121,7 +121,7 @@ class SetupVaultTests(unittest.TestCase):
             result = _run("--check", "--vault", str(vault))
             self.assertEqual(0, result.returncode, result.stderr)
             report = json.loads(result.stdout)
-            self.assertEqual("claude-obsidian.doctor.v1", report["schema"])
+            self.assertEqual("obsidian-plugin.doctor.v1", report["schema"])
             self.assertTrue(report["ok"])
             self.assertEqual(before, _snapshot(vault))
 
@@ -321,11 +321,11 @@ class SetupVaultTests(unittest.TestCase):
             automatic = _run("--dry-run", "--vault", str(existing))
             explicit = _run("--dry-run", "--init", "--vault", str(existing))
             self.assertEqual(
-                "claude-obsidian.adoption-plan.v1",
+                "obsidian-plugin.adoption-plan.v1",
                 json.loads(automatic.stdout)["schema"],
             )
             self.assertEqual(
-                "claude-obsidian.initialization-plan.v1",
+                "obsidian-plugin.initialization-plan.v1",
                 json.loads(explicit.stdout)["schema"],
             )
 

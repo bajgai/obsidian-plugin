@@ -18,9 +18,9 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian import cli
-from claude_obsidian.paths import VaultSelection
-from claude_obsidian.transaction import (
+from obsidian_plugin import cli
+from obsidian_plugin.paths import VaultSelection
+from obsidian_plugin.transaction import (
     BUNDLE_SCHEMA,
     MutationLock,
     inspect_bundle,
@@ -152,7 +152,7 @@ class DoctorReadinessTests(unittest.TestCase):
                 code, report = self.doctor(vault)
                 self.assertEqual(0, code)
                 self.assertTrue(report["ok"])
-                self.assertEqual("claude-obsidian.doctor.v1", report["schema"])
+                self.assertEqual("obsidian-plugin.doctor.v1", report["schema"])
                 self.assertEqual({"vault_exists", "obsidian_config", "wiki", "raw", "meta_writable", "runtime_state_safe", "mutation_lock_held"}, set(report["checks"]))
                 self.assertEqual(before, snapshot(vault))
 
@@ -174,7 +174,7 @@ class DeveloperRecoveryTests(unittest.TestCase):
             approval = inspect_bundle(vault, bundle)["approval_sha256"]
             program = """import json, os, sys
 from pathlib import Path
-from claude_obsidian.transaction import apply_bundle
+from obsidian_plugin.transaction import apply_bundle
 def interrupt(path, index):
     if index == 1:
         os._exit(91)

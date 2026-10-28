@@ -1,6 +1,6 @@
 # Compound Vault architecture
 
-The Compound Vault is claude-obsidian's operational model for a local,
+The Compound Vault is obsidian-plugin's operational model for a local,
 source-cited knowledge base. The 2.0.0 foundation replaces historical
 per-file-lock and lifecycle-write behavior with explicit vault selection and
 recoverable operation transactions.
@@ -45,7 +45,7 @@ from legacy delta tracking.
 ## One operation, one transaction
 
 A save, ingest, fold, canvas update, research merge, or approved lint repair is
-one `claude-obsidian.transaction.v1` bundle:
+one `obsidian-plugin.transaction.v1` bundle:
 
 1. Read every target and record its current SHA-256 or expected absence.
 2. Let parallel workers produce drafts and evidence without shared writes.
@@ -166,9 +166,9 @@ inert consent plans for a separately configured runner.
 ## Maintenance and recovery
 
 ```bash
-python3 scripts/claude-obsidian.py doctor --vault <vault>
-python3 scripts/claude-obsidian.py lint --vault <vault> --as-of YYYY-MM-DD
-python3 scripts/claude-obsidian.py transaction recover --vault <vault>
+python3 scripts/obsidian-plugin.py doctor --vault <vault>
+python3 scripts/obsidian-plugin.py lint --vault <vault> --as-of YYYY-MM-DD
+python3 scripts/obsidian-plugin.py transaction recover --vault <vault>
 ```
 
 Lint is deterministic for its declared UTC audit date and read-only. Any fix is a separate reviewed
@@ -183,9 +183,9 @@ then use `transaction recover --force-stale-lock`. Never automate the override.
 Existing layouts stay readable. Preview the additive migration before applying:
 
 ```bash
-python3 scripts/claude-obsidian.py migrate --vault <vault> \
+python3 scripts/obsidian-plugin.py migrate --vault <vault> \
   --generated-at <ISO-UTC> --operation-id migrate-reviewed
-python3 scripts/claude-obsidian.py migrate --vault <vault> \
+python3 scripts/obsidian-plugin.py migrate --vault <vault> \
   --generated-at <ISO-UTC> --operation-id migrate-reviewed \
   --approved-plan-sha256 <reviewed-sha256> --apply
 ```

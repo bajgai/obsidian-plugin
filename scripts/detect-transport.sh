@@ -92,7 +92,7 @@ VAULT_ROOT="$(PYTHONPATH="$PLUGIN_ROOT${PYTHONPATH:+:$PYTHONPATH}" python3 - "$R
 import sys
 from pathlib import Path
 
-from claude_obsidian.paths import VaultSelectionError, resolve_vault_root
+from obsidian_plugin.paths import VaultSelectionError, resolve_vault_root
 
 try:
     selected = resolve_vault_root(
@@ -301,8 +301,8 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, os.environ["PLUGIN_ROOT"])
-from claude_obsidian.json_utils import strict_json_loads
-from claude_obsidian.transaction import TransactionError, read_vault_regular
+from obsidian_plugin.json_utils import strict_json_loads
+from obsidian_plugin.transaction import TransactionError, read_vault_regular
 
 vault = os.environ["VAULT_ROOT"]
 expected_vault_identity = (
@@ -405,7 +405,7 @@ def classify() -> tuple[str, bool, bool | None, str, str]:
             f"'obsidian version' returned an unrecognized response: {raw_output}",
         )
     version_string = next((line.strip() for line in raw_output.splitlines() if line.strip()), "")
-    from claude_obsidian.transport_probe import probe_selected_vault
+    from obsidian_plugin.transport_probe import probe_selected_vault
     identity_verified, identity_diagnostic = probe_selected_vault(binary, vault)
     if not identity_verified:
         return ("vault_unverified", False, True, version_string, identity_diagnostic)
@@ -514,7 +514,7 @@ if [ "$MODE" = "peek" ]; then
   exit 0
 fi
 
-ACTIVE_TMP="$(mktemp "${TMPDIR:-/tmp}/claude-obsidian-transport.XXXXXX")"
+ACTIVE_TMP="$(mktemp "${TMPDIR:-/tmp}/obsidian-plugin-transport.XXXXXX")"
 snapshot > "$ACTIVE_TMP"
 if ! PYTHONPATH="$PLUGIN_ROOT${PYTHONPATH:+:$PYTHONPATH}" python3 -B -P - \
   "$VAULT_ROOT" "$ACTIVE_TMP" 2>/dev/null <<'PY'
@@ -523,7 +523,7 @@ import stat
 import sys
 from pathlib import Path
 
-from claude_obsidian.transaction import MutationLock, _atomic_vault_write
+from obsidian_plugin.transaction import MutationLock, _atomic_vault_write
 
 vault = Path(sys.argv[1])
 source = Path(sys.argv[2])

@@ -14,9 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-import claude_obsidian.checkpoint as checkpoint_module
-from claude_obsidian.checkpoint import CheckpointError, checkpoint_operation
-from claude_obsidian.transaction import BUNDLE_SCHEMA, MutationLock, apply_bundle
+import obsidian_plugin.checkpoint as checkpoint_module
+from obsidian_plugin.checkpoint import CheckpointError, checkpoint_operation
+from obsidian_plugin.transaction import BUNDLE_SCHEMA, MutationLock, apply_bundle
 
 
 def git(root: Path, *args: str) -> str:

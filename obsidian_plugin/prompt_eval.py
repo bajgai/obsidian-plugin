@@ -24,10 +24,10 @@ from .paths import (
 )
 
 
-CASES_SCHEMA = "claude-obsidian.prompt-cases.v1"
-PACKET_SCHEMA = "claude-obsidian.prompt-packet.v1"
-RESPONSE_SCHEMA = "claude-obsidian.prompt-response.v1"
-REPORT_SCHEMA = "claude-obsidian.prompt-evaluation.v1"
+CASES_SCHEMA = "obsidian-plugin.prompt-cases.v1"
+PACKET_SCHEMA = "obsidian-plugin.prompt-packet.v1"
+RESPONSE_SCHEMA = "obsidian-plugin.prompt-response.v1"
+REPORT_SCHEMA = "obsidian-plugin.prompt-evaluation.v1"
 MAX_JSON_BYTES = 1024 * 1024
 MAX_SOURCE_BYTES = 512 * 1024
 DEFAULT_CASES_PATH = Path("tests/fixtures/prompt-quality/cases.json")

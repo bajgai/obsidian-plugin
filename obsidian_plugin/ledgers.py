@@ -19,8 +19,8 @@ from .transaction import BUNDLE_SCHEMA, TransactionValidationError, _safe_hash, 
 from .url_safety import url_credential_issue
 
 
-SOURCE_SCHEMA = "claude-obsidian.source-ledger.v1"
-CLAIM_SCHEMA = "claude-obsidian.claim-ledger.v1"
+SOURCE_SCHEMA = "obsidian-plugin.source-ledger.v1"
+CLAIM_SCHEMA = "obsidian-plugin.claim-ledger.v1"
 SOURCE_PATH = "wiki/meta/ledgers/source-ledger.json"
 CLAIM_PATH = "wiki/meta/ledgers/claim-ledger.json"
 SOURCE_KINDS = {"file", "url", "manual"}
@@ -121,7 +121,7 @@ def validate_existing_canonical_state(
         workspace = _existing_json(root, config_name)
         if workspace is None:
             continue
-        if workspace.get("schema") != "claude-obsidian.workspace.v1":
+        if workspace.get("schema") != "obsidian-plugin.workspace.v1":
             _error(errors, f"{config_name}.schema", "unsupported workspace schema")
         configured = workspace.get("vault")
         if not isinstance(configured, str) or not configured.strip():
@@ -1373,7 +1373,7 @@ def migration_bundle(
         SOURCE_PATH: sources,
         CLAIM_PATH: claims,
         WORKSPACE_CONFIG: {
-            "schema": "claude-obsidian.workspace.v1",
+            "schema": "obsidian-plugin.workspace.v1",
             "vault": ".",
             "role": "vault",
             "source_inbox": "inbox",

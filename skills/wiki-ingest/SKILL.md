@@ -15,8 +15,8 @@ by explicit `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace config, then
 current-directory discovery. Never select the plugin/product root.
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 test -f "$CORE"
 ```
 
@@ -111,7 +111,7 @@ the requested conclusion instead of inventing evidence.
 ## Build one Ingest transaction
 
 Read [the transaction contract](../wiki/references/operation-transactions.md).
-Draft a single `claude-obsidian.transaction.v1` bundle with
+Draft a single `obsidian-plugin.transaction.v1` bundle with
 `operation_type: ingest` for the whole agreed batch. Couple, as applicable:
 
 - create-only raw captures;

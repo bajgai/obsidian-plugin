@@ -1,4 +1,4 @@
-"""Portable core for claude-obsidian.
+"""Portable core for obsidian-plugin.
 
 The package deliberately has no third-party runtime dependencies. Host-specific
 plugins and skills call this core instead of deriving mutable vault state from

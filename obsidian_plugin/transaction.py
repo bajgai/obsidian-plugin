@@ -44,9 +44,9 @@ from .paths import (
 )
 
 
-BUNDLE_SCHEMA = "claude-obsidian.transaction.v1"
-RESULT_SCHEMA = "claude-obsidian.transaction-result.v1"
-JOURNAL_SCHEMA = "claude-obsidian.transaction-journal.v1"
+BUNDLE_SCHEMA = "obsidian-plugin.transaction.v1"
+RESULT_SCHEMA = "obsidian-plugin.transaction-result.v1"
+JOURNAL_SCHEMA = "obsidian-plugin.transaction-journal.v1"
 OPERATION_TYPES = {
     "base",
     "save",
@@ -138,7 +138,7 @@ _SETUP_EXTENSION_PATHS = {
 }
 _POLICY_ROOT_CASE = {
     ".obsidian-wiki.json": ".obsidian-wiki.json",
-    ".claude-obsidian.json": ".claude-obsidian.json",
+    ".obsidian-plugin.json": ".obsidian-plugin.json",
     ".git": ".git",
     ".obsidian": ".obsidian",
     ".raw": ".raw",
@@ -1343,7 +1343,7 @@ def plan_approval_sha256(
 
     return bundle_sha256(
         {
-            "schema": "claude-obsidian.plan-approval.v3",
+            "schema": "obsidian-plugin.plan-approval.v3",
             "vault_root": vault_label
             if vault_label is not None
             else str(canonical(vault_root)),
@@ -2054,7 +2054,7 @@ class MutationLock:
                         "new mutation lock was concurrently replaced",
                     )
                 owner = {
-                    "schema": "claude-obsidian.mutation-lock.v1",
+                    "schema": "obsidian-plugin.mutation-lock.v1",
                     "pid": os.getpid(),
                     "token": self.token,
                     "host": socket.gethostname(),
@@ -4717,7 +4717,7 @@ def inspect_bundle(
         _safe_directory(vault, ".vault-meta", create=False)
         expanded = _expand_managed_metadata(vault, bundle, bundle_dir, root_fd=root_fd)
         with tempfile.TemporaryDirectory(
-            prefix="claude-obsidian-inspect-"
+            prefix="obsidian-plugin-inspect-"
         ) as directory:
             prepared = _prepare_writes(
                 vault,
@@ -4736,7 +4736,7 @@ def inspect_bundle(
             os.close(root_fd)
     expanded_hash = _canonical_json_hash(expanded)
     return {
-        "schema": "claude-obsidian.transaction-plan.v1",
+        "schema": "obsidian-plugin.transaction-plan.v1",
         "operation_id": operation_id,
         "operation_type": operation_type,
         "valid": True,

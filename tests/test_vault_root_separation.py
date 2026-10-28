@@ -15,13 +15,13 @@ from pathlib import Path
 
 PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 SCRIPTS = PLUGIN_ROOT / "scripts"
-CORE_CLI = SCRIPTS / "claude-obsidian.py"
+CORE_CLI = SCRIPTS / "obsidian-plugin.py"
 
 
 def _environment(**updates: str) -> dict[str, str]:
     env = os.environ.copy()
     env.pop("OBSIDIAN_WIKI_VAULT", None)
-    env.pop("CLAUDE_OBSIDIAN_VAULT", None)
+    env.pop("OBSIDIAN_PLUGIN_VAULT", None)
     env.update(updates)
     return env
 

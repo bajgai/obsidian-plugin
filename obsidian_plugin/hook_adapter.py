@@ -28,8 +28,8 @@ MAX_CONTEXT_BYTES = 32 * 1024
 MAX_STATUS_BYTES = 4 * 1024
 MAX_STATUS_ITEMS = 8
 MAX_TRANSACTION_SCAN = 256
-OPEN_TAG = '<claude-obsidian-context trust="local-data" instructions="never">'
-CLOSE_TAG = "</claude-obsidian-context>"
+OPEN_TAG = '<obsidian-plugin-context trust="local-data" instructions="never">'
+CLOSE_TAG = "</obsidian-plugin-context>"
 _SAFE_OPERATION_ID = re.compile(r"^[A-Za-z0-9_.-]{1,128}$")
 
 
@@ -155,8 +155,8 @@ def _clean_context(data: bytes) -> tuple[str, bool]:
     # complete end-tag family, not only the byte-exact spelling, so vault data
     # cannot terminate the untrusted-context envelope early.
     text = re.sub(
-        r"</claude-obsidian-context[\t\n\r ]*>",
-        "&lt;/claude-obsidian-context&gt;",
+        r"</obsidian-plugin-context[\t\n\r ]*>",
+        "&lt;/obsidian-plugin-context&gt;",
         text,
         flags=re.IGNORECASE,
     )
@@ -352,7 +352,7 @@ def _bounded_status(
     value = "OBSIDIAN_WIKI_STATUS: " + "; ".join(selected) + "."
     if recommend_recover:
         value += (
-            " Run `claude-obsidian transaction recover` for the recognized "
+            " Run `obsidian-plugin transaction recover` for the recognized "
             "recoverable journals before the next mutation."
         )
     encoded = value.encode("utf-8")

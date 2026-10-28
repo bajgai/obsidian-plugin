@@ -1,4 +1,4 @@
-"""Command-line interface for the portable claude-obsidian core."""
+"""Command-line interface for the portable obsidian-plugin core."""
 
 from __future__ import annotations
 
@@ -173,7 +173,7 @@ def command_doctor(args: argparse.Namespace) -> int:
         "mutation_lock_held": lock_state is True,
     }
     report = {
-        "schema": "claude-obsidian.doctor.v1",
+        "schema": "obsidian-plugin.doctor.v1",
         "version": __version__,
         "vault_root": str(root),
         "selection_source": selection.source,
@@ -220,7 +220,7 @@ def command_transaction_recover(args: argparse.Namespace) -> int:
         recovered = recover_incomplete(selection.root, mutation_lock=mutation_lock)
     _emit(
         {
-            "schema": "claude-obsidian.transaction-recovery.v1",
+            "schema": "obsidian-plugin.transaction-recovery.v1",
             "recovered": recovered,
             "forced_stale_lock": bool(args.force_stale_lock),
         }
@@ -277,11 +277,11 @@ def command_capacity_compact(args: argparse.Namespace) -> int:
     root = _selection(args).root
     operation = compaction_bundle(root, operation_id=args.operation_id)
     if not operation['writes']:
-        _emit({'schema': 'claude-obsidian.capacity-compaction.v1', 'status': 'noop', 'changed_paths': []})
+        _emit({'schema': 'obsidian-plugin.capacity-compaction.v1', 'status': 'noop', 'changed_paths': []})
         return 0
     if not args.apply:
         plan = inspect_bundle(root, operation)
-        _emit({'schema': 'claude-obsidian.capacity-compaction.v1', 'status': 'dry-run',
+        _emit({'schema': 'obsidian-plugin.capacity-compaction.v1', 'status': 'dry-run',
                'operation': operation, 'plan': plan, 'approved_plan_sha256': plan['approval_sha256']})
         return 0
     if not args.approved_plan_sha256:
@@ -440,7 +440,7 @@ def command_capture_plan(args: argparse.Namespace) -> int:
     plans = plan_filesystem_batch(root, sources, config=config, budget=budget)
     _emit(
         {
-            "schema": "claude-obsidian.capture-plan.v1",
+            "schema": "obsidian-plugin.capture-plan.v1",
             "status": "dry-run",
             "items": plans,
             "summary": {
@@ -472,7 +472,7 @@ def command_capture_apply(args: argparse.Namespace) -> int:
             }
         )
     operation = {
-        "schema": "claude-obsidian.transaction.v1",
+        "schema": "obsidian-plugin.transaction.v1",
         "operation_id": _operation_id("capture", timestamp, args.operation_id),
         "operation_type": "capture",
         "expected_hashes": expected_hashes,
@@ -482,7 +482,7 @@ def command_capture_apply(args: argparse.Namespace) -> int:
     }
     if not args.apply:
         payload = {
-            "schema": "claude-obsidian.capture-plan.v1",
+            "schema": "obsidian-plugin.capture-plan.v1",
             "status": "dry-run" if writes else "noop",
             "items": plans,
             "operation": operation,
@@ -500,7 +500,7 @@ def command_capture_apply(args: argparse.Namespace) -> int:
         transaction_result = None
     results = [
         {
-            "schema": "claude-obsidian.filesystem-capture.v1",
+            "schema": "obsidian-plugin.filesystem-capture.v1",
             "source_identity": item["source_identity"],
             "source": item["source"],
             "stored_path": item["stored_path"],
@@ -512,7 +512,7 @@ def command_capture_apply(args: argparse.Namespace) -> int:
     ]
     _emit(
         {
-            "schema": "claude-obsidian.capture-result.v1",
+            "schema": "obsidian-plugin.capture-result.v1",
             "status": "applied",
             "items": results,
             "transaction": transaction_result,
@@ -548,7 +548,7 @@ def _capture_queue(args: argparse.Namespace) -> CaptureQueue:
 def command_capture_queue_list(args: argparse.Namespace) -> int:
     _emit(
         {
-            "schema": "claude-obsidian.capture-queue-list.v1",
+            "schema": "obsidian-plugin.capture-queue-list.v1",
             "entries": _capture_queue(args).list(state=args.state),
         }
     )
@@ -616,7 +616,7 @@ def command_capture_queue_resume(args: argparse.Namespace) -> int:
         stale_after=args.stale_after,
         force=args.force,
     )
-    _emit({"schema": "claude-obsidian.capture-queue-resume.v1", "entries": entries})
+    _emit({"schema": "obsidian-plugin.capture-queue-resume.v1", "entries": entries})
     return 0
 
 
@@ -714,7 +714,7 @@ def command_mode_set(args: argparse.Namespace) -> int:
     document["configured_at"] = timestamp
     content = json.dumps(document, indent=2, sort_keys=True, ensure_ascii=False) + "\n"
     operation = {
-        "schema": "claude-obsidian.transaction.v1",
+        "schema": "obsidian-plugin.transaction.v1",
         "operation_id": _operation_id("mode", timestamp, args.operation_id),
         "operation_type": "configuration",
         "expected_hashes": {".vault-meta/mode.json": expected},
@@ -733,7 +733,7 @@ def command_mode_set(args: argparse.Namespace) -> int:
     if not args.apply:
         _emit(
             {
-                "schema": "claude-obsidian.mode-plan.v1",
+                "schema": "obsidian-plugin.mode-plan.v1",
                 "status": "dry-run",
                 "mode": args.mode,
                 "plan": plan,
@@ -759,7 +759,7 @@ def command_extension_dragonscale(args: argparse.Namespace) -> int:
         missing = [write["path"] for write in operation["writes"]]
         _emit(
             {
-                "schema": "claude-obsidian.extension-check.v1",
+                "schema": "obsidian-plugin.extension-check.v1",
                 "extension": "dragonscale",
                 "status": "ready" if not missing else "incomplete",
                 "ready": not missing,
@@ -770,7 +770,7 @@ def command_extension_dragonscale(args: argparse.Namespace) -> int:
     if not operation["writes"]:
         _emit(
             {
-                "schema": "claude-obsidian.extension-plan.v1",
+                "schema": "obsidian-plugin.extension-plan.v1",
                 "extension": "dragonscale",
                 "status": "noop",
                 "changed_paths": [],
@@ -781,7 +781,7 @@ def command_extension_dragonscale(args: argparse.Namespace) -> int:
     if not args.apply:
         _emit(
             {
-                "schema": "claude-obsidian.extension-plan.v1",
+                "schema": "obsidian-plugin.extension-plan.v1",
                 "extension": "dragonscale",
                 "status": "dry-run",
                 "plan": plan,
@@ -824,7 +824,7 @@ def command_migrate(args: argparse.Namespace) -> int:
     if not operation["writes"]:
         _emit(
             {
-                "schema": "claude-obsidian.migration-plan.v1",
+                "schema": "obsidian-plugin.migration-plan.v1",
                 "status": "noop",
                 "vault_layout": "v1",
                 "changed_paths": [],
@@ -834,7 +834,7 @@ def command_migrate(args: argparse.Namespace) -> int:
     if not args.apply:
         _emit(
             {
-                "schema": "claude-obsidian.migration-plan.v1",
+                "schema": "obsidian-plugin.migration-plan.v1",
                 "status": "dry-run",
                 "operation": operation,
                 "changed_paths": [write["path"] for write in operation["writes"]],
@@ -876,7 +876,7 @@ def command_init(args: argparse.Namespace) -> int:
     if not operation["writes"]:
         _emit(
             {
-                "schema": "claude-obsidian.initialization-plan.v1",
+                "schema": "obsidian-plugin.initialization-plan.v1",
                 "status": "noop",
                 "scan": scan,
                 "changed_paths": [],
@@ -886,7 +886,7 @@ def command_init(args: argparse.Namespace) -> int:
     if not args.apply:
         _emit(
             {
-                "schema": "claude-obsidian.initialization-plan.v1",
+                "schema": "obsidian-plugin.initialization-plan.v1",
                 "status": "dry-run",
                 "scan": scan,
                 "changed_paths": [write["path"] for write in operation["writes"]],
@@ -961,7 +961,7 @@ def command_adopt(args: argparse.Namespace) -> int:
     if not operation["writes"]:
         _emit(
             {
-                "schema": "claude-obsidian.adoption-plan.v1",
+                "schema": "obsidian-plugin.adoption-plan.v1",
                 "status": "noop",
                 "scan": scan_vault(destination),
                 "changed_paths": [],
@@ -971,7 +971,7 @@ def command_adopt(args: argparse.Namespace) -> int:
     if not args.apply:
         _emit(
             {
-                "schema": "claude-obsidian.adoption-plan.v1",
+                "schema": "obsidian-plugin.adoption-plan.v1",
                 "status": "dry-run",
                 "scan": scan_vault(destination),
                 "changed_paths": [write["path"] for write in operation["writes"]],
@@ -1001,7 +1001,7 @@ def command_checkpoint(args: argparse.Namespace) -> int:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="claude-obsidian")
+    parser = argparse.ArgumentParser(prog="obsidian-plugin")
     parser.add_argument("--version", action="version", version=__version__)
     subcommands = parser.add_subparsers(dest="command", required=True)
 

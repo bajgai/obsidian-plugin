@@ -1,5 +1,5 @@
 {
-  "schema": "claude-obsidian.upstream-references.v1",
+  "schema": "obsidian-plugin.upstream-references.v1",
   "checked_on": "2026-10-17",
   "update_policy": "manual-content-review-no-automatic-download-or-replacement",
   "references": [
@@ -414,23 +414,23 @@
     },
     {
       "path": "skills/defuddle/SKILL.md",
-      "sha256": "35958e30b3521ee04155e06253713871c11d82ee840271d9bb091f5c54efaeca"
+      "sha256": "91a605abd8c20b18c160b0c7d5422cd765c9e3ed0a0b6eafb1808fbb5c666f35"
     },
     {
       "path": "skills/obsidian-bases/SKILL.md",
-      "sha256": "3cd5676434bc86618802e07cf44ff9c7a5d4c10fb7ecb412775b9fef9cfa82be"
+      "sha256": "f2b282c4993648dea889dee534919a8c16d9fdc65372d3a6f50ed6e27a53ba09"
     },
     {
       "path": "skills/obsidian-markdown/SKILL.md",
-      "sha256": "c7c04184ba81b1f8482e647a56899bfc9796daa20acbd68e78c57b406d4351bf"
+      "sha256": "c3ebd90262a82dacb001c618fdd3dfccb53051b52ad4f376b70443077f975c13"
     },
     {
       "path": "skills/wiki-mode/SKILL.md",
-      "sha256": "47d267864295d6cda09c4f7f767cf24786ecfb843341506e7472c29ba870a2cf"
+      "sha256": "80ad956e5eaacd1311e19b5df54d5c3929bb01e542da1002cabfb86827f040dd"
     },
     {
       "path": "skills/wiki/references/coordination.md",
-      "sha256": "33315ec7bfe6f6dc63d10c0a75dc6ec26bd4860f039313f1d22534bbed5e37b6"
+      "sha256": "5a007254687a4f953f3d3213e86a23b17cd3db4ef1d237c41821d532acb453fb"
     },
     {
       "path": "skills/wiki/references/dataview.md",
@@ -438,7 +438,7 @@
     },
     {
       "path": "skills/wiki/references/frontmatter.md",
-      "sha256": "650cb8ff10937d2289b48412a9ac7438d9d5eefa68a58fe99630d3d9102d224e"
+      "sha256": "d7495c7cadc649a392293f8095dde8a55fa276633a95238df17d536e44ea3996"
     },
     {
       "path": "skills/wiki/references/knowledge-recipes.md",
@@ -446,15 +446,15 @@
     },
     {
       "path": "skills/wiki/references/operation-transactions.md",
-      "sha256": "a6af7a720d059dfa9942bfa506dfea90a343817e31d145b7b4dc8b82df7494c2"
+      "sha256": "c906808fa44351ce7d29089319eb8fa6a73f4bc72661ef1d35ac3ee5364877f2"
     },
     {
       "path": "skills/wiki/references/plugins.md",
-      "sha256": "cac30ee29fd762fdd91dfff2d2d6759d3d91ea5a3e1912ebd3309174cdc8c76f"
+      "sha256": "cd1b085de4aca82ec1d2f888a549d648e7e4d670970fdb665a58f4f10ac83d44"
     },
     {
       "path": "skills/wiki/references/rest-api.md",
-      "sha256": "79179ede8e8b8279ac0ec9982c616b86b548428edf14175e86c0dd02e5932ffb"
+      "sha256": "70c4bf688cce960eebb934cf1615c9e2b829ae566b525d2eaa0e3d36827971fa"
     }
   ]
 }

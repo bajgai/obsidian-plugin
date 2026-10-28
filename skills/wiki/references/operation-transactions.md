@@ -12,8 +12,8 @@ Resolve the installed product root from the invoking skill's own location, not
 from the user-vault working directory:
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 test -f "$CORE"
 ```
 
@@ -28,7 +28,7 @@ commit from a generic lifecycle hook.
    absent.
 3. Have workers return drafts and evidence. Workers do not edit shared vault
    state.
-4. Build one `claude-obsidian.transaction.v1` JSON bundle.
+4. Build one `obsidian-plugin.transaction.v1` JSON bundle.
 5. Run `python3 "$CORE" transaction inspect BUNDLE --vault VAULT`.
 6. Show destructive, external, or canonical-merge proposals to the user before
    applying them.
@@ -43,7 +43,7 @@ commit from a generic lifecycle hook.
 
 ```json
 {
-  "schema": "claude-obsidian.transaction.v1",
+  "schema": "obsidian-plugin.transaction.v1",
   "operation_id": "save-20260711-example",
   "operation_type": "save",
   "expected_hashes": {

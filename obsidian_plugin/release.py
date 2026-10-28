@@ -1963,10 +1963,10 @@ def _validate_public_marketplace(
         )
     required = {
         ".claude-plugin/plugin.json",
-        "claude_obsidian/__init__.py",
+        "obsidian_plugin/__init__.py",
         "config/capabilities.json",
         "hooks/hooks.json",
-        "scripts/claude-obsidian.py",
+        "scripts/obsidian-plugin.py",
         "skills/wiki/SKILL.md",
         "templates/vault/.gitignore",
     }
@@ -2503,7 +2503,7 @@ def build_public_artifact(
     temporary_path: Path | None = None
     try:
         descriptor, temporary_name = tempfile.mkstemp(
-            prefix="claude-obsidian-release-", suffix=".zip"
+            prefix="obsidian-plugin-release-", suffix=".zip"
         )
         temporary_path = Path(temporary_name)
         with os.fdopen(descriptor, "wb") as temporary:

@@ -18,8 +18,8 @@ from unittest import mock
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-import claude_obsidian.retrieval_eval as evaluation
-from claude_obsidian.retrieval_eval import (
+import obsidian_plugin.retrieval_eval as evaluation
+from obsidian_plugin.retrieval_eval import (
     EvaluationError,
     QUERY_SCHEMA,
     load_queries,

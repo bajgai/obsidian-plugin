@@ -12,7 +12,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.paths import (
+from obsidian_plugin.paths import (
     MAX_WORKSPACE_CONFIG_BYTES,
     VaultSelectionError,
     assert_not_plugin_tree,
@@ -43,7 +43,7 @@ def test_precedence_and_config() -> None:
         workspace.mkdir()
         (workspace / ".obsidian-wiki.json").write_text(
             json.dumps(
-                {"schema": "claude-obsidian.workspace.v1", "vault": "../configured"}
+                {"schema": "obsidian-plugin.workspace.v1", "vault": "../configured"}
             ),
             encoding="utf-8",
         )
@@ -70,9 +70,9 @@ def test_legacy_config_and_environment_names_are_fallbacks() -> None:
         current_configured = make_vault(base / "current-configured")
         workspace = base / "workspace"
         workspace.mkdir()
-        (workspace / ".claude-obsidian.json").write_text(
+        (workspace / ".obsidian-plugin.json").write_text(
             json.dumps(
-                {"schema": "claude-obsidian.workspace.v1", "vault": "../legacy-configured"}
+                {"schema": "obsidian-plugin.workspace.v1", "vault": "../legacy-configured"}
             ),
             encoding="utf-8",
         )
@@ -81,14 +81,14 @@ def test_legacy_config_and_environment_names_are_fallbacks() -> None:
         assert selected.source == "workspace-config"
         (workspace / ".obsidian-wiki.json").write_text(
             json.dumps(
-                {"schema": "claude-obsidian.workspace.v1", "vault": "../current-configured"}
+                {"schema": "obsidian-plugin.workspace.v1", "vault": "../current-configured"}
             ),
             encoding="utf-8",
         )
         selected = resolve_vault_root(start=workspace, environ={})
         assert selected.root == current_configured.resolve()
 
-        legacy = {"CLAUDE_OBSIDIAN_VAULT": str(legacy_env)}
+        legacy = {"OBSIDIAN_PLUGIN_VAULT": str(legacy_env)}
         selected = resolve_vault_root(start=workspace, environ=legacy)
         assert selected.root == legacy_env.resolve()
         both = {**legacy, "OBSIDIAN_WIKI_VAULT": str(current_env)}
@@ -197,7 +197,7 @@ def test_workspace_config_rejects_ambiguous_or_nonregular_authority() -> None:
         workspace.mkdir()
         config = workspace / ".obsidian-wiki.json"
         config.write_text(
-            '{"schema":"claude-obsidian.workspace.v1",'
+            '{"schema":"obsidian-plugin.workspace.v1",'
             f'"vault":"{first}","vault":"{second}"}}',
             encoding="utf-8",
         )
@@ -220,7 +220,7 @@ def test_workspace_config_rejects_ambiguous_or_nonregular_authority() -> None:
         config.unlink()
         outside = base / "outside-config.json"
         outside.write_text(
-            json.dumps({"schema": "claude-obsidian.workspace.v1", "vault": str(first)}),
+            json.dumps({"schema": "obsidian-plugin.workspace.v1", "vault": str(first)}),
             encoding="utf-8",
         )
         config.symlink_to(outside)

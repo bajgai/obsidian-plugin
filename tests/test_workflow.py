@@ -10,9 +10,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from claude_obsidian.transaction import BUNDLE_SCHEMA, RESULT_SCHEMA, TransactionError, inspect_bundle
-from claude_obsidian.ledgers import stable_source_id
-from claude_obsidian.workflow import apply_workflow, inspect_workflow
+from obsidian_plugin.transaction import BUNDLE_SCHEMA, RESULT_SCHEMA, TransactionError, inspect_bundle
+from obsidian_plugin.ledgers import stable_source_id
+from obsidian_plugin.workflow import apply_workflow, inspect_workflow
 
 
 class WorkflowTests(unittest.TestCase):
@@ -372,7 +372,7 @@ class WorkflowTests(unittest.TestCase):
             inspect_workflow(self.vault, source)
         self.assertEqual('WORKFLOW_LOG_NOT_TEXT', caught.exception.code)
         run = subprocess.run(
-            [sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'),
+            [sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'),
              'workflow', 'inspect', str(source), '--vault', str(self.vault)],
             text=True, capture_output=True, cwd=self.temporary.name, timeout=20,
         )
@@ -418,7 +418,7 @@ class WorkflowTests(unittest.TestCase):
             b'[]\n',
             b'null\n',
             b'{}\n',
-            b'{"schema":"claude-obsidian.transaction-result.v1","status":"complete"}\n',
+            b'{"schema":"obsidian-plugin.transaction-result.v1","status":"complete"}\n',
         ]
         for field in ('bundle_sha256', 'expanded_bundle_sha256', 'approval_sha256'):
             for mutation in ('missing', 'nonstring', 'bad-hash'):
@@ -439,7 +439,7 @@ class WorkflowTests(unittest.TestCase):
                     apply_workflow(self.vault, source, approved_plan_sha256=approval)
                 self.assertEqual('CORRUPT_RESULT', caught.exception.code)
                 run = subprocess.run(
-                    [sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'),
+                    [sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'),
                      'workflow', 'apply', str(source), '--vault', str(self.vault),
                      '--approved-plan-sha256', approval],
                     text=True, capture_output=True, cwd=self.temporary.name, timeout=20,
@@ -467,7 +467,7 @@ class WorkflowTests(unittest.TestCase):
             apply_workflow(self.vault, source, approved_plan_sha256=approval)
         self.assertEqual('INVALID_WRITE', caught.exception.code)
         run = subprocess.run(
-            [sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'),
+            [sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'),
              'workflow', 'apply', str(source), '--vault', str(self.vault),
              '--approved-plan-sha256', approval],
             text=True, capture_output=True, cwd=self.temporary.name, timeout=20,
@@ -613,7 +613,7 @@ class WorkflowTests(unittest.TestCase):
         bundle['expected_hashes']['.raw/articles/example.md'] = None
         for name, field in (('source', 'sources'), ('claim', 'claims')):
             path = f'wiki/meta/ledgers/{name}-ledger.json'
-            content = json.dumps({'schema': f'claude-obsidian.{name}-ledger.v1',
+            content = json.dumps({'schema': f'obsidian-plugin.{name}-ledger.v1',
                                   'generated_at': '2026-10-17T00:00:00Z', field: {}})
             bundle['writes'].append({'path': path, 'mode': 'create', 'content': content})
             bundle['expected_hashes'][path] = None
@@ -711,7 +711,7 @@ class WorkflowTests(unittest.TestCase):
 
     def init_vault(self):
         vault = Path(self.temporary.name) / 'seeded'
-        command = [sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'), 'init', str(vault),
+        command = [sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'), 'init', str(vault),
                    '--operation-id', 'init-seed', '--generated-at', '2026-10-18T00:00:00Z']
         plan = json.loads(subprocess.run(command, capture_output=True, text=True, check=True, timeout=60).stdout)
         subprocess.run(command + ['--apply', '--approved-plan-sha256', plan['approved_plan_sha256']],
@@ -773,7 +773,7 @@ class WorkflowTests(unittest.TestCase):
         path = Path(self.temporary.name) / 'listed.json'
         path.write_text(json.dumps(bundle))
         for command in ('transaction', 'workflow'):
-            run = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'), command, 'inspect',
+            run = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'), command, 'inspect',
                                   str(path), '--vault', str(self.vault)], capture_output=True, text=True, timeout=30)
             self.assertEqual(2, run.returncode, run.stderr)
             self.assertIn('ERR INVALID_WRITE_MODE:', run.stderr)
@@ -790,14 +790,14 @@ class WorkflowTests(unittest.TestCase):
         self.assertEqual('OPERATION_ID_REUSED', caught.exception.code)
         path = Path(self.temporary.name) / 'reused.json'
         path.write_text(json.dumps(bundle))
-        run = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'), 'workflow', 'apply',
+        run = subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'), 'workflow', 'apply',
                               str(path), '--vault', str(self.vault), '--approved-plan-sha256', approval],
                              capture_output=True, text=True, timeout=30)
         self.assertEqual(75, run.returncode, run.stderr)
         self.assertIn('ERR OPERATION_ID_REUSED:', run.stderr)
 
     def test_hot_context_is_bounded_in_bytes_like_session_context(self):
-        from claude_obsidian.hook_adapter import MAX_CONTEXT_BYTES
+        from obsidian_plugin.hook_adapter import MAX_CONTEXT_BYTES
         bundle = self.bundle()
         bundle['writes'][3]['content'] = '# Recent\n\n' + 'x' * MAX_CONTEXT_BYTES + '\n'
         codes = {x['code'] for x in inspect_workflow(self.vault, bundle)['workflow_findings']}
@@ -832,7 +832,7 @@ class WorkflowTests(unittest.TestCase):
     def test_large_catalog_is_parsed_once_for_many_selected_pages(self):
         import time
         from unittest import mock
-        from claude_obsidian import workflow as workflow_module
+        from obsidian_plugin import workflow as workflow_module
 
         pages = [f'wiki/concepts/Page {index}.md' for index in range(20)]
         filler = ''.join(f'- [[wiki/archive/Old {index}]] and [old](archive/Old%20{index}.md)\n'
@@ -868,7 +868,7 @@ class WorkflowTests(unittest.TestCase):
         ledgers.mkdir(parents=True)
         for name, field in (('source', 'sources'), ('claim', 'claims')):
             path = f'wiki/meta/ledgers/{name}-ledger.json'
-            content = json.dumps({'schema': f'claude-obsidian.{name}-ledger.v1',
+            content = json.dumps({'schema': f'obsidian-plugin.{name}-ledger.v1',
                                   'generated_at': '2026-10-17T00:00:00Z', field: {}})
             (self.vault / path).write_text(content)
             bundle['writes'].append({'path': path, 'mode': 'replace', 'content': content})
@@ -917,7 +917,7 @@ class WorkflowTests(unittest.TestCase):
 
         def cli(*args):
             try:
-                return subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'), *args],
+                return subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'), *args],
                                       capture_output=True, text=True, timeout=30)
             except subprocess.TimeoutExpired as exc:
                 raise AssertionError(f'workflow command blocked: {args}') from exc
@@ -966,7 +966,7 @@ class WorkflowTests(unittest.TestCase):
     def test_catalog_wikilink_scan_is_linear_and_matches_the_pattern(self):
         import random
         import time
-        from claude_obsidian import workflow as workflow_module
+        from obsidian_plugin import workflow as workflow_module
         rng = random.Random(203)
         for _ in range(5000):
             text = ''.join(rng.choice('[]\n|#a!') for _ in range(rng.randint(0, 24)))

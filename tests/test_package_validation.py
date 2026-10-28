@@ -13,7 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.package_validation import validate_package
+from obsidian_plugin.package_validation import validate_package
 
 
 class PackageValidationTests(unittest.TestCase):
@@ -63,9 +63,7 @@ class PackageValidationTests(unittest.TestCase):
             self.assertTrue(validate_package(root)["ok"])
 
     def test_reserved_host_identity_is_rejected_before_distribution(self) -> None:
-        # claude-obsidian is the owner-approved published identity, so a
-        # near miss stands in for it here.
-        names = ("claude-notes", "claude-obsidian-wiki", "anthropic-notes", "anthropics-wiki", "cc-plugin-notes", "claude")
+        names = ("claude-notes", "claude-wiki-notes", "anthropic-notes", "anthropics-wiki", "cc-plugin-notes", "claude")
         for name in names:
             with self.subTest(name=name), tempfile.TemporaryDirectory() as directory:
                 root = Path(directory)
@@ -80,7 +78,7 @@ class PackageValidationTests(unittest.TestCase):
                 marketplace_path.write_text(json.dumps(marketplace))
                 codes = {item["code"] for item in validate_package(root)["findings"]}
                 self.assertIn("reserved_plugin_name", codes)
-                plugin["name"] = "claude-obsidian"
+                plugin["name"] = "obsidian-plugin"
                 marketplace["plugins"][0]["name"] = plugin["name"]
                 plugin_path.write_text(json.dumps(plugin))
                 marketplace_path.write_text(json.dumps(marketplace))
@@ -255,7 +253,7 @@ class PackageValidationTests(unittest.TestCase):
             skill = root / "skills/sample/SKILL.md"
             skill.write_text(
                 skill.read_text(encoding="utf-8")
-                + "\n```bash\nclaude-obsidian transaction apply bundle.json --vault vault\n```\n",
+                + "\n```bash\nobsidian-plugin transaction apply bundle.json --vault vault\n```\n",
                 encoding="utf-8",
             )
             codes = {item["code"] for item in validate_package(root)["findings"]}
@@ -275,7 +273,7 @@ class PackageValidationTests(unittest.TestCase):
                 root, frontmatter="---\nname: sample\ndescription: Sample.\n---"
             )
             (root / "CLAUDE.md").write_text(
-                "```bash\npython3 scripts/claude-obsidian.py init /tmp/v --apply\n```\n",
+                "```bash\npython3 scripts/obsidian-plugin.py init /tmp/v --apply\n```\n",
                 encoding="utf-8",
             )
             codes = {item["code"] for item in validate_package(root)["findings"]}
@@ -387,11 +385,11 @@ class PackageValidationTests(unittest.TestCase):
                 self.assertEqual(reserved, "reserved_plugin_name" in codes)
 
     def test_published_marketplace_migrates_the_former_plugin_identity(self) -> None:
-        # 3.0.0 shipped as agricidaniel-obsidian; 3.0.1 restores claude-obsidian.
+        # The fork publishes the same host-neutral identity on both surfaces.
         plugin = json.loads(
             (ROOT / ".claude-plugin" / "plugin.json").read_text(encoding="utf-8")
         )
-        self.assertEqual("claude-obsidian", plugin["name"])
+        self.assertEqual("obsidian-plugin", plugin["name"])
         for relative in (".claude-plugin/marketplace.json", "config/public-marketplace.json"):
             with self.subTest(relative):
                 marketplace = json.loads((ROOT / relative).read_text(encoding="utf-8"))
@@ -410,7 +408,7 @@ class PackageValidationTests(unittest.TestCase):
             reference = root / "skills/sample/references/workflow.md"
             reference.parent.mkdir()
             reference.write_text(
-                '```bash\npython3 scripts/claude-obsidian.py lint --vault "$VAULT"\n```\n',
+                '```bash\npython3 scripts/obsidian-plugin.py lint --vault "$VAULT"\n```\n',
                 encoding="utf-8",
             )
             findings = validate_package(root)["findings"]
@@ -425,7 +423,7 @@ class PackageValidationTests(unittest.TestCase):
 
             (root / "agents").mkdir()
             (root / "agents" / "reviewer.md").write_text(
-                "Run `python3 scripts/claude-obsidian.py lint --vault .`.\n",
+                "Run `python3 scripts/obsidian-plugin.py lint --vault .`.\n",
                 encoding="utf-8",
             )
             findings = validate_package(root)["findings"]

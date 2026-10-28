@@ -30,7 +30,7 @@ inflate recall or MRR by dividing by zero or counting a free success.
 
 ```json
 {
-  "schema": "claude-obsidian.retrieval-queries.v1",
+  "schema": "obsidian-plugin.retrieval-queries.v1",
   "queries": [
     {
       "id": "journal-recovery",

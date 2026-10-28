@@ -28,7 +28,7 @@ another active methodology MOC, place its exact vault-relative path in the bundl
 }
 ```
 
-This is a field inside a complete `claude-obsidian.transaction.v1` bundle, not a
+This is a field inside a complete `obsidian-plugin.transaction.v1` bundle, not a
 standalone applyable document. Include expected hashes and writes for declared
 catalogs. Every selected canonical content page, whether created or replaced,
 requires a visible reference in the prospective content of a declared catalog

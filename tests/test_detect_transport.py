@@ -102,7 +102,7 @@ class DetectTransportTests(unittest.TestCase):
         import unittest.mock
 
         sys.path.insert(0, str(ROOT))
-        from claude_obsidian import transport_probe
+        from obsidian_plugin import transport_probe
 
         with tempfile.TemporaryDirectory() as directory:
             base = Path(directory)

@@ -15,7 +15,7 @@
     },
     {
       "mode": "0644",
-      "path": ".cursor/rules/claude-obsidian.mdc",
+      "path": ".cursor/rules/obsidian-plugin.mdc",
       "sha256": "790ef7f05c12b245feeecf4fe8ddd592088dfad2ee84a57b7c6eca908838587a",
       "size": 1162
     },
@@ -81,7 +81,7 @@
     },
     {
       "mode": "0644",
-      "path": ".windsurf/rules/claude-obsidian.md",
+      "path": ".windsurf/rules/obsidian-plugin.md",
       "sha256": "63def845007b3d475a464f0c56d7400126363f290dc54a84ba9aafab53f063d4",
       "size": 772
     },
@@ -285,193 +285,193 @@
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/__init__.py",
+      "path": "obsidian_plugin/__init__.py",
       "sha256": "8c0273ddd627c392734ba991a3a0c66b404d986acadc886dd4f87650dac94ce8",
       "size": 296
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/__main__.py",
+      "path": "obsidian_plugin/__main__.py",
       "sha256": "9573278a10fd58f03b8d2480311533fb9d8ceec8e0ec13ce414b811d27c78c04",
       "size": 85
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/artifacts.py",
+      "path": "obsidian_plugin/artifacts.py",
       "sha256": "a46401568febc8f5da497e537b20813a1d30d51649409a33a638acc315cebd7e",
       "size": 6755
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/capacity.py",
+      "path": "obsidian_plugin/capacity.py",
       "sha256": "b4f79f565b2b3f49c9417bf81e44518d0c42a1833248f183438f32f6b5fb9329",
       "size": 4720
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/capture.py",
+      "path": "obsidian_plugin/capture.py",
       "sha256": "ed0e6c87077dd5a49ec63151ccfe7df684e5a53799daf90cac09f6f8f7429ad7",
       "size": 85077
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/checkpoint.py",
+      "path": "obsidian_plugin/checkpoint.py",
       "sha256": "9770df91a8c2db82b2be04abecd04c38f6adf3380fd47907b05e42c811bfe9b6",
       "size": 50861
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/cli.py",
+      "path": "obsidian_plugin/cli.py",
       "sha256": "04fd03ea2f6d897c284be90d4c7cdf5b5427186adb243b28b18d0935124a5636",
       "size": 50315
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/contracts.py",
+      "path": "obsidian_plugin/contracts.py",
       "sha256": "995baf1ce86fc2b2ad426523bd142ef0853f6a41841dcd0e557c463cc8e9025c",
       "size": 49622
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/extensions.py",
+      "path": "obsidian_plugin/extensions.py",
       "sha256": "846ef977af9d8029fdde3c7024159b3e8c35e3bd6c5fba020173726009bb5ee9",
       "size": 2679
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/gates.py",
+      "path": "obsidian_plugin/gates.py",
       "sha256": "d36cf301e5c4bbd40e5f225abd9cfa8f2071e59ef918a8a9d119ad4a8932b974",
       "size": 5014
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/gitignore.py",
+      "path": "obsidian_plugin/gitignore.py",
       "sha256": "2513d7591f59fac2984705d78e044e04bacd192e64f71248ef3bc694891f0dc3",
       "size": 6934
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/hook_adapter.py",
+      "path": "obsidian_plugin/hook_adapter.py",
       "sha256": "4af06351f0630b132ee69e3af2becb14c10861326c9ba1230db7ffeda0661d40",
       "size": 13463
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/json_utils.py",
+      "path": "obsidian_plugin/json_utils.py",
       "sha256": "31143eebb4e9d22de3159753a368a71ef2a15f3c84177e0507a29885ac1d31f1",
       "size": 1105
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/ledgers.py",
+      "path": "obsidian_plugin/ledgers.py",
       "sha256": "25429402d69d6f1838ae7f8869da2e02b1cf77171613d2e99e576f71cb24edfe",
       "size": 55451
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/legacy_lock.py",
+      "path": "obsidian_plugin/legacy_lock.py",
       "sha256": "c98a6549d4f034de1ae6efefef882f1bd18a342f79962dcbf686ca4a367b6993",
       "size": 24323
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/limits.py",
+      "path": "obsidian_plugin/limits.py",
       "sha256": "bc1801f13b19e92fe49ef22ee249e1c92f579d9485f539e5fde4204652f0edd5",
       "size": 674
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/lint_engine.py",
+      "path": "obsidian_plugin/lint_engine.py",
       "sha256": "34082829959b8bb359a90eebdaf842751c3ce78a9ea4395b29e3b248df5c682c",
       "size": 85617
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/markdown_links.py",
+      "path": "obsidian_plugin/markdown_links.py",
       "sha256": "7c4dfa51b596a42eca7770421fc1e09cb04965cb43e82be35ee53a7bdf42006f",
       "size": 24631
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/mode_config.py",
+      "path": "obsidian_plugin/mode_config.py",
       "sha256": "2f3e1a6d907f46d13ed405c8bc6456da7cf2bc243a30ae8182aa79782fb7249e",
       "size": 2827
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/ollama.py",
+      "path": "obsidian_plugin/ollama.py",
       "sha256": "c71a5cfcf785a2968e9d7401afb174b6d257b5819417975be84e3314585668e8",
       "size": 13796
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/package_validation.py",
+      "path": "obsidian_plugin/package_validation.py",
       "sha256": "87a32ab1dd6fe9df7aa8facb37544322e229316b8702df7150f6b243ace2abf1",
       "size": 25929
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/page_schema.py",
+      "path": "obsidian_plugin/page_schema.py",
       "sha256": "1fc1c41548df703f5921f1a07eef735de5fe9686f2eff137a05345447414fc45",
       "size": 5119
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/paths.py",
+      "path": "obsidian_plugin/paths.py",
       "sha256": "f0c5df01dfd54bea1f61b16f2e6a70f2b71f75d5c287b49e70fa2275bfc510d4",
       "size": 16729
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/prompt_eval.py",
+      "path": "obsidian_plugin/prompt_eval.py",
       "sha256": "51625e2f2dd214a0e85ba59da9665b4a9f3452c89aec006a1f5b6ab289ee0bf4",
       "size": 31975
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/release.py",
+      "path": "obsidian_plugin/release.py",
       "sha256": "a99e4f09821caba7ccfd1f4cc564d7270447db47d3d1938f0d725786f1f49f87",
       "size": 90792
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/retrieval_eval.py",
+      "path": "obsidian_plugin/retrieval_eval.py",
       "sha256": "dd31f586226987bc3a8550cb2ab278b2f3b84a2fea482c0aa296deb9fb81653c",
       "size": 19760
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/transaction.py",
+      "path": "obsidian_plugin/transaction.py",
       "sha256": "c3daa4456ca2bc700b88338d90fde65924b533ce3d3b7cb967d2c200ec6ecc34",
       "size": 195194
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/transport_probe.py",
+      "path": "obsidian_plugin/transport_probe.py",
       "sha256": "4942fb89df03a92463c8563aa4a98b5b5d74aa413b1d4a813ac16946c976a127",
       "size": 2991
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/url_safety.py",
+      "path": "obsidian_plugin/url_safety.py",
       "sha256": "d32b74164daa1bc735cc9a96b2cce07a5e3aa08209e4bdd2328dc6b8ef761d6b",
       "size": 2402
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/vault_ops.py",
+      "path": "obsidian_plugin/vault_ops.py",
       "sha256": "166456d39a11f1deafd4de3afeccb81da21b8e9d1dc3ff4c3996d7a904338c54",
       "size": 5162
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/visible_paths.py",
+      "path": "obsidian_plugin/visible_paths.py",
       "sha256": "37fdf77fc9b3b68040ebcc310d3a48e17600c3c0398b5503ad0ea8b6ce32cb4c",
       "size": 704
     },
     {
       "mode": "0644",
-      "path": "claude_obsidian/workflow.py",
+      "path": "obsidian_plugin/workflow.py",
       "sha256": "9d97608aef9e93b95bf276f3249bce11deb9cebf922e77b76707df2b6b1ac9bf",
       "size": 22895
     },
@@ -699,7 +699,7 @@
     },
     {
       "mode": "0755",
-      "path": "scripts/claude-obsidian.py",
+      "path": "scripts/obsidian-plugin.py",
       "sha256": "a6c8a81ed2fc2c235a156bc8e1b8a5475f61e95965d6caf21b3534183d89ce3f",
       "size": 1298
     },

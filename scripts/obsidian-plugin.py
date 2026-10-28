@@ -19,21 +19,21 @@ sys.path.insert(0, str(PLUGIN_ROOT))
 # hook on a legacy console code page.
 if sys.argv[1:] == ["hook", "session-start"]:
     _consent = os.environ.get("OBSIDIAN_WIKI_SESSION_CONTEXT") or os.environ.get(
-        "CLAUDE_OBSIDIAN_SESSION_CONTEXT"
+        "OBSIDIAN_PLUGIN_SESSION_CONTEXT"
     )
     if _consent != "1":
         raise SystemExit(0)
-    from claude_obsidian.hook_adapter import emit_session_start, force_utf8_stdio
+    from obsidian_plugin.hook_adapter import emit_session_start, force_utf8_stdio
 
     force_utf8_stdio()
     raise SystemExit(emit_session_start(plugin_root=PLUGIN_ROOT))
 if sys.argv[1:] == ["hook", "stop"]:
-    from claude_obsidian.hook_adapter import emit_stop_status, force_utf8_stdio
+    from obsidian_plugin.hook_adapter import emit_stop_status, force_utf8_stdio
 
     force_utf8_stdio()
     raise SystemExit(emit_stop_status(plugin_root=PLUGIN_ROOT))
 
-from claude_obsidian.cli import main
+from obsidian_plugin.cli import main
 
 
 raise SystemExit(main())

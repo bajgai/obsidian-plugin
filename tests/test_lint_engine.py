@@ -21,19 +21,19 @@ from unittest import mock
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
-ENGINE_PATH = ROOT / "claude_obsidian" / "lint_engine.py"
+ENGINE_PATH = ROOT / "obsidian_plugin" / "lint_engine.py"
 FIXTURE = ROOT / "tests" / "fixtures" / "lint" / "vault"
 
 spec = importlib.util.spec_from_file_location(
-    "claude_obsidian_lint_engine", ENGINE_PATH
+    "obsidian_plugin_lint_engine", ENGINE_PATH
 )
 lint_engine = importlib.util.module_from_spec(spec)
 sys.modules[spec.name] = lint_engine
 assert spec.loader is not None
 spec.loader.exec_module(lint_engine)
 
-from claude_obsidian.ledgers import stable_source_id
-from claude_obsidian import transaction as transaction_module
+from obsidian_plugin.ledgers import stable_source_id
+from obsidian_plugin import transaction as transaction_module
 
 
 def _snapshot(root: Path) -> dict[str, str]:
@@ -49,7 +49,7 @@ def _snapshot(root: Path) -> dict[str, str]:
 def _mark_vault(vault: Path) -> None:
     """Declare a real vault so wiki-root linting may resolve parent targets."""
     (vault / ".obsidian-wiki.json").write_text(
-        json.dumps({"schema": "claude-obsidian.workspace.v1", "vault": "."}),
+        json.dumps({"schema": "obsidian-plugin.workspace.v1", "vault": "."}),
         encoding="utf-8",
     )
 
@@ -380,7 +380,7 @@ tags:
                 ],
                 [
                     sys.executable,
-                    str(ROOT / "scripts/claude-obsidian.py"),
+                    str(ROOT / "scripts/obsidian-plugin.py"),
                     "lint",
                     "--vault",
                     str(vault),
@@ -391,7 +391,7 @@ tags:
                 ],
                 [
                     sys.executable,
-                    str(ROOT / "scripts/claude-obsidian.py"),
+                    str(ROOT / "scripts/obsidian-plugin.py"),
                     "lint",
                     "--vault",
                     str(vault),
@@ -504,7 +504,7 @@ tags:
             (ledgers / "source-ledger.json").write_text(
                 json.dumps(
                     {
-                        "schema": "claude-obsidian.source-ledger.v1",
+                        "schema": "obsidian-plugin.source-ledger.v1",
                         "generated_at": "2026-07-11T00:00:00Z",
                         "sources": {},
                     }
@@ -514,7 +514,7 @@ tags:
             (ledgers / "claim-ledger.json").write_text(
                 json.dumps(
                     {
-                        "schema": "claude-obsidian.claim-ledger.v1",
+                        "schema": "obsidian-plugin.claim-ledger.v1",
                         "generated_at": "2026-07-11T00:00:00Z",
                         "claims": {
                             "clm-unsafe": {
@@ -546,7 +546,7 @@ tags:
             ledgers = copy / "wiki/meta/ledgers"
             ledgers.mkdir(parents=True)
             duplicate = (
-                '{"schema":"claude-obsidian.source-ledger.v1",'
+                '{"schema":"obsidian-plugin.source-ledger.v1",'
                 '"generated_at":"2026-07-11T00:00:00Z",'
                 '"sources":{"src-a":{},"src-a":{}}}'
             )
@@ -568,7 +568,7 @@ tags:
             ledgers.mkdir(parents=True)
             with unittest.mock.patch.object(lint_engine, "MAX_CANONICAL_LEDGER_BYTES", 64):
                 (ledgers / "source-ledger.json").write_text(
-                    '{"schema":"claude-obsidian.source-ledger.v1",'
+                    '{"schema":"obsidian-plugin.source-ledger.v1",'
                     + '"generated_at":"2026-07-11T00:00:00Z","sources":{}}'
                     + " " * 64,
                     encoding="utf-8",
@@ -588,7 +588,7 @@ tags:
             ledgers.mkdir(parents=True)
             source_id = stable_source_id("url", "https://example.com/old", None)
             source = {
-                "schema": "claude-obsidian.source-ledger.v1",
+                "schema": "obsidian-plugin.source-ledger.v1",
                 "generated_at": "2020-01-01T00:00:00Z",
                 "sources": {
                     source_id: {
@@ -608,7 +608,7 @@ tags:
                 },
             }
             claim = {
-                "schema": "claude-obsidian.claim-ledger.v1",
+                "schema": "obsidian-plugin.claim-ledger.v1",
                 "generated_at": "2020-01-01T00:00:00Z",
                 "claims": {
                     "clm-old": {
@@ -654,7 +654,7 @@ tags:
             locator = json.loads('"https://example.com/\\ud800"')
             source_id = stable_source_id("url", locator, None)
             document = {
-                "schema": "claude-obsidian.source-ledger.v1",
+                "schema": "obsidian-plugin.source-ledger.v1",
                 "generated_at": "2026-07-11T00:00:00Z",
                 "sources": {
                     source_id: {
@@ -692,7 +692,7 @@ tags:
             ledgers.mkdir(parents=True)
             source_id = json.loads('"src-\\ud800"')
             document = {
-                "schema": "claude-obsidian.source-ledger.v1",
+                "schema": "obsidian-plugin.source-ledger.v1",
                 "generated_at": "2026-07-11T00:00:00Z",
                 "sources": {
                     source_id: {
@@ -732,7 +732,7 @@ tags:
                 ],
                 [
                     sys.executable,
-                    str(ROOT / "scripts/claude-obsidian.py"),
+                    str(ROOT / "scripts/obsidian-plugin.py"),
                     "lint",
                     "--vault",
                     str(copy),
@@ -768,7 +768,7 @@ tags:
             (ledgers / "claim-ledger.json").write_text(
                 json.dumps(
                     {
-                        "schema": "claude-obsidian.claim-ledger.v1",
+                        "schema": "obsidian-plugin.claim-ledger.v1",
                         "claims": {
                             "clm-bad": {
                                 "text": "Bad evidence.",
@@ -1634,7 +1634,7 @@ class ObsidianConformanceTests(unittest.TestCase):
     def test_random_markdown_never_raises_in_scanners(self) -> None:
         import random
 
-        from claude_obsidian import markdown_links
+        from obsidian_plugin import markdown_links
 
         alphabet = list("[]()!`~$%<>-=#*_\\|^: \t\na1") + [
             "\r\n", "\x0b", "\x0c", "\x1c", "\x1d", "\x1e", "\x85", " ", " ",
@@ -1681,7 +1681,7 @@ class ObsidianConformanceTests(unittest.TestCase):
         self.assertEqual(["Visible"], [entry["target"] for entry in report["dead_links"]])
 
     def test_provenance_ledger_read_uses_shared_capacity_constant(self) -> None:
-        from claude_obsidian.limits import MAX_CANONICAL_LEDGER_BYTES
+        from obsidian_plugin.limits import MAX_CANONICAL_LEDGER_BYTES
 
         self.assertEqual(MAX_CANONICAL_LEDGER_BYTES, lint_engine.MAX_CANONICAL_LEDGER_BYTES)
         with mock.patch.object(lint_engine, "MAX_CANONICAL_LEDGER_BYTES", 8):
@@ -1724,7 +1724,7 @@ class ParserScalingTests(unittest.TestCase):
             )
 
     def test_adversarial_markdown_scans_are_linear(self) -> None:
-        from claude_obsidian import markdown_links
+        from obsidian_plugin import markdown_links
 
         def page_scan(text: str) -> None:
             masked = markdown_links.mask_protected_regions(text)
@@ -1853,7 +1853,7 @@ class WalkScopeTests(unittest.TestCase):
             completed = subprocess.run(
                 [
                     sys.executable,
-                    str(ROOT / "scripts" / "claude-obsidian.py"),
+                    str(ROOT / "scripts" / "obsidian-plugin.py"),
                     "lint",
                     "--vault",
                     str(vault),

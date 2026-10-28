@@ -8,8 +8,8 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from claude_obsidian.cli import build_parser
-from claude_obsidian.transaction import BUNDLE_SCHEMA
+from obsidian_plugin.cli import build_parser
+from obsidian_plugin.transaction import BUNDLE_SCHEMA
 
 
 class UpgradeCliTests(unittest.TestCase):
@@ -22,7 +22,7 @@ class UpgradeCliTests(unittest.TestCase):
         (self.vault / 'wiki').mkdir()
 
     def run_cli(self, *args):
-        return subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/claude-obsidian.py'), *args],
+        return subprocess.run([sys.executable, '-B', str(ROOT / 'scripts/obsidian-plugin.py'), *args],
                               text=True, capture_output=True, cwd=self.base, timeout=20)
 
     def test_capacity_has_readonly_status_and_both_vault_argument_positions(self):

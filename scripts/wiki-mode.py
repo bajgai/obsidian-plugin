@@ -45,15 +45,15 @@ PLUGIN_ROOT = Path(__file__).resolve().parent.parent
 if str(PLUGIN_ROOT) not in sys.path:
     sys.path.insert(0, str(PLUGIN_ROOT))
 
-from claude_obsidian.mode_config import validate_mode_folders, validate_wiki_route
-from claude_obsidian.page_schema import (
+from obsidian_plugin.mode_config import validate_mode_folders, validate_wiki_route
+from obsidian_plugin.page_schema import (
     LEGACY_TYPE_ALIASES,
     ROUTABLE_TYPES,
     route_rejection,
 )
-from claude_obsidian.ledgers import strict_json_loads
-from claude_obsidian.paths import VaultSelectionError, resolve_vault_root
-from claude_obsidian.transaction import (
+from obsidian_plugin.ledgers import strict_json_loads
+from obsidian_plugin.paths import VaultSelectionError, resolve_vault_root
+from obsidian_plugin.transaction import (
     TransactionError,
     _safe_vault_path,
     read_vault_regular,
@@ -64,7 +64,7 @@ META_DIR = VAULT_ROOT / ".vault-meta"
 MODE_PATH = META_DIR / "mode.json"
 
 VALID_MODES = ("generic", "lyt", "para", "zettelkasten")
-# Derived, never restated: claude_obsidian.page_schema is the one declaration.
+# Derived, never restated: obsidian_plugin.page_schema is the one declaration.
 # The legacy `research` alias stays accepted on the command line.
 VALID_TYPES = ROUTABLE_TYPES + tuple(LEGACY_TYPE_ALIASES)
 ZETTEL_ID_FORMAT = "YYYYMMDDHHMMSSffffff-UUID4HEX"

@@ -15,8 +15,8 @@ Resolve the installed product root from this skill's own location, not from the
 vault or current working directory:
 
 ```bash
-PRODUCT_ROOT=/absolute/path/to/installed/claude-obsidian
-CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
+PRODUCT_ROOT=/absolute/path/to/installed/obsidian-plugin
+CORE="$PRODUCT_ROOT/scripts/obsidian-plugin.py"
 MODE_HELPER="$PRODUCT_ROOT/scripts/wiki-mode.py"
 test -f "$CORE" && test -f "$MODE_HELPER"
 ```
@@ -53,7 +53,7 @@ Use the templates as structural guidance: [LYT atomic](templates/lyt/atomic-temp
 [PARA project](templates/para/project-template.md),
 [PARA resource](templates/para/resource-template.md), or
 [Zettelkasten atomic](templates/zettel/atomic-template.md). They use canonical
-`type` values from `claude_obsidian/page_schema.py` and a separate flat
+`type` values from `obsidian_plugin/page_schema.py` and a separate flat
 `methodology_role` property:
 
 | Template | Type | Methodology role |

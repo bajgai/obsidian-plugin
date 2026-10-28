@@ -17,7 +17,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 
-from claude_obsidian.ledgers import (
+from obsidian_plugin.ledgers import (
     CLAIM_SCHEMA,
     LedgerValidationError,
     SOURCE_SCHEMA,
@@ -28,15 +28,15 @@ from claude_obsidian.ledgers import (
     validate_claim_ledger,
     validate_source_ledger,
 )
-from claude_obsidian.transaction import (
+from obsidian_plugin.transaction import (
     BUNDLE_SCHEMA,
     TransactionConflict,
     TransactionValidationError,
     apply_bundle,
     inspect_bundle,
 )
-import claude_obsidian.transaction as transaction_module
-import claude_obsidian.ledgers as ledgers_module
+import obsidian_plugin.transaction as transaction_module
+import obsidian_plugin.ledgers as ledgers_module
 
 
 def make_vault(root: Path) -> Path:
@@ -1812,7 +1812,7 @@ def test_transaction_rejects_duplicate_provenance_json_keys() -> None:
         vault = make_vault(Path(td) / "vault")
         source_path = "wiki/meta/ledgers/source-ledger.json"
         duplicate = (
-            '{"schema":"claude-obsidian.source-ledger.v1",'
+            '{"schema":"obsidian-plugin.source-ledger.v1",'
             '"generated_at":"2026-07-11T00:00:00Z",'
             '"sources":{"src-a":{},"src-a":{}}}'
         )
@@ -2018,7 +2018,7 @@ def main() -> None:
 
 
 def test_canonical_ledger_capacity_is_symmetric_and_legacy_is_recoverable() -> None:
-    from claude_obsidian.ledgers import validate_existing_canonical_state
+    from obsidian_plugin.ledgers import validate_existing_canonical_state
 
     limit = 16 * 1024 * 1024
     source_path = "wiki/meta/ledgers/source-ledger.json"

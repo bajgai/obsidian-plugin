@@ -21,8 +21,8 @@ from .json_utils import strict_json_loads
 from .paths import is_name_surrogate, linked_path_hint, supports_confined_dirfd
 
 
-QUERY_SCHEMA = "claude-obsidian.retrieval-queries.v1"
-REPORT_SCHEMA = "claude-obsidian.retrieval-evaluation.v1"
+QUERY_SCHEMA = "obsidian-plugin.retrieval-queries.v1"
+REPORT_SCHEMA = "obsidian-plugin.retrieval-evaluation.v1"
 MAX_QUERY_FILE_BYTES = 1024 * 1024
 MAX_INDEX_BYTES = 64 * 1024 * 1024
 MAX_QUERIES = 1000
@@ -188,7 +188,7 @@ def _index_snapshot(vault: Path, product_root: Path) -> bytes:
         raise IndexNotReadyError("BM25 index has no docs mapping; rebuild derived caches explicitly")
     helper = product_root / "scripts/bm25-index.py"
     try:
-        spec = importlib.util.spec_from_file_location("claude_obsidian_eval_bm25", helper)
+        spec = importlib.util.spec_from_file_location("obsidian_plugin_eval_bm25", helper)
         if spec is None or spec.loader is None:
             raise EvaluationError("BM25 validation helper cannot be loaded")
         module = importlib.util.module_from_spec(spec)
@@ -359,7 +359,7 @@ def run_fixture(product_root: Path | str) -> dict[str, Any]:
 
     product = Path(product_root).resolve()
     fixture = product / "tests/fixtures/retrieval-quality"
-    with tempfile.TemporaryDirectory(prefix="claude-obsidian-quality-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="obsidian-plugin-quality-") as temporary:
         vault = Path(temporary) / "fixture-vault"
         labels = provision_fixture(vault, product)
         report = run_quality(vault, labels, product)

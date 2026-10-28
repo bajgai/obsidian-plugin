@@ -14,7 +14,7 @@ import re
 import time
 import urllib.request
 
-from claude_obsidian.json_utils import strict_json_loads
+from obsidian_plugin.json_utils import strict_json_loads
 
 
 MODEL_RE = re.compile(

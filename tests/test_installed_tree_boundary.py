@@ -130,7 +130,7 @@ class InstalledTreeBoundaryTests(unittest.TestCase):
             environment.pop("PYTHONPATH", None)
             environment["HOME"] = str(home)
             environment["CLAUDE_PLUGIN_ROOT"] = str(installed)
-            environment["CLAUDE_OBSIDIAN_VAULT"] = str(vault)
+            environment["OBSIDIAN_WIKI_VAULT"] = str(vault)
 
             before = fingerprint(installed)
 

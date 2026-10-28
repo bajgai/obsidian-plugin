@@ -1,6 +1,6 @@
 <!--
-  claude-obsidian: a free, open-source AI second brain for Obsidian and Claude Code, by Agrici Daniel.
-  Drop in sources and Claude reads, links and files them into a connected knowledge graph of plain Markdown you own.
+  claude-obsidian: a free, open-source AI second brain for Obsidian and any Agent Skills host, by Agrici Daniel.
+  Drop in sources and your AI agent reads, links and files them into a connected knowledge graph of plain Markdown you own.
   Personal knowledge management (PKM), AI note-taking and a local-first wiki, based on Andrej Karpathy's LLM Wiki pattern.
   15 skills and 3 agents. Works in Claude Code, Codex, OpenCode, Gemini, ZCode, Cursor and Windsurf. MIT licensed.
 -->
@@ -10,7 +10,7 @@
 <h1 align="center">claude-obsidian</h1>
 
 <p align="center">
-  <b>Your AI second brain for <a href="https://obsidian.md">Obsidian</a>, built for <a href="https://claude.com/product/claude-code">Claude Code</a>.</b><br />
+  <b>Your AI second brain for <a href="https://obsidian.md">Obsidian</a>, for any <a href="https://agentskills.io">Agent Skills</a> host: Claude Code, Codex, OpenCode, Gemini, Cursor and more.</b><br />
   Drop in sources. Get a connected wiki that grows every time you use it.
 </p>
 
@@ -43,10 +43,10 @@
   </a>
 </p>
 
-**claude-obsidian turns the things you read into a knowledge base that keeps getting more useful.** Drop a paper, an article, a transcript or your own notes into the vault, and Claude reads them, writes linked notes with sources, and files everything into one connected knowledge graph you can explore in Obsidian.
+**claude-obsidian turns the things you read into a knowledge base that keeps getting more useful.** Drop a paper, an article, a transcript or your own notes into the vault, and your AI agent reads them, writes linked notes with sources, and files everything into one connected knowledge graph you can explore in Obsidian.
 
 - **Capture.** Put sources in `inbox/`. The originals are kept, untouched, so every summary can point back to where it came from.
-- **Connect.** Claude writes linked pages, indexes and maps of content, so new ideas join the graph instead of piling up.
+- **Connect.** The agent writes linked pages, indexes and maps of content, so new ideas join the graph instead of piling up.
 - **Ask.** Get answers from what your vault already knows, with citations, without changing a single file.
 - **Save.** Keep the answers worth keeping as notes, one at a time, when you ask.
 - **Check.** A health check finds dead links, orphan pages and gaps before they spread.
@@ -68,7 +68,24 @@ The result is a normal Obsidian vault that stays useful with or without an AI: b
 
 <img src="assets/readme/install.svg" width="1200" height="420" alt="Installing claude-obsidian: a terminal adds the marketplace and installs the plugin, an inventory fills with all 15 skills and the 3 agents march in. /claude-obsidian:wiki previews the new vault first and creates it only after you approve. PRESS START." />
 
-You need [Claude Code](https://claude.com/product/claude-code), Python 3.11 or newer and, for the visual side, [Obsidian](https://obsidian.md). Install the plugin with two commands:
+You need an [Agent Skills](https://agentskills.io) host, Python 3.11 or newer and, for the visual side, [Obsidian](https://obsidian.md). The same 15 skills run everywhere; pick the path for your tool.
+
+### Codex, OpenCode, Gemini, ZCode, Cursor, Windsurf and other hosts
+
+From a copy of this repo, preview the setup, then apply it:
+
+```bash
+git clone https://github.com/AgriciDaniel/claude-obsidian.git
+cd claude-obsidian
+bash scripts/setup-multi-agent.sh --host codex            # preview, writes nothing
+bash scripts/setup-multi-agent.sh --host codex --apply    # link the skills
+```
+
+Use `--host opencode`, `--host gemini` or `--host zcode` the same way. Cursor and Windsurf need a workspace: `--host cursor --host windsurf --workspace <folder> --apply`. Any other Agent Skills host can link `skills/<name>/` into its skill folder directly. Then start your tool in the vault folder and invoke the skills by name: `wiki`, `wiki-ingest`, `wiki-query`, `save`, `wiki-lint`. Every host is covered in the [installation guide](docs/install-guide.md).
+
+### Claude Code
+
+Claude Code also gets a plugin with namespaced commands. Install it with two commands:
 
 ```bash
 claude plugin marketplace add AgriciDaniel/claude-obsidian
@@ -89,24 +106,7 @@ claude                                   # start Claude Code in your vault folde
 
 Open the same folder in Obsidian with **Open folder as vault** to browse your notes as they grow.
 
-Already have an Obsidian vault? `/claude-obsidian:wiki` can adopt it without moving your notes. The [installation guide](docs/install-guide.md#adopt-an-existing-vault) walks through it.
-
-<details>
-<summary><b>Other AI tools: Codex, OpenCode, Gemini, ZCode, Cursor and Windsurf</b></summary>
-<br />
-
-claude-obsidian is a set of [Agent Skills](https://agentskills.io), so it also runs in other hosts. From a copy of this repo, preview the setup, then apply it:
-
-```bash
-git clone https://github.com/AgriciDaniel/claude-obsidian.git
-cd claude-obsidian
-bash scripts/setup-multi-agent.sh --host codex            # preview, writes nothing
-bash scripts/setup-multi-agent.sh --host codex --apply    # link the skills
-```
-
-Use `--host opencode`, `--host gemini` or `--host zcode` the same way. Cursor and Windsurf need a workspace: `--host cursor --host windsurf --workspace <folder> --apply`. Every host is covered in the [installation guide](docs/install-guide.md).
-
-</details>
+Already have an Obsidian vault? The `wiki` skill (`/claude-obsidian:wiki` in Claude Code) can adopt it without moving your notes. The [installation guide](docs/install-guide.md#adopt-an-existing-vault) walks through it.
 
 <details>
 <summary><b>Windows</b></summary>
@@ -201,10 +201,10 @@ Behind the skills, three agents do the heavy reading and checking. All three are
 
 Your notes matter, so every change to the vault works like a careful save:
 
-1. **Read first.** Claude reads every note it will touch and records a fingerprint (a SHA-256 hash) of each one.
-2. **One plan, one apply.** Helpers can work in parallel, but they only hand back drafts. Claude merges them into one plan, checks it, and applies it as a single transaction.
+1. **Read first.** The agent reads every note it will touch and records a fingerprint (a SHA-256 hash) of each one.
+2. **One plan, one apply.** Helpers can work in parallel, but they only hand back drafts. The agent merges them into one plan, checks it, and applies it as a single transaction.
 3. **Undo if anything breaks.** A journal keeps backups during the write. If the power cuts out halfway, `transaction recover` rolls the unfinished change back from the journal.
-4. **Your edits win.** If you change a note in Obsidian while Claude is planning, the fingerprint no longer matches and the write stops with a conflict instead of overwriting you.
+4. **Your edits win.** If you change a note in Obsidian while the agent is planning, the fingerprint no longer matches and the write stops with a conflict instead of overwriting you.
 
 Web research, Git checkpoints and anything that sends data off your machine are separate steps that ask you first.
 
@@ -212,7 +212,7 @@ Web research, Git checkpoints and anything that sends data off your machine are 
 <summary><b>For the curious: how the vault is chosen and protected</b></summary>
 <br />
 
-The plugin never treats its own folder or cache as your vault. A vault is picked explicitly: through `CLAUDE_OBSIDIAN_VAULT`, the nearest `.claude-obsidian.json`, or one clear initialized parent folder. If it is not sure, it exits without writing.
+The plugin never treats its own folder or cache as your vault. A vault is picked explicitly: through `OBSIDIAN_WIKI_VAULT`, the nearest `.obsidian-wiki.json`, or one clear initialized parent folder. If it is not sure, it exits without writing.
 
 The lock coordinates local writers that cooperate with it. Other devices and external editors do not share it, so keep backups, especially when you sync Canvas or Base files. Read the [transaction contract](skills/wiki/references/operation-transactions.md), the [provenance contract](skills/wiki/references/provenance.md) and the [Compound Vault guide](docs/compound-vault-guide.md) for the full detail.
 
@@ -284,7 +284,7 @@ Run `python3 scripts/claude-obsidian.py --help`, or add `--help` to any command,
 <summary><b>What is claude-obsidian?</b></summary>
 <br />
 
-A free, open-source AI second brain for Obsidian: a personal knowledge management (PKM) and AI note-taking system that builds a knowledge graph of plain Markdown. It is a Claude Code plugin (and a set of Agent Skills for other AI tools) that turns your sources into linked, cited notes, answers questions from them, and keeps the vault healthy over time.
+A free, open-source AI second brain for Obsidian: a personal knowledge management (PKM) and AI note-taking system that builds a knowledge graph of plain Markdown. It is a set of Agent Skills for Claude Code, Codex, Gemini, Cursor and other AI tools that turns your sources into linked, cited notes, answers questions from them, and keeps the vault healthy over time.
 
 </details>
 
@@ -292,7 +292,7 @@ A free, open-source AI second brain for Obsidian: a personal knowledge managemen
 <summary><b>Is it free?</b></summary>
 <br />
 
-Yes. It is MIT licensed with no subscription and no tracking. You use it with your own Claude Code plan, or with another AI tool you already have.
+Yes. It is MIT licensed with no subscription and no tracking. You use it with the AI tool and plan you already have.
 
 </details>
 
@@ -308,7 +308,7 @@ No, but it is the nicest way to see the result. The vault is plain Markdown, so 
 <summary><b>Is this an Obsidian community plugin?</b></summary>
 <br />
 
-No. You don't install it from Obsidian's community plugin list. It is a Claude Code plugin (and a set of Agent Skills for other AI tools) that works on your vault folder. Obsidian opens the result as a normal vault, and no Obsidian plugin is required.
+No. You don't install it from Obsidian's community plugin list. It is a set of Agent Skills (plus a Claude Code plugin) that works on your vault folder. Obsidian opens the result as a normal vault, and no Obsidian plugin is required.
 
 </details>
 
@@ -316,7 +316,7 @@ No. You don't install it from Obsidian's community plugin list. It is a Claude C
 <summary><b>Does my data leave my computer?</b></summary>
 <br />
 
-Your vault stays on your computer as ordinary files. When you work with it in Claude Code, the notes Claude reads are sent to Claude, Anthropic's model, the same as anything else you open in Claude Code. Web research and remote models are off until you allow them for a task.
+Your vault stays on your computer as ordinary files. When you work with it in an AI tool, the notes the agent reads are sent to that tool's model provider, the same as anything else you open there. Web research and remote models are off until you allow them for a task.
 
 </details>
 
@@ -324,7 +324,7 @@ Your vault stays on your computer as ordinary files. When you work with it in Cl
 <summary><b>Will it mess up my existing notes?</b></summary>
 <br />
 
-It is built not to. Adopting a vault does not move your notes, every change is shown as a plan before it is applied, and an interrupted write can be rolled back. If you edit a note while Claude is working on it, the write stops instead of overwriting you. Keep normal backups anyway.
+It is built not to. Adopting a vault does not move your notes, every change is shown as a plan before it is applied, and an interrupted write can be rolled back. If you edit a note while the agent is working on it, the write stops instead of overwriting you. Keep normal backups anyway.
 
 </details>
 
@@ -340,7 +340,7 @@ Most AI note tools save text and stop. claude-obsidian keeps the original source
 <summary><b>Does it work with Codex, Gemini or Cursor?</b></summary>
 <br />
 
-Yes. The skills follow the open Agent Skills format. Claude Code gets the full plugin; Codex, OpenCode, Gemini, ZCode, Cursor and Windsurf link the same skills with one setup script. See [Install](#install).
+Yes. The skills follow the open Agent Skills format. Codex, OpenCode, Gemini, ZCode, Cursor and Windsurf link the skills with one setup script; Claude Code can also install them as a plugin. Session hooks are the only Claude-only extra. See [Install](#install).
 
 </details>
 
@@ -348,11 +348,11 @@ Yes. The skills follow the open Agent Skills format. Claude Code gets the full p
 <summary><b>Good to know: requirements, limits and uninstall</b></summary>
 <br />
 
-**Requirements.** Python 3.11 or newer, a current Claude Code release for the plugin (or another Agent Skills host), Obsidian for the visual side, and Bash for the setup scripts. Git is only needed for development or checkpoints.
+**Requirements.** Python 3.11 or newer, an Agent Skills host (a current Claude Code release for the plugin), Obsidian for the visual side, and Bash for the setup scripts. Git is only needed for development or checkpoints.
 
 **Limits.** It is not an automatic transcript recorder, a cloud sync service or a fact checker, and it does not replace backups. PDFs and web pages need extra tools for full text.
 
-**Uninstall.** Removing the plugin never removes your vault. Your notes, sources and Obsidian settings stay yours: `claude plugin uninstall claude-obsidian@agricidaniel-claude-obsidian`.
+**Uninstall.** Removing the skills or the plugin never removes your vault. Your notes, sources and Obsidian settings stay yours. Unlink the skills from your host's skill folder, or in Claude Code run `claude plugin uninstall claude-obsidian@agricidaniel-claude-obsidian`.
 
 </details>
 

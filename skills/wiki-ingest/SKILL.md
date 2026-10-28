@@ -11,7 +11,7 @@ source archive. Files already present in either location remain user-owned and
 read-only.
 
 Resolve the portable core from this skill's installation. Resolve the user vault
-by explicit `--vault`, `CLAUDE_OBSIDIAN_VAULT`, workspace config, then
+by explicit `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace config, then
 current-directory discovery. Never select the plugin/product root.
 
 ```bash

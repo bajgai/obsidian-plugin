@@ -11,11 +11,11 @@ its provider under that tool's own policy.
 - Markdown pages, raw source bytes, ledgers, queues, transaction journals,
   BM25 indexes, and hot context stay in the user vault by default.
 - The SessionStart hook is silent unless the user explicitly exports
-  `CLAUDE_OBSIDIAN_SESSION_CONTEXT=1`. With that opt-in, it emits bounded,
+  `OBSIDIAN_WIKI_SESSION_CONTEXT=1`. With that opt-in, it emits bounded,
   sanitized `wiki/hot.md` data into the Claude session context; it never
   captures a transcript. A workspace config may spend that global consent only
   on a vault inside its own project tree. For an intentional external-vault
-  route, also set `CLAUDE_OBSIDIAN_SESSION_CONTEXT_VAULT` to that vault's exact
+  route, also set `OBSIDIAN_WIKI_SESSION_CONTEXT_VAULT` to that vault's exact
   canonical path; this prevents an untrusted project config from redirecting
   automatic context injection into another private vault.
 - The Stop hook emits only aggregate recovery state when intervention is

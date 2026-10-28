@@ -9,28 +9,27 @@ CORE="$PRODUCT_ROOT/scripts/claude-obsidian.py"
 test -f "$CORE"
 ```
 
-## Claude marketplace plugin
-
-Install the plugin through its marketplace and invoke namespaced skills such as
-`/claude-obsidian:wiki`. Plugin assets live in an ephemeral cache. Mutable vault
-state must resolve from the project, `--vault`, or workspace configuration,
-never `${CLAUDE_PLUGIN_ROOT}`.
-
-## Local Claude plugin development
-
-```bash
-claude --plugin-dir /path/to/claude-obsidian
-```
-
-Skills remain namespaced. Run Claude from the user vault, not the plugin source
-directory, or configure the vault explicitly.
-
 ## Portable Agent Skills
 
-Use `scripts/setup-multi-agent.sh` or link each `skills/<name>/` directory at the
-host's direct `<skill-root>/<name>/SKILL.md` discovery path. Codex, OpenCode,
-and other Agent Skills hosts consume the same `SKILL.md` files. Claude-only
-hooks are adapters, not core workflow logic.
+Every host loads the same `skills/<name>/SKILL.md` files. Use
+`scripts/setup-multi-agent.sh --host <host>` (preview by default, `--apply` to
+link) or link each `skills/<name>/` directory at the host's direct
+`<skill-root>/<name>/SKILL.md` discovery path. Codex, OpenCode, Gemini, ZCode,
+Cursor, Windsurf and any other Agent Skills host invoke the skills by their
+plain names, such as `wiki` or `wiki-ingest`. Run the host from the user vault,
+or configure the vault explicitly. Host-specific hooks and plugin manifests are
+optional adapters, never core workflow logic.
+
+## Host plugin adapters
+
+A host that installs the package as a plugin may namespace the skills and cache
+the product assets in an ephemeral, read-only location. Mutable vault state must
+still resolve from `--vault`, the workspace configuration or the project, never
+from the plugin cache or a host plugin-root variable.
+
+Claude Code is the one shipped plugin adapter. Install it through its
+marketplace, or load a checkout with `claude --plugin-dir /path/to/claude-obsidian`,
+and invoke skills as `/claude-obsidian:<name>`.
 
 ## Product clone
 

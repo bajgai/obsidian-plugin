@@ -68,7 +68,7 @@ from claude_obsidian.markdown_links import (
     mask_comments as _mask_comments,
     mask_protected_regions as _mask_markdown_code,
 )
-from claude_obsidian.paths import is_name_surrogate
+from claude_obsidian.paths import WORKSPACE_CONFIG_NAMES, is_name_surrogate
 
 REPORT_VERSION = 1
 ENGINE_VERSION = "1.2.0"
@@ -650,11 +650,14 @@ def _walk_files(root: Path) -> list[Path]:
 
 def _is_declared_vault(path: Path) -> bool:
     """Report whether ``path`` holds a regular workspace marker file."""
-    try:
-        metadata = (path / ".claude-obsidian.json").lstat()
-    except OSError:
-        return False
-    return stat.S_ISREG(metadata.st_mode) and not is_name_surrogate(metadata)
+    for name in WORKSPACE_CONFIG_NAMES:
+        try:
+            metadata = (path / name).lstat()
+        except OSError:
+            continue
+        if stat.S_ISREG(metadata.st_mode) and not is_name_surrogate(metadata):
+            return True
+    return False
 
 
 def _wiki_location(root: Path) -> tuple[Path, str]:
@@ -1545,7 +1548,7 @@ def lint_vault(
 
     ``root`` is normally the vault directory containing ``wiki/``.  Passing a
     directory named ``wiki`` is also supported; its links resolve to parent
-    files only when that parent declares ``.claude-obsidian.json``. Symlinked
+    files only when that parent declares ``.obsidian-wiki.json``. Symlinked
     files and symlinked directories are not followed.  The function performs
     no filesystem writes.
 

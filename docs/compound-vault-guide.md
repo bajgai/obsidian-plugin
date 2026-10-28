@@ -15,7 +15,7 @@ recoverable operation transactions.
 | Public artifact | Allowlisted product files and synthetic samples | Rebuilt from a clean Git snapshot |
 
 An installed plugin cache is always product code. It never becomes the user
-vault. Resolve vault state through `--vault`, `CLAUDE_OBSIDIAN_VAULT`, workspace
+vault. Resolve vault state through `--vault`, `OBSIDIAN_WIKI_VAULT`, workspace
 config, or current-directory discovery.
 
 The development checkout and public marketplace root are distinct roles even
@@ -150,7 +150,7 @@ Read [the provenance reference](../skills/wiki/references/provenance.md).
 
 Claude's SessionStart hook is silent by default. It emits bounded, sanitized hot
 context only when a user vault resolves and the user has explicitly exported
-`CLAUDE_OBSIDIAN_SESSION_CONTEXT=1`; hook stdout becomes model context, so this
+`OBSIDIAN_WIKI_SESSION_CONTEXT=1`; hook stdout becomes model context, so this
 opt-in is an egress decision. The Stop hook reports incomplete transactions.
 Hooks do not update notes, capture conversations, stage files, or commit Git.
 Hosts without hooks use the same core workflows.

@@ -48,7 +48,7 @@ def _snapshot(root: Path) -> dict[str, str]:
 
 def _mark_vault(vault: Path) -> None:
     """Declare a real vault so wiki-root linting may resolve parent targets."""
-    (vault / ".claude-obsidian.json").write_text(
+    (vault / ".obsidian-wiki.json").write_text(
         json.dumps({"schema": "claude-obsidian.workspace.v1", "vault": "."}),
         encoding="utf-8",
     )

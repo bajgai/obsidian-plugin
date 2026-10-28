@@ -14,7 +14,7 @@ from urllib.parse import urlsplit, urlunsplit
 
 from .json_utils import parse_finite_json_float
 from .limits import CANONICAL_LEDGER_PATHS, MAX_CANONICAL_LEDGER_BYTES, ledger_capacity_message
-from .paths import assert_within, canonical
+from .paths import WORKSPACE_CONFIG, WORKSPACE_CONFIG_NAMES, assert_within, canonical
 from .transaction import BUNDLE_SCHEMA, TransactionValidationError, _safe_hash, read_vault_regular, sha256_bytes
 from .url_safety import url_credential_issue
 
@@ -117,15 +117,15 @@ def validate_existing_canonical_state(
 
     root = canonical(vault_root)
     errors: list[dict[str, str]] = []
-    workspace = _existing_json(root, ".claude-obsidian.json")
-    if workspace is not None:
+    for config_name in WORKSPACE_CONFIG_NAMES:
+        workspace = _existing_json(root, config_name)
+        if workspace is None:
+            continue
         if workspace.get("schema") != "claude-obsidian.workspace.v1":
-            _error(
-                errors, ".claude-obsidian.json.schema", "unsupported workspace schema"
-            )
+            _error(errors, f"{config_name}.schema", "unsupported workspace schema")
         configured = workspace.get("vault")
         if not isinstance(configured, str) or not configured.strip():
-            _error(errors, ".claude-obsidian.json.vault", "must be a non-empty path")
+            _error(errors, f"{config_name}.vault", "must be a non-empty path")
         else:
             supplied = Path(configured).expanduser()
             selected = canonical(
@@ -134,7 +134,7 @@ def validate_existing_canonical_state(
             if selected != root:
                 _error(
                     errors,
-                    ".claude-obsidian.json.vault",
+                    f"{config_name}.vault",
                     "must resolve to the vault being adopted",
                 )
 
@@ -1372,7 +1372,7 @@ def migration_bundle(
     values = {
         SOURCE_PATH: sources,
         CLAIM_PATH: claims,
-        ".claude-obsidian.json": {
+        WORKSPACE_CONFIG: {
             "schema": "claude-obsidian.workspace.v1",
             "vault": ".",
             "role": "vault",

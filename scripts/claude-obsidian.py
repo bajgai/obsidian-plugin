@@ -18,7 +18,10 @@ sys.path.insert(0, str(PLUGIN_ROOT))
 # Both fast paths emit UTF-8 like the full CLI, so vault text cannot crash a
 # hook on a legacy console code page.
 if sys.argv[1:] == ["hook", "session-start"]:
-    if os.environ.get("CLAUDE_OBSIDIAN_SESSION_CONTEXT") != "1":
+    _consent = os.environ.get("OBSIDIAN_WIKI_SESSION_CONTEXT") or os.environ.get(
+        "CLAUDE_OBSIDIAN_SESSION_CONTEXT"
+    )
+    if _consent != "1":
         raise SystemExit(0)
     from claude_obsidian.hook_adapter import emit_session_start, force_utf8_stdio
 

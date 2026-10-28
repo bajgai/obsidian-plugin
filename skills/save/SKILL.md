@@ -36,7 +36,7 @@ selected vault's `wiki/` directory.
 ## Prepare
 
 1. Resolve the user vault by explicit `--vault`, then
-   `CLAUDE_OBSIDIAN_VAULT`, workspace config, then current-directory discovery.
+   `OBSIDIAN_WIKI_VAULT`, workspace config, then current-directory discovery.
    The product/plugin root is never a vault.
 2. Read `wiki/hot.md`, `wiki/index.md`, the methodology configuration when
    present, and at most five directly relevant pages. Increase the read budget

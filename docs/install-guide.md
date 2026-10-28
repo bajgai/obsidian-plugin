@@ -2,7 +2,8 @@
 
 claude-obsidian has two independent parts:
 
-1. the product package (skills, portable core, Claude adapter, and templates);
+1. the product package (host-neutral skills, portable core, templates, and an
+   optional Claude Code plugin adapter);
 2. a user-owned Obsidian vault containing mutable knowledge.
 
 Do not use an installed plugin cache as the vault. A source clone is suitable
@@ -17,42 +18,6 @@ for development, but a normal user vault should be a separate directory.
 - Git only for source development, release builds, or explicit checkpoints
 - On Windows: WSL for vault writes; native Windows supports read-only
   inspection and dry-runs, see the [Windows and WSL guide](windows-wsl.md)
-
-## Claude Code marketplace
-
-Add the public catalog and install the namespaced plugin:
-
-```bash
-claude plugin marketplace add AgriciDaniel/claude-obsidian
-claude plugin install claude-obsidian@agricidaniel-claude-obsidian
-claude plugin list
-```
-
-Upgrading from 2.x or 3.0.0? See [Upgrade and rollback](#upgrade-and-rollback).
-
-A private development tree that holds contributor-vault state has no
-`.claude-plugin/marketplace.json`; it can contain contributor-vault state and
-must not be added as a marketplace. The deterministic release builder injects
-that manifest only into its audited output. The public default branch must be
-promoted from the extracted audited artifact before these marketplace commands
-are advertised for a new version.
-
-Invoke skills as `/claude-obsidian:wiki`,
-`/claude-obsidian:wiki-ingest`, and `/claude-obsidian:save`.
-
-The plugin cache contains read-only product assets. Run Claude from the user
-vault, set `CLAUDE_OBSIDIAN_VAULT`, or pass `--vault` to portable commands.
-
-## Local Claude plugin development
-
-From a product clone:
-
-```bash
-claude --plugin-dir <product-repository>
-```
-
-This mode is for testing uninstalled changes. Skills remain namespaced. It does
-not convert the product repository into a user vault.
 
 ## Portable Agent Skills hosts
 
@@ -99,6 +64,42 @@ Cursor:    <workspace>/.cursor/skills/<name>   -> <product-repository>/skills/<n
 Windsurf:  <workspace>/.windsurf/skills/<name> -> <product-repository>/skills/<name>
 ```
 
+## Claude Code marketplace
+
+Add the public catalog and install the namespaced plugin:
+
+```bash
+claude plugin marketplace add AgriciDaniel/claude-obsidian
+claude plugin install claude-obsidian@agricidaniel-claude-obsidian
+claude plugin list
+```
+
+Upgrading from 2.x or 3.0.0? See [Upgrade and rollback](#upgrade-and-rollback).
+
+A private development tree that holds contributor-vault state has no
+`.claude-plugin/marketplace.json`; it can contain contributor-vault state and
+must not be added as a marketplace. The deterministic release builder injects
+that manifest only into its audited output. The public default branch must be
+promoted from the extracted audited artifact before these marketplace commands
+are advertised for a new version.
+
+Invoke skills as `/claude-obsidian:wiki`,
+`/claude-obsidian:wiki-ingest`, and `/claude-obsidian:save`.
+
+The plugin cache contains read-only product assets. Run Claude from the user
+vault, set `OBSIDIAN_WIKI_VAULT`, or pass `--vault` to portable commands.
+
+## Local Claude plugin development
+
+From a product clone:
+
+```bash
+claude --plugin-dir <product-repository>
+```
+
+This mode is for testing uninstalled changes. Skills remain namespaced. It does
+not convert the product repository into a user vault.
+
 ## Create a new vault
 
 Review the initialization plan first:
@@ -121,7 +122,7 @@ The generated vault contains:
 
 - `.gitignore`, privacy-safe defaults excluding `.vault-meta/` runtime state,
   Obsidian workspace state, and live `.mcp.json` launch configuration;
-- `.claude-obsidian.json`, workspace identity and vault selection;
+- `.obsidian-wiki.json`, workspace identity and vault selection;
 - `inbox/`, visible source intake;
 - `.raw/`, immutable source payloads and legacy delta manifest;
 - `wiki/`, index, log, hot cache, overview, and generated notes;
@@ -166,12 +167,18 @@ legacy `.raw/.manifest.json` byte-for-byte unchanged.
 Mutable commands use this precedence:
 
 1. `--vault <path>`
-2. `CLAUDE_OBSIDIAN_VAULT`
-3. nearest `.claude-obsidian.json`
+2. `OBSIDIAN_WIKI_VAULT`
+3. nearest `.obsidian-wiki.json`
 4. nearest unambiguous initialized vault from the current directory
 
 If selection fails, the command exits without mutation. The product/plugin root
 is rejected as an implicit vault.
+
+Older vaults keep working: `.claude-obsidian.json` and the
+`CLAUDE_OBSIDIAN_*` variables are read as deprecated fallbacks when the
+`.obsidian-wiki.json` file or the matching `OBSIDIAN_WIKI_*` variable is absent.
+`init` and `adopt` write only `.obsidian-wiki.json`; rename the old file at
+your convenience.
 
 Verify a selected vault:
 
@@ -290,7 +297,7 @@ User notes, sources, ledgers, and Obsidian settings remain untouched.
 | Symptom | Check |
 |---|---|
 | Skill is not discovered | Confirm `<host-skill-root>/<name>/SKILL.md` resolves to the matching product skill; rerun installer `--check`. |
-| Command says no vault selected | Run from the vault, pass `--vault`, or set `CLAUDE_OBSIDIAN_VAULT`. |
+| Command says no vault selected | Run from the vault, pass `--vault`, or set `OBSIDIAN_WIKI_VAULT`. |
 | Plugin-root refusal | Select a separate user vault; plugin cache writes are unsupported. |
 | Transaction conflict / exit 75 | Another operation is active or a target changed; reread, rebuild, and inspect a new bundle. |
 | Obsidian CLI is unavailable | Use filesystem reads; start/update Obsidian before retrying CLI transport. |

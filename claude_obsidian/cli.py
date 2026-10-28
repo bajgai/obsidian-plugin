@@ -39,6 +39,7 @@ from .paths import (
     VaultSelectionError,
     assert_not_plugin_tree,
     assert_unaliased_directory,
+    env_setting,
     resolve_vault_root,
 )
 from .release import audit_artifact, build_public_artifact
@@ -324,7 +325,7 @@ def command_contracts(args: argparse.Namespace) -> int:
     except VaultSelectionError as exc:
         implicit_absence = (
             args.vault is None
-            and not os.environ.get("CLAUDE_OBSIDIAN_VAULT")
+            and not env_setting(os.environ, "VAULT")
             and exc.code in {"VAULT_NOT_FOUND", "PLUGIN_ROOT_IS_NOT_VAULT"}
         )
         if not implicit_absence:

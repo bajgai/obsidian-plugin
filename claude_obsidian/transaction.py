@@ -116,7 +116,7 @@ _DIRECT_MANAGED_METADATA_AUTHORITY = {
     ".vault-meta/address-counter.txt": {"setup"},
 }
 _BOOTSTRAP_COMMON_PATHS = {
-    ".claude-obsidian.json",
+    ".obsidian-wiki.json",
     ".gitignore",
     ".obsidian/app.json",
     ".obsidian/appearance.json",
@@ -137,6 +137,7 @@ _SETUP_EXTENSION_PATHS = {
     ".vault-meta/tiling-thresholds.json",
 }
 _POLICY_ROOT_CASE = {
+    ".obsidian-wiki.json": ".obsidian-wiki.json",
     ".claude-obsidian.json": ".claude-obsidian.json",
     ".git": ".git",
     ".obsidian": ".obsidian",

@@ -41,7 +41,7 @@ def test_precedence_and_config() -> None:
         configured = make_vault(base / "configured")
         workspace = base / "workspace"
         workspace.mkdir()
-        (workspace / ".claude-obsidian.json").write_text(
+        (workspace / ".obsidian-wiki.json").write_text(
             json.dumps(
                 {"schema": "claude-obsidian.workspace.v1", "vault": "../configured"}
             ),
@@ -50,15 +50,50 @@ def test_precedence_and_config() -> None:
         nested = workspace / "nested"
         nested.mkdir()
         selected = resolve_vault_root(
-            explicit, start=nested, environ={"CLAUDE_OBSIDIAN_VAULT": str(env)}
+            explicit, start=nested, environ={"OBSIDIAN_WIKI_VAULT": str(env)}
         )
         assert selected.root == explicit.resolve()
         selected = resolve_vault_root(
-            start=nested, environ={"CLAUDE_OBSIDIAN_VAULT": str(env)}
+            start=nested, environ={"OBSIDIAN_WIKI_VAULT": str(env)}
         )
         assert selected.root == env.resolve()
         selected = resolve_vault_root(start=nested, environ={})
         assert selected.root == configured.resolve()
+
+
+def test_legacy_config_and_environment_names_are_fallbacks() -> None:
+    with tempfile.TemporaryDirectory() as td:
+        base = Path(td)
+        legacy_env = make_vault(base / "legacy-env")
+        current_env = make_vault(base / "current-env")
+        legacy_configured = make_vault(base / "legacy-configured")
+        current_configured = make_vault(base / "current-configured")
+        workspace = base / "workspace"
+        workspace.mkdir()
+        (workspace / ".claude-obsidian.json").write_text(
+            json.dumps(
+                {"schema": "claude-obsidian.workspace.v1", "vault": "../legacy-configured"}
+            ),
+            encoding="utf-8",
+        )
+        selected = resolve_vault_root(start=workspace, environ={})
+        assert selected.root == legacy_configured.resolve()
+        assert selected.source == "workspace-config"
+        (workspace / ".obsidian-wiki.json").write_text(
+            json.dumps(
+                {"schema": "claude-obsidian.workspace.v1", "vault": "../current-configured"}
+            ),
+            encoding="utf-8",
+        )
+        selected = resolve_vault_root(start=workspace, environ={})
+        assert selected.root == current_configured.resolve()
+
+        legacy = {"CLAUDE_OBSIDIAN_VAULT": str(legacy_env)}
+        selected = resolve_vault_root(start=workspace, environ=legacy)
+        assert selected.root == legacy_env.resolve()
+        both = {**legacy, "OBSIDIAN_WIKI_VAULT": str(current_env)}
+        selected = resolve_vault_root(start=workspace, environ=both)
+        assert selected.root == current_env.resolve()
 
 
 def test_plugin_root_rejected_implicitly_and_explicitly() -> None:
@@ -142,7 +177,7 @@ def test_workspace_config_root_must_be_an_object() -> None:
     for value in ([], None, "vault"):
         with tempfile.TemporaryDirectory() as td:
             root = Path(td)
-            (root / ".claude-obsidian.json").write_text(
+            (root / ".obsidian-wiki.json").write_text(
                 json.dumps(value), encoding="utf-8"
             )
             try:
@@ -160,7 +195,7 @@ def test_workspace_config_rejects_ambiguous_or_nonregular_authority() -> None:
         second = make_vault(base / "second")
         workspace = base / "workspace"
         workspace.mkdir()
-        config = workspace / ".claude-obsidian.json"
+        config = workspace / ".obsidian-wiki.json"
         config.write_text(
             '{"schema":"claude-obsidian.workspace.v1",'
             f'"vault":"{first}","vault":"{second}"}}',
@@ -264,6 +299,7 @@ def test_platform_flag_helpers_degrade_without_posix_flags() -> None:
 
 def main() -> None:
     test_precedence_and_config()
+    test_legacy_config_and_environment_names_are_fallbacks()
     test_plugin_root_rejected_implicitly_and_explicitly()
     test_plugin_tree_without_vault_sentinels_is_still_rejected_implicitly()
     test_plugin_descendants_are_never_mutable_vaults()

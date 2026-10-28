@@ -88,8 +88,8 @@
     {
       "mode": "0644",
       "path": "AGENTS.md",
-      "sha256": "f12fe295445b942a38c82e07f486428f548df32f9ca9ca2302b58ace8c68cf99",
-      "size": 4775
+      "sha256": "6b93cb430dd5f8efede76af616434493c16aa98b19dde3ac64277bab4d515e18",
+      "size": 4866
     },
     {
       "mode": "0644",
@@ -100,8 +100,8 @@
     {
       "mode": "0644",
       "path": "CHANGELOG.md",
-      "sha256": "7f37f7c0c0658bb14628e947a6dfc5c9eef38d88a35af2e6ad30e2e52de74e4d",
-      "size": 35266
+      "sha256": "d2957846cd96679fc2de5953565a8a3e81e1de25d63113e331a5dc61799c8987",
+      "size": 35905
     },
     {
       "mode": "0644",
@@ -148,14 +148,14 @@
     {
       "mode": "0644",
       "path": "PRIVACY.md",
-      "sha256": "0d7ca4c0c293413115d7db08eed97cf318cdf1a322c1d12bebb1a38ec8747f99",
-      "size": 2588
+      "sha256": "068b9d50095324c340a8db9ed0f0679f50e3f33b5379e817a482d49d75010c52",
+      "size": 2584
     },
     {
       "mode": "0644",
       "path": "README.md",
-      "sha256": "d6c34f1651bec9f6884f9d1a326e332c3aa9fe34789bdbdb4d19a109a87e4ba3",
-      "size": 22740
+      "sha256": "296102baa10c0c3829f214c957c8f5f5c1277ed780979cacad097589171657ba",
+      "size": 23127
     },
     {
       "mode": "0644",
@@ -184,8 +184,8 @@
     {
       "mode": "0644",
       "path": "agents/wiki-ingest.md",
-      "sha256": "e055b30af416695cdd69ecfaa5221fc16158eb25414593266db347b7bc3f2fe9",
-      "size": 4918
+      "sha256": "40d6e9be31a90c0be65ce4b72f3f1a788fa994b290703d60d352f7c321a96463",
+      "size": 4916
     },
     {
       "mode": "0644",
@@ -322,8 +322,8 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/cli.py",
-      "sha256": "41344a5d6b3f6ca07d092d89f616ab908b62cb07c53f17f7c00f444b0ceb3981",
-      "size": 50305
+      "sha256": "04fd03ea2f6d897c284be90d4c7cdf5b5427186adb243b28b18d0935124a5636",
+      "size": 50315
     },
     {
       "mode": "0644",
@@ -352,8 +352,8 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/hook_adapter.py",
-      "sha256": "8fd3f6ee2b9c01cdf62d241c29afd3fab2c49376b44cfddf612f4e182bc2b3ca",
-      "size": 13453
+      "sha256": "4af06351f0630b132ee69e3af2becb14c10861326c9ba1230db7ffeda0661d40",
+      "size": 13463
     },
     {
       "mode": "0644",
@@ -364,14 +364,14 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/ledgers.py",
-      "sha256": "290c5a7d11ceb91df1370dd3c581fc66ec1efdb2b1707731db90bfc2f6af48ca",
-      "size": 55407
+      "sha256": "25429402d69d6f1838ae7f8869da2e02b1cf77171613d2e99e576f71cb24edfe",
+      "size": 55451
     },
     {
       "mode": "0644",
       "path": "claude_obsidian/legacy_lock.py",
-      "sha256": "6edd094debd30ac3550974a624e37bc13d1902a355888009778cad812ebe5d18",
-      "size": 24317
+      "sha256": "c98a6549d4f034de1ae6efefef882f1bd18a342f79962dcbf686ca4a367b6993",
+      "size": 24323
     },
     {
       "mode": "0644",
@@ -382,8 +382,8 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/lint_engine.py",
-      "sha256": "ed5f174047db1c16e966fa4a50f68f7b56c8133dfcb7bb6de2ca66b8ccaeb353",
-      "size": 85520
+      "sha256": "34082829959b8bb359a90eebdaf842751c3ce78a9ea4395b29e3b248df5c682c",
+      "size": 85617
     },
     {
       "mode": "0644",
@@ -418,8 +418,8 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/paths.py",
-      "sha256": "9c58d9a3e96f5355e5fde615ed06efd8412f68b31511640b130cf99b3cbe0be6",
-      "size": 15703
+      "sha256": "f0c5df01dfd54bea1f61b16f2e6a70f2b71f75d5c287b49e70fa2275bfc510d4",
+      "size": 16729
     },
     {
       "mode": "0644",
@@ -442,8 +442,8 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/transaction.py",
-      "sha256": "f67bc5e037c4bf3c46669e38622dc08e4ad40c6a787fd37c27cdbd0d5a4a3128",
-      "size": 195146
+      "sha256": "c3daa4456ca2bc700b88338d90fde65924b533ce3d3b7cb967d2c200ec6ecc34",
+      "size": 195194
     },
     {
       "mode": "0644",
@@ -460,8 +460,8 @@
     {
       "mode": "0644",
       "path": "claude_obsidian/vault_ops.py",
-      "sha256": "baab23cb2fd4936186108cc6fb47d4c5663b4026978fc56c06810489ba833a57",
-      "size": 5131
+      "sha256": "166456d39a11f1deafd4de3afeccb81da21b8e9d1dc3ff4c3996d7a904338c54",
+      "size": 5162
     },
     {
       "mode": "0644",
@@ -484,8 +484,8 @@
     {
       "mode": "0644",
       "path": "config/capabilities.json",
-      "sha256": "d0df938f0fd9ff8d41a57c5011d23de7ee4389d89871b0a28b1689380fad21ae",
-      "size": 17575
+      "sha256": "ead1b6d566de993aa2a3fd5548463ff3d2a1d40be793cf552f782d3ad0275e26",
+      "size": 17571
     },
     {
       "mode": "0644",
@@ -508,7 +508,7 @@
     {
       "mode": "0644",
       "path": "config/upstream-references.json",
-      "sha256": "8578d7d6c34d46ba3f60d7d8b1a456412268e57e5116a9b218500c3f94bfe559",
+      "sha256": "d6b28cf0612bad09e19ec09f4144c81e770f7d3ea8ed7cf936f670c9ebe6c122",
       "size": 19608
     },
     {
@@ -520,8 +520,8 @@
     {
       "mode": "0644",
       "path": "docs/compound-vault-guide.md",
-      "sha256": "e190605f93bff278c4f450875ae4d71281f0260a202fe1637b3b0021154b13b4",
-      "size": 9799
+      "sha256": "3cc287c1126c0e27dc214acefedb0bae8fe23cf3e5699bf32de39e5f7de09ac1",
+      "size": 9795
     },
     {
       "mode": "0644",
@@ -532,8 +532,8 @@
     {
       "mode": "0644",
       "path": "docs/install-guide.md",
-      "sha256": "5165f52408bf093eac7658487733fbee8ceac2251e4609f35b377c3077caa653",
-      "size": 11408
+      "sha256": "76c583c85c3ea4aa3122b5dca940b12275bfa87495c3ceb5890fe1255ec54e62",
+      "size": 11745
     },
     {
       "mode": "0644",
@@ -591,15 +591,15 @@
     },
     {
       "mode": "0644",
-      "path": "examples/sample-vault/.claude-obsidian.json",
-      "sha256": "5701c6910dcdb39cd0494769e6e8e2814cbb01cf2bc5c29d2b40fcf5094e1453",
-      "size": 133
-    },
-    {
-      "mode": "0644",
       "path": "examples/sample-vault/.gitignore",
       "sha256": "0d62dd96ce7a511d2f0154b6373b7a0bfc74b7985c2342af9357751b9fba42dd",
       "size": 351
+    },
+    {
+      "mode": "0644",
+      "path": "examples/sample-vault/.obsidian-wiki.json",
+      "sha256": "5701c6910dcdb39cd0494769e6e8e2814cbb01cf2bc5c29d2b40fcf5094e1453",
+      "size": 133
     },
     {
       "mode": "0644",
@@ -670,8 +670,8 @@
     {
       "mode": "0644",
       "path": "hooks/README.md",
-      "sha256": "dd064f4519566ae5ef60df75a9e2468656519b9d78438825a1cbd5487e9fa587",
-      "size": 1834
+      "sha256": "3775c71850a32da07e1b5ec6fade3f1853db4419160cca5d803f9f53aa4a0398",
+      "size": 1830
     },
     {
       "mode": "0644",
@@ -700,8 +700,8 @@
     {
       "mode": "0755",
       "path": "scripts/claude-obsidian.py",
-      "sha256": "8cc2f55c4cef7e81bbe4632b88a6da0d608f58024ff7073e03eb33ee3638a30d",
-      "size": 1209
+      "sha256": "a6c8a81ed2fc2c235a156bc8e1b8a5475f61e95965d6caf21b3534183d89ce3f",
+      "size": 1298
     },
     {
       "mode": "0755",
@@ -790,8 +790,8 @@
     {
       "mode": "0644",
       "path": "skills/autoresearch/SKILL.md",
-      "sha256": "54ca6599760e6e5827cee50d448b182e40ff77e784a7eda5cd44976b968b5970",
-      "size": 6392
+      "sha256": "7c2c0da92b5ec425309d87c82b354cb5cbc4cb640dc6b16285af05e97cc54d6e",
+      "size": 6390
     },
     {
       "mode": "0644",
@@ -832,8 +832,8 @@
     {
       "mode": "0644",
       "path": "skills/save/SKILL.md",
-      "sha256": "f668e5a4f05448821a026183ea4901ab444751eb761694942f5eeb8f968e6108",
-      "size": 6543
+      "sha256": "d50a357442a86aac91c3f6195c828436c7247d8b256532f19ef5db74b9162c3a",
+      "size": 6541
     },
     {
       "mode": "0644",
@@ -850,8 +850,8 @@
     {
       "mode": "0644",
       "path": "skills/wiki-fold/SKILL.md",
-      "sha256": "df61e257eaaed9a3ea413af9cb5e27bc8b3f6bac04eff96565af484787bb823f",
-      "size": 4613
+      "sha256": "8fc7e431a6d976461a0003dd7adf6ddaa1baacb40257fce229037f729c5f22f1",
+      "size": 4611
     },
     {
       "mode": "0644",
@@ -862,8 +862,8 @@
     {
       "mode": "0644",
       "path": "skills/wiki-ingest/SKILL.md",
-      "sha256": "ff26d09933ad0f2a1eb4bc463bfc842ca6c7f3d56e212655739a743996aae604",
-      "size": 9101
+      "sha256": "56a6bb798535f15b755e4d2e89dbeb9bf9f77470030a1f884e0d127cf4ac8fc7",
+      "size": 9099
     },
     {
       "mode": "0644",
@@ -922,14 +922,14 @@
     {
       "mode": "0644",
       "path": "skills/wiki-retrieve/SKILL.md",
-      "sha256": "654136eec3577929e457abb73444ff88ca9a753e6079b1e881daf59b70519427",
-      "size": 7253
+      "sha256": "c0cfca5d6d13e7273f70495e925d89922eb27593b24ad9c269ce9cf96c33fe8d",
+      "size": 7251
     },
     {
       "mode": "0644",
       "path": "skills/wiki/SKILL.md",
-      "sha256": "562c92afa2ff44b3084ae5d4c2b9a3e4d09bfd20b586fc27d275c4b15cdd8662",
-      "size": 6271
+      "sha256": "34c6828bc982a30bda8aac13d4945b93ba82ee9e05328d2c49cf6e822b96836c",
+      "size": 6267
     },
     {
       "mode": "0644",
@@ -964,8 +964,8 @@
     {
       "mode": "0644",
       "path": "skills/wiki/references/install-modes.md",
-      "sha256": "e144fd3d74f7ad6495f5b9d5c29e225e9ccf8572d91f4af40d913a278433c5b0",
-      "size": 1926
+      "sha256": "f7690e2c849430638832f20d6992a8b7a0a3d1dfb4b34337920b6c46a64f7161",
+      "size": 2219
     },
     {
       "mode": "0644",
@@ -982,8 +982,8 @@
     {
       "mode": "0644",
       "path": "skills/wiki/references/model-guidance.md",
-      "sha256": "5a28662268be6d43e52fb2f65eb424713e8031132f2b0ffb69bb10ee94587d78",
-      "size": 1628
+      "sha256": "3af4d2c3b8807ec2c5121d6c3dddf13fcfbff568c97f7e068ac9da325ef0314c",
+      "size": 1493
     },
     {
       "mode": "0644",
@@ -994,8 +994,8 @@
     {
       "mode": "0644",
       "path": "skills/wiki/references/operation-transactions.md",
-      "sha256": "182a333e314f948d42504d48505bb76550276db17a27ae6081acfa9273330cd1",
-      "size": 6156
+      "sha256": "a6af7a720d059dfa9942bfa506dfea90a343817e31d145b7b4dc8b82df7494c2",
+      "size": 6152
     },
     {
       "mode": "0644",
@@ -1330,8 +1330,8 @@
     {
       "mode": "0755",
       "path": "tests/test_boundary_score.py",
-      "sha256": "11264ef2cbaa51eb57d4709e580cdd943291a4cb0e248abc9b35232d644240a5",
-      "size": 11517
+      "sha256": "5b6759031c1b145697a8c88bac7714bebbb7a193114d8a2b7dd66d0ba80848b0",
+      "size": 11515
     },
     {
       "mode": "0644",
@@ -1420,26 +1420,26 @@
     {
       "mode": "0644",
       "path": "tests/test_hooks.py",
-      "sha256": "827e45f866796eafb85268f1f5a959a83ab74ac955f5eddb300429cdb3ce1e82",
-      "size": 22586
+      "sha256": "a9344f99733e4bf130c850af4ea9a4f10b21441b1c2b48a4676318e5cd863082",
+      "size": 23188
     },
     {
       "mode": "0644",
       "path": "tests/test_installed_tree_boundary.py",
-      "sha256": "43f562cea8d157af1afd58a68c073dff926784c1ae8e4a408fa91c1d1e8fdb86",
-      "size": 10520
+      "sha256": "46f6fefa12a1f6f74bacaf4bd459e3c6d4792c1d88f747a0d0d8f37f2533b62e",
+      "size": 10518
     },
     {
       "mode": "0644",
       "path": "tests/test_knowledge_contracts.py",
-      "sha256": "635d4a054afceaa77048e5815b00f684de5b22a5131724a0436f13c946f68fb9",
-      "size": 12861
+      "sha256": "9ec2eb2eb892673efc822d5e9af9bd952f1be86c5101cb75baf46037dedc1c2e",
+      "size": 12859
     },
     {
       "mode": "0644",
       "path": "tests/test_ledgers.py",
-      "sha256": "6b41cc66a30ed4b16602de53530bd0e9a5c8d38e1757bee439a1df807caafacf",
-      "size": 80994
+      "sha256": "be5e18c79112608dc2929fb2ff65e14cfbdbb176058aef0f7ffbf991e3c26c98",
+      "size": 80992
     },
     {
       "mode": "0644",
@@ -1450,8 +1450,8 @@
     {
       "mode": "0644",
       "path": "tests/test_lint_engine.py",
-      "sha256": "0c3b7b33e4a24bb3c507fc122c751bb721e92feda607b635e7f3dd41b06649f8",
-      "size": 113025
+      "sha256": "3c2c6cfd38dd994fa2289bac87ce9830e4792b407269a58a02f99a23b58efb88",
+      "size": 113023
     },
     {
       "mode": "0644",
@@ -1474,8 +1474,8 @@
     {
       "mode": "0644",
       "path": "tests/test_paths.py",
-      "sha256": "1a5c4c4915fefac5ca2ea4569bc909b5fddf63347ad8e6259a6b5e61d20a35d9",
-      "size": 10424
+      "sha256": "657308d04a51511a9519ff288b7216c21ec939ba5f42c07bdb5c8f4da67f7851",
+      "size": 12066
     },
     {
       "mode": "0644",
@@ -1504,8 +1504,8 @@
     {
       "mode": "0755",
       "path": "tests/test_retrieve.py",
-      "sha256": "695a0d84d72d561cec6f9811e0a952a9712750c2dbe10fde909277c57d0b0074",
-      "size": 73025
+      "sha256": "1388115576ef8015b6a83d8a395384e3abc5d1a43c31d6bc52d837c7b072e04b",
+      "size": 73023
     },
     {
       "mode": "0644",
@@ -1522,8 +1522,8 @@
     {
       "mode": "0644",
       "path": "tests/test_setup_vault.py",
-      "sha256": "73a5d56d8c2a12c60f113a80412f6a48d801f5a721df4cd19470a868da5d075c",
-      "size": 15267
+      "sha256": "f3233ea8d787d8e07b09fcf36448ec94d208a398a2bc7500ffcdbd9663878148",
+      "size": 15265
     },
     {
       "mode": "0644",
@@ -1534,8 +1534,8 @@
     {
       "mode": "0755",
       "path": "tests/test_tiling_check.py",
-      "sha256": "0c91f95d9dfe9f901d6ccda976f2ec6f37dbd0ce8d175dd23f75906c4430d04e",
-      "size": 45614
+      "sha256": "06b14a2512c46521b17fc9c8fc7e10918b861c3ca77f5cc5603191148528c229",
+      "size": 45612
     },
     {
       "mode": "0644",
@@ -1552,26 +1552,26 @@
     {
       "mode": "0644",
       "path": "tests/test_vault_ops.py",
-      "sha256": "5df7e6cb3b5b8d749f82eeb3e557b87a4a34f3244b5e6e467b0b8a32719103b0",
-      "size": 9744
+      "sha256": "3df9df32eb54518cc31cfa49640f36e6965a6dfcfd42b4ee4cb1274ca01f0406",
+      "size": 9740
     },
     {
       "mode": "0644",
       "path": "tests/test_vault_root_separation.py",
-      "sha256": "182c907b1d8f5e8fa160bed9da8edd33716898f9caaa00a57155e185c2daddac",
-      "size": 17279
+      "sha256": "e8556717b6e6297e28130cee9f0b58a3aae308e9ac19271f1af68afdaaa9b242",
+      "size": 17318
     },
     {
       "mode": "0755",
       "path": "tests/test_wiki_lock.sh",
-      "sha256": "8e05bdfa9ef177a109453b17894748b75498b303311fb1b4709ce3f379bbafbd",
-      "size": 16939
+      "sha256": "03bfdb25164a614d3e8fc757a62ed0e46cb95bdaf55f9238cedb45d3e058f120",
+      "size": 16959
     },
     {
       "mode": "0644",
       "path": "tests/test_wiki_mode.py",
-      "sha256": "b12b91bb1a1dfb04c80930fcde3f6e2700c4b33ccbad22bec7e1f169745477d1",
-      "size": 35174
+      "sha256": "4e83b33cc3164a583f1276dcef3c007076b215b05f8a3108e9d8eced8276593b",
+      "size": 35172
     },
     {
       "mode": "0644",
@@ -1601,6 +1601,6 @@
     }
   },
   "schema_version": 1,
-  "source_commit": "b5f4fd0301cec04a240c3ea478a40871af476255",
-  "source_date_epoch": 1792686373
+  "source_commit": "f6de8f42c39dc82dc5a4b5698f941c1fe1c1e54a",
+  "source_date_epoch": 1793220052
 }

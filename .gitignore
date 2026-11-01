@@ -153,3 +153,4 @@ _attachments/
 .vault-meta/mode.*.tmp
 # Project-scope MCP config may carry commands or credentials; never commit the live file.
 .mcp.json
+plans/
